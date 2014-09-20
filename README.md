@@ -1,8 +1,7 @@
 Library Hierarchy
 -----------------
 
-  - Graph.cpp
-    -----------
+  - **Graph.cpp**
     - [x] SCC (Tarjan)
     - [x] TopSort
     - [ ] Dijkstra
@@ -17,8 +16,7 @@ Library Hierarchy
     - [ ] Heavy-Light Decomposition
     - [ ] Euler Path
     
-  - Geometry.cpp
-    ------------
+  - **Geometry.cpp**
     - [ ] Point
     - [ ] Segment
     - [ ] Line
@@ -37,13 +35,13 @@ Library Hierarchy
     - [ ] Diophantine Equation
     - [ ] Reduced Row Echelon Form
     
-  - *String.cpp*
+  - **String.cpp**
     - [ ] Suffix Array
     - [ ] Trie
     - [ ] Automata
     - [ ] KMP
     
-  - *Data Structures*
+  - **Data Structures**
     - [ ] BIT
     - [ ] Segment Tree
     - [ ] 2D Segment Tree
@@ -52,6 +50,6 @@ Library Hierarchy
     - [ ] Union Find
     - [ ] Dates
     
-  *Misc.cpp*
+  - **Misc.cpp**
     - [ ] Hacks, Tweaks, Tips and Formulas
   
