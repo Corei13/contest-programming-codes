@@ -29,7 +29,7 @@ Library Hierarchy
     - [ ] Convex Hull
     - [ ] Closest Points
     
-  - *Math.cpp*
+  - **Math.cpp**
     - [ ] Simplex
     - [ ] Gauss-Jordan
     - [ ] FFT
@@ -37,13 +37,13 @@ Library Hierarchy
     - [ ] Diophantine Equation
     - [ ] Reduced Row Echelon Form
     
-  *String.cpp*
+  - *String.cpp*
     - [ ] Suffix Array
     - [ ] Trie
     - [ ] Automata
     - [ ] KMP
     
-  *Data Structures*
+  - *Data Structures*
     - [ ] BIT
     - [ ] Segment Tree
     - [ ] 2D Segment Tree
