@@ -3,7 +3,9 @@ contest-progamming-codes
 
 Library Hierarchy
 -----------------
+
 *Graph.cpp*
+-----------
     - [x] SCC (Tarjan)
     - [x] TopSort
     - [ ] Dijkstra
@@ -17,7 +19,9 @@ Library Hierarchy
     - [ ] Bellman-Ford
     - [ ] Heavy-Light Decomposition
     - [ ] Euler Path
+    
   *Geometry.cpp*
+  --------------
     - [ ] Point
     - [ ] Segment
     - [ ] Line
@@ -27,6 +31,7 @@ Library Hierarchy
     - [ ] Triangulation
     - [ ] Convex Hull
     - [ ] Closest Points
+    
   *Math.cpp*
     - [ ] Simplex
     - [ ] Gauss-Jordan
@@ -34,11 +39,13 @@ Library Hierarchy
     - [ ] Extended Euclid
     - [ ] Diophantine Equation
     - [ ] Reduced Row Echelon Form
+    
   *String.cpp*
     - [ ] Suffix Array
     - [ ] Trie
     - [ ] Automata
     - [ ] KMP
+    
   *Data Structures*
     - [ ] BIT
     - [ ] Segment Tree
@@ -47,6 +54,7 @@ Library Hierarchy
     - [ ] LIS
     - [ ] Union Find
     - [ ] Dates
+    
   *Misc.cpp*
     - [ ] Hacks, Tweaks, Tips and Formulas
   
