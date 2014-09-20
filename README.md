@@ -41,12 +41,12 @@ Library Hierarchy
     - [ ] Automata
     - [ ] KMP
     
-  - **Data Structures**
+  - **DS.cpp**
+    - [x] LIS
     - [ ] BIT
     - [ ] Segment Tree
     - [ ] 2D Segment Tree
     - [ ] LCA
-    - [ ] LIS
     - [ ] Union Find
     - [ ] Dates
     
