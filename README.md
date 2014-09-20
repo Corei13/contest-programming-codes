@@ -2,7 +2,7 @@ Library Hierarchy
 -----------------
 
   - Graph.cpp
-  -----------
+    -----------
     - [x] SCC (Tarjan)
     - [x] TopSort
     - [ ] Dijkstra
@@ -17,8 +17,8 @@ Library Hierarchy
     - [ ] Heavy-Light Decomposition
     - [ ] Euler Path
     
-  - *Geometry.cpp*
-    --------------
+  - Geometry.cpp
+    ------------
     - [ ] Point
     - [ ] Segment
     - [ ] Line
@@ -29,7 +29,7 @@ Library Hierarchy
     - [ ] Convex Hull
     - [ ] Closest Points
     
-  *Math.cpp*
+  - *Math.cpp*
     - [ ] Simplex
     - [ ] Gauss-Jordan
     - [ ] FFT
