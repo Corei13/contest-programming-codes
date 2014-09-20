@@ -1,10 +1,7 @@
-contest-progamming-codes
-========================
-
 Library Hierarchy
 -----------------
 
-  - *Graph.cpp*
+  - Graph.cpp
   -----------
     - [x] SCC (Tarjan)
     - [x] TopSort
