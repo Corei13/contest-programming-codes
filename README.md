@@ -4,8 +4,8 @@ contest-progamming-codes
 Library Hierarchy
 -----------------
 
-*Graph.cpp*
------------
+  - *Graph.cpp*
+  -----------
     - [x] SCC (Tarjan)
     - [x] TopSort
     - [ ] Dijkstra
@@ -20,8 +20,8 @@ Library Hierarchy
     - [ ] Heavy-Light Decomposition
     - [ ] Euler Path
     
-  *Geometry.cpp*
-  --------------
+  - *Geometry.cpp*
+    --------------
     - [ ] Point
     - [ ] Segment
     - [ ] Line
