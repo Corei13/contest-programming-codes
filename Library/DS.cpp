@@ -4,7 +4,7 @@ struct LIS {
 
     LIS (int n): n(n), a(n) {}
 
-    void buildLIS (int ord = 1, VI &idx) { // ord = -1 for LDS
+    void buildLIS (int ord, VI &idx) { // ord = -1 for LDS
         VPI best;
         VI prev(n, -1);
         idx = VI(n, 0);
