@@ -46,10 +46,16 @@ Library Hierarchy
     - [ ] BIT
     - [ ] Segment Tree
     - [ ] 2D Segment Tree
+    - [ ] Sparse Segment Tree
     - [ ] LCA
     - [ ] Union Find
     - [ ] Dates
+    - [ ] BigInt
+
+  - *Parser.cpp*
+    - [ ] Postfix, Infix, Prefix Converter
+    - [ ] Context-Free Grammer
+    - [ ] RegEx
     
   - **Misc.cpp**
     - [ ] Hacks, Tweaks, Tips and Formulas
-  

@@ -1,3 +1,41 @@
+struct TopSort {
+    int n;
+    VVI adj;
+    VI sorted;
+
+    TopSort (int n): n(n), adj(n) {}
+
+    void addEdge (int a, int b) {
+        adj[a].push_back(b);
+    }
+
+    void dfs (int u, VB &marked) {
+        if (marked[u]) {
+            return;
+        }
+        for (auto v: adj[u]) {
+            dfs(v, marked);
+        }
+        marked[u] = true;
+        sorted.push_back(u);
+    }
+
+    void sort () {
+        VB marked(n, false);
+        sorted.clear();
+
+        for (int i = 0; i < n; ++i) {
+            dfs(i, marked);
+        }
+    }
+};
+
+
+/*
+    Finds SCC with Tarjan's Algorithm.
+    In addition the SCC's will be in topological order.
+*/
+
 struct TarjanSCC {
     int n;
     int index, totalComponents;
@@ -50,36 +88,18 @@ struct TarjanSCC {
             DFS(i);
         }
     }
-};
 
-struct TopSort {
-    int n;
-    VVI adj;
-    VI sorted;
-
-    TopSort (int n): n(n), adj(n) {}
-
-    void addEdge (int a, int b) {
-        adj[a].push_back(b);
-    }
-
-    void dfs (int u, VB &marked) {
-        if (marked[u]) {
-            return;
-        }
-        for (auto v: adj[u]) {
-            dfs(v, marked);
-        }
-        marked[u] = true;
-        sorted.push_back(u);
-    }
-
-    void sort () {
-        VB marked(n, false);
-        sorted.clear();
-
-        for (int i = 0; i < n; ++i) {
-            dfs(i, marked);
+    /*
+        Finds an asignment for a 2-SAT problem and stores in sol
+        neg[i] is the inverse of i
+    */
+    void find2SATSolution (VI &sol, VI &neg) {
+        sol = VI(n, -1);
+        for (auto comp: components) {
+            for (auto j: comp) if (sol[j] == -1) {
+                sol[j] = 1;
+                sol[neg[j]] = 0;
+            }
         }
     }
 };
