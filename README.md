@@ -15,7 +15,9 @@ Library Hierarchy
     - [ ] Bellman-Ford
     - [ ] Heavy-Light Decomposition
     - [ ] Euler Path
-    
+    - [ ] Suurballe's Algorithm
+
+
   - **Geometry.cpp**
     - [ ] Point
     - [ ] Segment
@@ -25,7 +27,8 @@ Library Hierarchy
     - [ ] Point in Polygon
     - [ ] Triangulation
     - [ ] Convex Hull
-    - [ ] Closest Points
+    - [ ] Closest Pair of Points
+    - [ ] Rotating Calipers
     
   - **Math.cpp**
     - [ ] Simplex
@@ -51,6 +54,7 @@ Library Hierarchy
     - [ ] Union Find
     - [ ] Dates
     - [ ] BigInt
+    - [ ] RMQ, RMedianQ
 
   - *Parser.cpp*
     - [ ] Postfix, Infix, Prefix Converter
@@ -59,3 +63,4 @@ Library Hierarchy
     
   - **Misc.cpp**
     - [ ] Hacks, Tweaks, Tips and Formulas
+    - [ ] Kahan Summation Algorithm
