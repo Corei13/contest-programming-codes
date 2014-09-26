@@ -50,3 +50,14 @@ transform(all(a), a.begin(), [](int i){return i*i;}); // a[i] *= a[i]
 for (int i = n; i != 0; i = (i - 1) & n) { cout << i << endl; }
 // Looping Over all set bits of a number
 for (int m = n, i = (m & (m - 1)) ^ m; m != 0; m &= (m - 1), i = (m & (m - 1)) ^ m) { cout << i << endl; }
+
+double KahanSummation (VD &v) {
+	double sum = 0.0, c = 0.0;
+	for (auto a: v) {
+		double y = a - c;
+		double t = sum + y;
+		c = (t - sum) - y;
+		sum = t;
+	}
+	return sum;
+}

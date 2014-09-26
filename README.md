@@ -63,5 +63,7 @@ Library Hierarchy
     - [ ] RegEx
     
   - **Misc.cpp**
+    - [x] lambda functions
+    - [x] STL cheatsheet
+    - [x] Kahan Summation Algorithm
     - [ ] Hacks, Tweaks, Tips and Formulas
-    - [ ] Kahan Summation Algorithm
