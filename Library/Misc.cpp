@@ -44,3 +44,9 @@ transform(all(a), a.begin(), [](int i){return i*i;}); // a[i] *= a[i]
 // inner_product(all(a), b.begin(), init, f, g) -> accumulate({g(a[0], b[0]), g(a[1], b[1])...}, init, f)
 // partial_sum(all(v), res, f) --> res = {v[0], f(v[0], v[1]), f(f(v[0], v[1]), v[2])...}
 // res must have size greater than or equal to v
+
+// Bit Hacks
+// Looping Over all subsets of a number
+for (int i = n; i != 0; i = (i - 1) & n) { cout << i << endl; }
+// Looping Over all set bits of a number
+for (int m = n, i = (m & (m - 1)) ^ m; m != 0; m &= (m - 1), i = (m & (m - 1)) ^ m) { cout << i << endl; }

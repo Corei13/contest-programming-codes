@@ -4,7 +4,8 @@ Library Hierarchy
   - **Graph.cpp**
     - [x] SCC (Tarjan)
     - [x] TopSort
-    - [ ] Dijkstra
+    - [x] Minimum Spanning Tree
+    - [x] Dijkstra
     - [ ] Articulation Point, Bridge, Biconnected Components
     - [ ] Push Relabel Flow
     - [ ] Min Cost Max Flow
@@ -46,12 +47,12 @@ Library Hierarchy
     
   - **DS.cpp**
     - [x] LIS
+    - [x] Union Find
     - [ ] BIT
     - [ ] Segment Tree
     - [ ] 2D Segment Tree
     - [ ] Sparse Segment Tree
     - [ ] LCA
-    - [ ] Union Find
     - [ ] Dates
     - [ ] BigInt
     - [ ] RMQ, RMedianQ
