@@ -60,7 +60,7 @@ Library Hierarchy
     - [ ] Splay Tree
     - [ ] Link/Cut Tree
 
-  - *Parser.cpp*
+  - **Parser.cpp**
     - [ ] Postfix, Infix, Prefix Converter
     - [ ] Context-Free Grammer
     - [ ] RegEx
@@ -70,3 +70,4 @@ Library Hierarchy
     - [x] STL cheatsheet
     - [x] Kahan Summation Algorithm
     - [ ] Hacks, Tweaks, Tips and Formulas
+    - [ ] Write down usefull templates
