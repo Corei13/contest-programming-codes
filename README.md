@@ -17,6 +17,7 @@ Library Hierarchy
     - [ ] Heavy-Light Decomposition
     - [ ] Euler Path
     - [ ] Suurballe's Algorithm
+    - [ ] Directed MST
 
 
   - **Geometry.cpp**
@@ -56,6 +57,8 @@ Library Hierarchy
     - [ ] Dates
     - [ ] BigInt
     - [ ] RMQ, RMedianQ
+    - [ ] Splay Tree
+    - [ ] Link/Cut Tree
 
   - *Parser.cpp*
     - [ ] Postfix, Infix, Prefix Converter

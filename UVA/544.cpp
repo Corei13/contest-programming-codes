@@ -8,25 +8,28 @@ using namespace std;
 #define pb push_back
 #define sz(a) (int)(a.size())
 #define all(a) a.begin(), a.end()
+#define R(a) ((a)%mod)
 
-typedef unsigned long long ll;
-typedef vector <int> VI;
-typedef vector <VI> VVI;
-typedef pair <ll, ll> PI;
-typedef vector <PI> VPI;
-typedef vector <VPI> VVPI;
-typedef vector <ll> VL;
-typedef vector <VL> VVL;
-typedef vector <string> VS;
-typedef vector <bool> VB;
-typedef vector <long double> VD;
-typedef vector <VD> VVD;
+typedef vector<int> VI;
+typedef vector<VI> VVI;
+typedef long long ll;
+typedef vector<ll> VL;
+typedef vector<VL> VVL;
+typedef vector<VVL> VVVL;
+typedef vector<bool> VB;
+typedef vector<string> VS;
+typedef pair<int, ll> PI;
+typedef vector<PI> VPI;
+typedef vector<PI> VPI;
+typedef vector<VPI> VVPI;
+typedef vector<double> VD;
+typedef vector<VD> VVD;
 
 struct DisjointSet {
     int n;
     VI rank, parent;
 
-    DisjointSet (int n): n(n), rank(n) {
+    DisjointSet (int n): n(n), rank(n, 0) {
         for (int i = 0; i < n; i++) {
             parent.push_back(i);
         }
@@ -50,7 +53,6 @@ struct DisjointSet {
     }
 };
 
-
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
@@ -62,45 +64,48 @@ template <class T> struct Kruskal {
         edges.push_back(make_pair(d, make_pair(s, t)));
     }
 
-    T MST (vector <pair <T, PI>>* mst = NULL) {
-        T ret = 0;
+    T MST (int s, int t) {
         D = new DisjointSet(n);
         sort(all(edges));
         for (auto e: edges) if (D->Union(e.y.x, e.y.y)) {
-            ret += e.x;
-            if (mst) {
-                mst->push_back(e);
+            if (D->Find(s) == D->Find(t)) {
+                return e.x;
             }
         }
-        return ret;
+        return 0;
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
-    int t;
-    Kruskal <ll>* K;
 
-    cin >> t;
-    for (int cs = 0; cs < t; ++cs) {
-        int n, sat;
-        cin >> sat >> n;
-        VL x(n), y(n);
-        K = new Kruskal <ll>(n);
-
-        for (int i = 0; i < n; ++i) {
-            cin >> x[i] >> y[i];
-            for (int j = 0; j < i; ++j) {
-                K->addEdge(i, j, (x[i]-x[j]) * (x[i]-x[j]) + (y[i]-y[j]) * (y[i]-y[j]));
+    int n, m, cs = 0;
+    Kruskal<int> *K;
+    while (cin >> n >> m && n != 0) {
+        K = new Kruskal<int>(n);
+        map <string, int> f;
+        for (int i = 0; i < m; ++i) {
+            string s, t;
+            int d;
+            cin >> s >> t >> d;
+            if (f.find(s) == f.end()) {
+                f[s] = sz(f);
             }
+            if (f.find(t) == f.end()) {
+                f[t] = sz(f);
+            }
+            K->addEdge(f[s], f[t], -d);
         }
-
-        vector <pair <ll, PI>> mst;
-        K->MST(&mst);
-
-        cout << fixed << setprecision(2) << sqrt(double(mst[n-sat-1].x)) << endl;
+        string s, t;
+        cin >> s >> t;
+        if (f.find(s) == f.end()) {
+            f[s] = sz(f);
+        }
+        if (f.find(t) == f.end()) {
+            f[t] = sz(f);
+        }
+        cout << "Scenario #" << ++cs << endl << -K->MST(f[s], f[t]) << " tons" << endl << endl;
     }
-
+    
     return 0;
 }

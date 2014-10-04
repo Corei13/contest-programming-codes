@@ -24,23 +24,23 @@ typedef vector <VD> VVD;
 
 const ll inf = 2000000000;
 
-struct Dijkstra {
+template <class T> struct Dijkstra {
     int n;
     bool directed;
-    VVPI adj;
+    vector <vector <pair <T, int>>> adj;
 
     Dijkstra (int n, bool directed = false): n(n), adj(n), directed(directed) {}
 
-    void addEdge (int a, int b, ll d) {
+    void addEdge (int a, int b, T d) {
         adj[a].push_back(make_pair(d, b));
         if (!directed) {
             adj[b].push_back(make_pair(d, a));
         }
     }
 
-    void buildTree(int s, VL &dist) {
-        dist = VL(n, inf);
-        priority_queue <PI, VPI, greater<PI>> q;
+    void buildTree(int s, vector<T> &dist) {
+        dist = vector <T>(n, inf);
+        priority_queue <pair <T, vector<pair <T, int>>>, VPI, greater<pair <T, int>>> q;
 
         dist[s] = 0;
         q.push(make_pair(dist[s], s));
@@ -59,12 +59,12 @@ int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
     
     int t;
-    Dijkstra* D;
+    Dijkstra <ll>* D;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
         int n, m, s, t;
         cin >> n >> m >> s >> t;
-        D = new Dijkstra(n);
+        D = new Dijkstra <ll>(n);
         for (int i = 0; i < m; ++i) {
             int a, b, d;
             cin >> a >> b >> d;

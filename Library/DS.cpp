@@ -39,7 +39,7 @@ struct DisjointSet {
     int n;
     VI rank, parent;
 
-    DisjointSet (int n): n(n), rank(n) {
+    DisjointSet (int n): n(n), rank(n, 0) {
         for (int i = 0; i < n; i++) {
             parent.push_back(i);
         }

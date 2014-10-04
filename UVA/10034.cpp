@@ -1,3 +1,7 @@
+/*
+    MST
+*/
+
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -8,19 +12,20 @@ using namespace std;
 #define pb push_back
 #define sz(a) (int)(a.size())
 #define all(a) a.begin(), a.end()
+#define R(a) ((a)%mod)
 
-typedef unsigned long long ll;
-typedef vector <int> VI;
-typedef vector <VI> VVI;
-typedef pair <ll, ll> PI;
-typedef vector <PI> VPI;
-typedef vector <VPI> VVPI;
-typedef vector <ll> VL;
-typedef vector <VL> VVL;
-typedef vector <string> VS;
-typedef vector <bool> VB;
-typedef vector <long double> VD;
-typedef vector <VD> VVD;
+typedef vector<int> VI;
+typedef vector<VI> VVI;
+typedef long long ll;
+typedef vector<ll> VL;
+typedef vector<VL> VVL;
+typedef vector<VVL> VVVL;
+typedef vector<bool> VB;
+typedef vector<string> VS;
+typedef pair<int, int> PI;
+typedef vector<PI> VPI;
+typedef vector<double> VD;
+typedef vector<VD> VVD;
 
 struct DisjointSet {
     int n;
@@ -50,7 +55,6 @@ struct DisjointSet {
     }
 };
 
-
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
@@ -78,29 +82,28 @@ template <class T> struct Kruskal {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
-    Kruskal <ll>* K;
-
     cin >> t;
-    for (int cs = 0; cs < t; ++cs) {
-        int n, sat;
-        cin >> sat >> n;
-        VL x(n), y(n);
-        K = new Kruskal <ll>(n);
 
+    Kruskal<double> *K;
+
+    for (int cs = 0; cs < t; ++cs) {
+        int n;
+        cin >> n;
+        VD x(n), y(n);
+        K = new Kruskal<double>(n);
         for (int i = 0; i < n; ++i) {
             cin >> x[i] >> y[i];
             for (int j = 0; j < i; ++j) {
-                K->addEdge(i, j, (x[i]-x[j]) * (x[i]-x[j]) + (y[i]-y[j]) * (y[i]-y[j]));
+                K->addEdge(i, j, sqrt((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j])));
             }
         }
-
-        vector <pair <ll, PI>> mst;
-        K->MST(&mst);
-
-        cout << fixed << setprecision(2) << sqrt(double(mst[n-sat-1].x)) << endl;
+        if (cs != 0) {
+            cout << endl;
+        }
+        cout << fixed << setprecision(2) << K->MST() << endl;
     }
-
+    
     return 0;
 }
