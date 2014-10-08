@@ -1,9 +1,9 @@
-struct TopSort {
+struct TopologicalSort {
     int n;
     VVI adj;
     VI sorted;
 
-    TopSort (int n): n(n), adj(n) {}
+    TopologicalSort (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b) {
         adj[a].push_back(b);
@@ -36,20 +36,20 @@ struct TopSort {
     In addition the SCC's will be in topological order.
 */
 
-struct TarjanSCC {
+struct StronglyConnectedComponents {
     int n;
-    int index, totalComponents;
+    int totalComponents;
     VVI adj, components;
     VI idx, componentOf, st, low;
     VB inStack;
     
-    TarjanSCC (int n): n(n), adj(n) {}
+    StronglyConnectedComponents (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b) {
         adj[a].push_back(b);
     }
 
-    void DFS (int v) {
+    int DFS (int v, int index) {
         idx[v] = index;
         low[v] = index;
         index += 1;
@@ -58,7 +58,7 @@ struct TarjanSCC {
 
         for (auto w: adj[v]) {
             if (idx[w] == -1) {
-                DFS(w);
+                index = DFS(w, index);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
                 low[v] = min(low[v], low[w]);                
@@ -77,15 +77,16 @@ struct TarjanSCC {
             } while (w != v);
             totalComponents++;
         }
+        return index;
     }
 
     void buildSCC () {
-        index = 0, totalComponents = 0;
+        totalComponents = 0;
         idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
         st.clear();
         
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i);
+            DFS(i, 0);
         }
     }
 
@@ -157,5 +158,78 @@ template <class T> struct Dijkstra {
                 q.push(make_pair(dist[e.y], e.y));
             }
         } while (!q.empty());
+    }
+};
+
+struct BiconnectedComponents {
+    int n;
+    int totalComponents;
+    VVPI adj;
+    VPI edges;
+    VI idx, low;
+    VI cutVertices, bridges;
+    VI st;
+    VVI components;
+
+    BiconnectedComponents (int n): n(n), adj(n) {}
+
+    void addEdge (int a, int b) {
+        int i = sz(edges);
+        adj[a].push_back(make_pair(b, i));
+        adj[b].push_back(make_pair(a, i));
+        edges.push_back(make_pair(a, b));
+    }
+
+    int DFS (PI v, int index) {
+        idx[v.x] = index;
+        low[v.x] = index;
+        index += 1;
+
+        int children = 0;
+        bool ap = false;
+        for (auto w: adj[v.x]) if (w.y != v.y) {
+            if (idx[w.x] == -1) {
+                st.push_back(w.y);
+                index = DFS(w, index);
+                low[v.x] = min(low[v.x], low[w.x]);
+                if (low[w.x] > idx[v.x]) {
+                    bridges.push_back(w.y);
+                }
+                children++;
+                if (low[w.x] >= idx[v.x]) {
+                    if (v.y != -1 || children >= 2) {
+                        ap = true;
+                    }
+                    components.push_back(VI());
+                    totalComponents++;
+                    int u;
+                    do {
+                        u = st.back();
+                        st.pop_back();
+                        components.back().push_back(u);
+                    } while (u != w.y);
+                }
+            } else if (idx[w.x] < idx[v.x]) {
+                st.push_back(w.y);
+                low[v.x] = min(low[v.x], idx[w.x]);
+            }
+        }
+        if (ap) {
+            cutVertices.push_back(v.x);
+        }
+        return index;
+    }
+
+    void buildBCC () {
+        idx = VI(n, -1), low = VI(n);
+        cutVertices.clear();
+        bridges.clear();
+        st.clear();
+        components.clear();
+        totalComponents++;
+
+        for (int i = 0; i < n; i++) if (idx[i] == -1) {
+            DFS(make_pair(i, -1), 0);
+        }
     }
 };

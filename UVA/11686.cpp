@@ -1,11 +1,4 @@
-#include <cmath>
-#include <vector>
-#include <cstdio>
-#include <algorithm>
-#include <string>
-#include <iostream>
-#include <sstream>
-#include <map>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -21,13 +14,19 @@ typedef vector<int> VI;
 typedef vector<VI> VVI;
 typedef long long ll;
 typedef vector<ll> VL;
+typedef vector<VL> VVL;
+typedef vector<VVL> VVVL;
 typedef vector<bool> VB;
 typedef vector<string> VS;
-typedef pair<ll, ll> PI;
+typedef pair<int, int> PI;
+typedef vector<PI> VPI;
+typedef vector<VPI> VVPI;
+typedef vector<double> VD;
+typedef vector<VD> VVD;
 
 struct TarjanSCC {
     int n;
-    int totalComponents;
+    int index, totalComponents;
     VVI adj, components;
     VI idx, componentOf, st, low;
     VB inStack;
@@ -38,7 +37,7 @@ struct TarjanSCC {
         adj[a].push_back(b);
     }
 
-    int DFS (int v, int index) {
+    void DFS (int v) {
         idx[v] = index;
         low[v] = index;
         index += 1;
@@ -47,7 +46,7 @@ struct TarjanSCC {
 
         for (auto w: adj[v]) {
             if (idx[w] == -1) {
-                index = DFS(w, index);
+                DFS(w);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
                 low[v] = min(low[v], low[w]);                
@@ -66,16 +65,15 @@ struct TarjanSCC {
             } while (w != v);
             totalComponents++;
         }
-        return index;
     }
 
     void buildSCC () {
-        totalComponents = 0;
+        index = 0, totalComponents = 0;
         idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
         st.clear();
         
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i, 0);
+            DFS(i);
         }
     }
 
@@ -94,26 +92,27 @@ struct TarjanSCC {
     }
 };
 
-
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
     
+    TarjanSCC* T;
     int n, m;
-    while (cin >> n >> m && n >= 1) {
-        TarjanSCC T(n);
-        map <string, int> f;
-        for (int i = 0; i < n; ++i) {
-            string a, b;
-            cin >> a >> b;
-            f[a+b] = i;
-        }
+    while (cin >> n >> m && n != 0) {
+        T = new TarjanSCC(n);
         for (int i = 0; i < m; ++i) {
-            string a, b, c, d;
-            cin >> a >> b >> c >> d;
-            T.addEdge(f[a+b], f[c+d]);
+            int a, b;
+            cin >> a >> b;
+            T->addEdge(a - 1, b - 1);
         }
-        T.buildSCC();
-        cout << sz(T.components) << endl;
+        T->buildSCC();
+        if (T->totalComponents != n) {
+            cout << "IMPOSSIBLE" << endl;
+        } else {
+            reverse(all(T->components));
+            for (auto c: T->components) {
+                cout << c.front() + 1 << endl;
+            }
+        }
     }
 
     return 0;

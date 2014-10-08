@@ -6,7 +6,8 @@ Library Hierarchy
     - [x] TopSort
     - [x] Minimum Spanning Tree
     - [x] Dijkstra
-    - [ ] Articulation Point, Bridge, Biconnected Components
+    - [x] Articulation Point, Bridge, Biconnected Components [partially tested]
+    - [ ] 2-Connected Component
     - [ ] Push Relabel Flow
     - [ ] Min Cost Max Flow
     - [ ] Dinic
@@ -18,6 +19,7 @@ Library Hierarchy
     - [ ] Euler Path
     - [ ] Suurballe's Algorithm
     - [ ] Directed MST
+    - [ ] Array Represtation Of Adj. List
 
 
   - **Geometry.cpp**
