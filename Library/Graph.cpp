@@ -144,7 +144,7 @@ template <class T> struct Dijkstra {
         }
     }
 
-    void buildTree(int s, vector<T> &dist) {
+    void buildTree (int s, vector<T> &dist) {
         dist = vector <T>(n, inf);
         priority_queue <pair <T, vector<pair <T, int>>>, vector<pair <T, int>>, greater<pair <T, int>>> q;
 
@@ -233,3 +233,117 @@ struct BiconnectedComponents {
         }
     }
 };
+
+struct HopcroftKarp { // Carefull, -1 is not used as 'not matched'
+    int n, m;
+    VVI adj;
+    VI right, left;
+    VI dist;
+
+    HopcroftKarp (int n, int m): n(n), m(m), adj(n) {}
+
+    void addEdge (int l, int r) {
+        adj[l].push_back(r);
+    }
+    
+    bool bfs () {
+        queue <int> q;
+        dist = VI(n + 1, -1);
+        for (int l = 0; l < n; ++l) if (right[l] == m) {
+            dist[l] = 0;
+            q.push(l);
+        }
+
+        while (!q.empty()) {
+            int l = q.front();
+            q.pop();
+            if (dist[n] == -1 || dist[l] < dist[n]) {
+                for (auto r: adj[l]) if (dist[left[r]] == -1) {
+                    dist[left[r]] = dist[l] + 1;
+                    q.push(left[r]);
+                }
+            }
+        }
+        return dist[n] != -1;
+    }
+
+    bool dfs (int l) {
+        if (l != n) {
+            for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
+                left[r] = l;
+                right[l] = r;
+                return true;
+            }
+            dist[l] = -1;
+            return false;
+        }
+        return true;
+    }
+
+    int match () {
+        right = VI(n, m);
+        left = VI(m, n);
+        int ret = 0;
+        while (bfs()) {
+            for (int l = 0; l < n; ++l) if (right[l] == m && dfs(l)) {
+                ret++;
+            }
+        }
+        return ret;
+    }
+
+    void minimumVertexCover (VB &leftCover, VB &rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
+        leftCover = VB(n, true), rightCover = VB(m, false);
+        queue <int> q;
+        dist = VI(n + 1, -1);
+        for (int l = 0; l < n; ++l) if (right[l] == m) {
+            dist[l] = 0;
+            q.push(l);
+        }
+
+        while (!q.empty()) {
+            int l = q.front();
+            q.pop();
+            leftCover[l] = false;
+            if (dist[n] == -1 || dist[l] < dist[n]) {
+                for (auto r: adj[l]) if (dist[left[r]] == -1) {
+                    dist[left[r]] = dist[l] + 1;
+                    rightCover[r] = true;
+                    q.push(left[r]);
+                }
+            }
+        }
+    }
+};
+
+void stableMatching (int n, VVI &maleRank, VVI &femaleRank, VI &wife) {
+    // a male m prefers w to w' if maleRank[m][w] < maleRank[m][w']
+    // returns male-optimal matching
+
+    VI freeMen;
+    VVPI fq(n);
+    VI husband(n, -1);
+    for (int m = 0; m < n; ++m) {
+        for (int w = 0; w < n; ++w) {
+            fq[m].push_back(make_pair(maleRank[m][w], w));
+        }
+        sort(all(fq[m]), greater<PI>());
+        freeMen.push_back(m);
+    }
+    while (!freeMen.empty()) {
+        int m = freeMen.back(), w = fq[m].back().y;
+        fq[m].pop_back();
+        if (husband[w] == -1) {
+            husband[w] = m;
+            freeMen.pop_back();
+        } else if (femaleRank[w][m] < femaleRank[w][husband[w]]) {
+            freeMen.pop_back();
+            freeMen.push_back(husband[w]);
+            husband[w] = m;
+        }
+    }
+    wife = VI(n);
+    for (int w = 0; w < n; ++w) {
+        wife[husband[w]] = w;
+    }
+}

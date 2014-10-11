@@ -7,12 +7,13 @@ Library Hierarchy
     - [x] Minimum Spanning Tree
     - [x] Dijkstra
     - [x] Articulation Point, Bridge, Biconnected Components [partially tested]
+    - [x] Hofcroft-Karp Matching + Minimum Vertex Cover (Maximum Independent Set)
+    - [x] Stable Matching
     - [ ] 2-Connected Component
     - [ ] Push Relabel Flow
     - [ ] Min Cost Max Flow
     - [ ] Dinic
     - [ ] Global Min Cut
-    - [ ] Hofcroft-Karp Matching
     - [ ] Edmond's Blossom Algorithm
     - [ ] Bellman-Ford
     - [ ] Heavy-Light Decomposition
