@@ -234,13 +234,13 @@ struct BiconnectedComponents {
     }
 };
 
-struct HopcroftKarp { // Carefull, -1 is not used as 'not matched'
+struct HopcroftKarp { // 1-based indexing
     int n, m;
     VVI adj;
     VI right, left;
     VI dist;
 
-    HopcroftKarp (int n, int m): n(n), m(m), adj(n) {}
+    HopcroftKarp (int n, int m): n(n), m(m), adj(n + 1) {}
 
     void addEdge (int l, int r) {
         adj[l].push_back(r);
@@ -249,7 +249,7 @@ struct HopcroftKarp { // Carefull, -1 is not used as 'not matched'
     bool bfs () {
         queue <int> q;
         dist = VI(n + 1, -1);
-        for (int l = 0; l < n; ++l) if (right[l] == m) {
+        for (int l = 1; l <= n; ++l) if (right[l] == 0) {
             dist[l] = 0;
             q.push(l);
         }
@@ -257,18 +257,18 @@ struct HopcroftKarp { // Carefull, -1 is not used as 'not matched'
         while (!q.empty()) {
             int l = q.front();
             q.pop();
-            if (dist[n] == -1 || dist[l] < dist[n]) {
+            if (dist[0] == -1 || dist[l] < dist[0]) {
                 for (auto r: adj[l]) if (dist[left[r]] == -1) {
                     dist[left[r]] = dist[l] + 1;
                     q.push(left[r]);
                 }
             }
         }
-        return dist[n] != -1;
+        return dist[0] != -1;
     }
 
     bool dfs (int l) {
-        if (l != n) {
+        if (l != 0) {
             for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
                 left[r] = l;
                 right[l] = r;
@@ -281,11 +281,11 @@ struct HopcroftKarp { // Carefull, -1 is not used as 'not matched'
     }
 
     int match () {
-        right = VI(n, m);
-        left = VI(m, n);
+        right = VI(n + 1, 0);
+        left = VI(m + 1, 0);
         int ret = 0;
         while (bfs()) {
-            for (int l = 0; l < n; ++l) if (right[l] == m && dfs(l)) {
+            for (int l = 1; l <= n; ++l) if (right[l] == 0 && dfs(l)) {
                 ret++;
             }
         }
@@ -293,10 +293,10 @@ struct HopcroftKarp { // Carefull, -1 is not used as 'not matched'
     }
 
     void minimumVertexCover (VB &leftCover, VB &rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
-        leftCover = VB(n, true), rightCover = VB(m, false);
+        leftCover = VB(n + 1, true), rightCover = VB(m + 1, false);
         queue <int> q;
         dist = VI(n + 1, -1);
-        for (int l = 0; l < n; ++l) if (right[l] == m) {
+        for (int l = 1; l <= n; ++l) if (right[l] == 0) {
             dist[l] = 0;
             q.push(l);
         }
@@ -305,7 +305,7 @@ struct HopcroftKarp { // Carefull, -1 is not used as 'not matched'
             int l = q.front();
             q.pop();
             leftCover[l] = false;
-            if (dist[n] == -1 || dist[l] < dist[n]) {
+            if (dist[0] == -1 || dist[l] < dist[0]) {
                 for (auto r: adj[l]) if (dist[left[r]] == -1) {
                     dist[left[r]] = dist[l] + 1;
                     rightCover[r] = true;
