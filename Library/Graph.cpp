@@ -316,7 +316,7 @@ struct HopcroftKarp { // 1-based indexing
     }
 };
 
-void stableMatching (int n, VVI &maleRank, VVI &femaleRank, VI &wife) {
+void stableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI &wife) {
     // a male m prefers w to w' if maleRank[m][w] < maleRank[m][w']
     // returns male-optimal matching
 
