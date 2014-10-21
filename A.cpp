@@ -71,95 +71,117 @@ struct EulerTour {
     }
 };
 
-typedef long long LL;
+template <class T> struct Edge {
+    int from, to, index;
+    T cap, flow;
 
-struct Edge {
-  int from, to, cap, flow, index;
-  Edge(int from, int to, int cap, int flow, int index) :
-    from(from), to(to), cap(cap), flow(flow), index(index) {}
+    Edge(int from, int to, T cap, T flow, int index): from(from), to(to), cap(cap), flow(flow), index(index) {}
 };
 
-struct PushRelabel {
-  int N;
-  vector<vector<Edge> > G;
-  vector<LL> excess;
-  vector<int> dist, active, count;
-  queue<int> Q;
+template <class T> struct PushRelabel {
+    int n;
+    vector <vector <Edge <T>>> adj;
+    vector <T> excess;
+    VI dist, count;
+    VB active;
+    VVI B;
+    int b;
+    queue <int> Q;
 
-  PushRelabel(int N) : N(N), G(N), excess(N), dist(N), active(N), count(2*N) {}
+    PushRelabel (int n): n(n), adj(n) {}
 
-  void AddEdge(int from, int to, int cap) {
-    G[from].push_back(Edge(from, to, cap, 0, G[to].size()));
-    if (from == to) G[from].back().index++;
-    G[to].push_back(Edge(to, from, 0, 0, G[from].size() - 1));
-  }
+    void AddEdge (int from, int to, int cap) {
+        adj[from].push_back(Edge <T>(from, to, cap, 0, adj[to].size()));
+        if (from == to) {
+            adj[from].back().index++;
+        }
+        adj[to].push_back(Edge <T>(to, from, 0, 0, adj[from].size() - 1));
 
-  void Enqueue(int v) { 
-    if (!active[v] && excess[v] > 0) { active[v] = true; Q.push(v); } 
-  }
-
-  void Push(Edge &e) {
-    int amt = int(min(excess[e.from], LL(e.cap - e.flow)));
-    if (dist[e.from] <= dist[e.to] || amt == 0) return;
-    e.flow += amt;
-    G[e.to][e.index].flow -= amt;
-    excess[e.to] += amt;    
-    excess[e.from] -= amt;
-    Enqueue(e.to);
-  }
-  
-  void Gap(int k) {
-    for (int v = 0; v < N; v++) {
-      if (dist[v] < k) continue;
-      count[dist[v]]--;
-      dist[v] = max(dist[v], N+1);
-      count[dist[v]]++;
-      Enqueue(v);
     }
-  }
 
-  void Relabel(int v) {
-    count[dist[v]]--;
-    dist[v] = 2*N;
-    for (int i = 0; i < G[v].size(); i++) 
-      if (G[v][i].cap - G[v][i].flow > 0)
-    dist[v] = min(dist[v], dist[G[v][i].to] + 1);
-    count[dist[v]]++;
-    Enqueue(v);
-  }
+    void Enqueue (int v) {
+        if (!active[v] && excess[v] > 0 && dist[v] < n) {
+            active[v] = true;
+            B[dist[v]].push_back(v);
+            b = max(b, dist[v]);
+        }
+    }
 
-  void Discharge(int v) {
-    for (int i = 0; excess[v] > 0 && i < G[v].size(); i++) Push(G[v][i]);
-    if (excess[v] > 0) {
-      if (count[dist[v]] == 1) 
-    Gap(dist[v]); 
-      else
-    Relabel(v);
+    void Push (Edge <T> &e) {
+        T amt = min(excess[e.from], e.cap - e.flow);
+        if (dist[e.from] == dist[e.to] + 1 && amt > T(0)) {
+            e.flow += amt;
+            adj[e.to][e.index].flow -= amt;
+            excess[e.to] += amt;    
+            excess[e.from] -= amt;
+            Enqueue(e.to);
+        }
     }
-  }
 
-  LL GetMaxFlow(int s, int t) {
-    count[0] = N-1;
-    count[N] = 1;
-    dist[s] = N;
-    active[s] = active[t] = true;
-    for (int i = 0; i < G[s].size(); i++) {
-      excess[s] += G[s][i].cap;
-      Push(G[s][i]);
+    void Gap (int k) {
+        for (int v = 0; v < n; v++) if (dist[v] >= k) {
+            count[dist[v]]--;
+            dist[v] = max(dist[v], n);
+            count[dist[v]]++;
+            Enqueue(v);
+        }
     }
-    
-    while (!Q.empty()) {
-      int v = Q.front();
-      Q.pop();
-      active[v] = false;
-      Discharge(v);
+
+    void Relabel (int v) {
+        count[dist[v]]--;
+        dist[v] = n;
+        for (auto e: adj[v]) if (e.cap - e.flow > 0) {
+            dist[v] = min(dist[v], dist[e.to] + 1);
+        }
+        count[dist[v]]++;
+        Enqueue(v);
     }
-    
-    LL totflow = 0;
-    for (int i = 0; i < G[s].size(); i++) totflow += G[s][i].flow;
-    return totflow;
-  }
+
+    void Discharge(int v) {
+        for (auto &e: adj[v]) {
+            if (excess[v] > 0) {
+                Push(e);
+            } else {
+                break;
+            }
+        }
+
+        if (excess[v] > 0) {
+            if (count[dist[v]] == 1) {
+                Gap(dist[v]); 
+            } else {
+                Relabel(v);
+            }
+        }
+    }
+
+    T GetMaxFlow (int s, int t) {
+        dist = VI(n, 0), excess = vector<T>(n, 0), count = VI(n + 1, 0), active = VB(n, false), B = VVI(n), b = 0;
+        
+        for (auto &e: adj[s]) {
+            excess[s] += e.cap;
+        }
+
+        count[0] = n;
+        Enqueue(s);
+        active[t] = true;
+        
+        while (b >= 0) {
+            if (!B[b].empty()) {
+                int v = B[b].back();
+                B[b].pop_back();
+                active[v] = false;
+                Discharge(v);
+            } else {
+                b--;
+            }
+        }
+        return excess[t];
+    }
+
+    T GetMinCut (int s, int t, VI &cut);
 };
+
 
 
 int main(int argc, char const *argv[]) {
