@@ -9,6 +9,7 @@ Library Hierarchy
     - [x] Articulation Point, Bridge, Biconnected Components [partially tested]
     - [x] Hofcroft-Karp Matching + Minimum Vertex Cover (Maximum Independent Set) [Revert to 0-base index]
     - [x] Stable Matching
+    - [x] Euler Tour
     - [x] Push Relabel Flow [Implement Phase II]
     - [ ] 2-Connected Component
     - [ ] Min Cost Max Flow
