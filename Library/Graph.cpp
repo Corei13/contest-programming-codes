@@ -1,3 +1,20 @@
+/*
+    Implementation of topological sort in directed acyclic graphs
+
+    Running time:
+        O(|V| + |E|)
+
+    Usage:
+        - add edges by AddEdge()
+        - calling Sort() will generate the topological order
+
+    Input:
+        - graph, constructed using AddEdge()
+
+    Output:
+        - sorted, vector containing the topological order
+*/
+
 struct TopologicalSort {
     int n;
     VVI adj;
@@ -5,35 +22,49 @@ struct TopologicalSort {
 
     TopologicalSort (int n): n(n), adj(n) {}
 
-    void addEdge (int a, int b) {
+    void AddEdge (int a, int b) {
         adj[a].push_back(b);
     }
 
-    void dfs (int u, VB &marked) {
+    void DFS (int u, VB &marked) {
         if (marked[u]) {
             return;
         }
         for (auto v: adj[u]) {
-            dfs(v, marked);
+            DFS(v, marked);
         }
         marked[u] = true;
         sorted.push_back(u);
     }
 
-    void sort () {
+    void Sort () {
         VB marked(n, false);
         sorted.clear();
 
         for (int i = 0; i < n; ++i) {
-            dfs(i, marked);
+            DFS(i, marked);
         }
     }
 };
 
-
 /*
-    Finds SCC with Tarjan's Algorithm.
-    In addition the SCC's will be in topological order.
+    Implementation of Tarjan's strongly connected components algorithm.
+
+    Running time:
+        O(|V|+|E|)
+    
+    Usage:
+        - add edges by AddEdge()
+        - calling BbuildSCC() will generate the strongly connected components
+        - calling Find2SATSolution() will build a solution for the related 2-SAT problem
+
+    Input:
+        - graph, constructed using AddEdge()
+
+    Output:
+        - components, vector of vectors, where each subvector is a strongly connected component.
+        Components are in topological order
+        - componentOf, componentOf[i] denotes the component of the node i
 */
 
 struct StronglyConnectedComponents {
@@ -45,7 +76,7 @@ struct StronglyConnectedComponents {
     
     StronglyConnectedComponents (int n): n(n), adj(n) {}
 
-    void addEdge (int a, int b) {
+    void AddEdge (int a, int b) {
         adj[a].push_back(b);
     }
 
@@ -80,7 +111,7 @@ struct StronglyConnectedComponents {
         return index;
     }
 
-    void buildSCC () {
+    void BuildSCC () {
         totalComponents = 0;
         idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
         st.clear();
@@ -91,10 +122,16 @@ struct StronglyConnectedComponents {
     }
 
     /*
-        Finds an asignment for a 2-SAT problem and stores in sol
-        neg[i] is the inverse of i
+        Builds an assignment for a 2-SAT problem
+
+        Input:
+            - sol, a vector of integers
+            - neg, neg[i] is the negation of i
+
+        Output
+            - sol, sol[i] will contain the assignment for i {0: false, 1: true}
     */
-    void find2SATSolution (VI &sol, VI &neg) {
+    void Find2SATSolution (VI &sol, VI &neg) {
         sol = VI(n, -1);
         for (auto comp: components) {
             for (auto j: comp) if (sol[j] == -1) {
@@ -105,6 +142,26 @@ struct StronglyConnectedComponents {
     }
 };
 
+
+/*
+    Implementation of Kruskal's minimum spanning tree algorithm
+
+    Running time:
+        O(|E|log|V|)
+
+    Usage:
+        - add edges by AddEdge()
+        - call MST() to generate minimum spanning tree
+    
+    Input:
+        - n, number of nodes
+        - graph, constructed using AddEdge()
+
+    Output:
+        - weight of minimum spanning tree
+        - mst, if given, mst will contain the edges of the minimum spanning tree
+*/
+
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
@@ -112,7 +169,7 @@ template <class T> struct Kruskal {
 
     Kruskal (int n): n(n) {}
 
-    void addEdge (int s, int t, T d) {
+    void AddEdge (int s, int t, T d) {
         edges.push_back(make_pair(d, make_pair(s, t)));
     }
 
@@ -130,9 +187,32 @@ template <class T> struct Kruskal {
     }
 };
 
+
+/*
+    Implementation of Dijkstra's single source shortest path algorithm
+
+    Running time:
+        O(|V|log|V|+|E|)
+
+    Usage:
+        - add edges by AddEdge()
+        - call BuildTree() to generate shortest path tree
+    
+    Input:
+        - n, number of nodes
+        - directed, true iff the graph is directed
+        - graph, constructed using AddEdge()
+        - source
+
+    Output:
+        - dist, dist[v] is the distance of v from source
+        - parent, parent[v] is the parent of v in the tree
+*/
+
 template <class T> struct Dijkstra {
     int n;
     bool directed;
+    VI parent;
     vector <vector <pair <T, int>>> adj;
 
     Dijkstra (int n, bool directed = false): n(n), adj(n), directed(directed) {}
@@ -144,8 +224,9 @@ template <class T> struct Dijkstra {
         }
     }
 
-    void buildTree (int s, vector<T> &dist) {
+    void BuildTree (int s, vector<T> &dist) {
         dist = vector <T>(n, inf);
+        parent = VI(n, -1);
         priority_queue <pair <T, vector<pair <T, int>>>, vector<pair <T, int>>, greater<pair <T, int>>> q;
 
         dist[s] = 0;
@@ -155,11 +236,35 @@ template <class T> struct Dijkstra {
             q.pop();
             for (auto e: adj[u.y]) if(u.x + e.x < dist[e.y]) {
                 dist[e.y] = u.x + e.x;
+                parent[e.y] = u.y;
                 q.push(make_pair(dist[e.y], e.y));
             }
         } while (!q.empty());
     }
 };
+
+
+/*
+    Finds biconnected components, bridges and articulation points in a graph
+
+    Running time:
+        O(|V|+|E|)
+
+    Usage:
+        - add edges by AddEdge()
+        - call BuildBCC() to find all biconnected components, bridges and articulation points
+    
+    Input:
+        - graph, constructed using AddEdge()
+
+    Output:
+        - components, vector of vectors, where each subvector is a biconnected component.
+        - bridges, index of the edges which are bridge
+        - cutVertices, index of the nodes which are articulation points
+
+    Todo:
+        - Implementat 2-connected components finding algorithm
+*/
 
 struct BiconnectedComponents {
     int n;
@@ -173,7 +278,7 @@ struct BiconnectedComponents {
 
     BiconnectedComponents (int n): n(n), adj(n) {}
 
-    void addEdge (int a, int b) {
+    void AddEdge (int a, int b) {
         int i = sz(edges);
         adj[a].push_back(make_pair(b, i));
         adj[b].push_back(make_pair(a, i));
@@ -220,7 +325,7 @@ struct BiconnectedComponents {
         return index;
     }
 
-    void buildBCC () {
+    void BuildBCC () {
         idx = VI(n, -1), low = VI(n);
         cutVertices.clear();
         bridges.clear();
@@ -234,7 +339,33 @@ struct BiconnectedComponents {
     }
 };
 
-struct HopcroftKarp { // 1-based indexing
+
+/*
+    Implementation of Hopcroft-Karp algorithm of finding maximum matching
+
+    Running time:
+        O(|E||V|^{1/2})
+
+    Usage:
+        - add edges by AddEdge()
+        - indexing is 1-based
+        - call Match() to generate the macimum matching
+        - MinimumVertexCover() finds a vertex cover of minimum size
+        - Maximum independent set is the complement of minimum vertex cover
+    
+    Input:
+        - graph, constructed using AddEdge()
+
+    Output:
+        - number of matching in the maximum matching
+        - right, node l of the left is matched with node right[l] of the right, (right[l] = 0 if unmatched)
+        - left, node r of the right is matched with node left[r] of the left, (left[r] = 0 if unmatched)
+
+    Todo:
+        - Probably convert to 0-base indexing
+*/
+
+struct HopcroftKarp {
     int n, m;
     VVI adj;
     VI right, left;
@@ -246,7 +377,7 @@ struct HopcroftKarp { // 1-based indexing
         adj[l].push_back(r);
     }
     
-    bool bfs () {
+    bool BFS () {
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 1; l <= n; ++l) if (right[l] == 0) {
@@ -267,9 +398,9 @@ struct HopcroftKarp { // 1-based indexing
         return dist[0] != -1;
     }
 
-    bool dfs (int l) {
+    bool DFS (int l) {
         if (l != 0) {
-            for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
+            for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && DFS(left[r])) {
                 left[r] = l;
                 right[l] = r;
                 return true;
@@ -280,19 +411,30 @@ struct HopcroftKarp { // 1-based indexing
         return true;
     }
 
-    int match () {
+    int Match () {
         right = VI(n + 1, 0);
         left = VI(m + 1, 0);
         int ret = 0;
-        while (bfs()) {
-            for (int l = 1; l <= n; ++l) if (right[l] == 0 && dfs(l)) {
+        while (BFS()) {
+            for (int l = 1; l <= n; ++l) if (right[l] == 0 && DFS(l)) {
                 ret++;
             }
         }
         return ret;
     }
 
-    void minimumVertexCover (VB &leftCover, VB &rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
+    /*
+        Finds minimum vertex cover
+
+        Running time:
+            O(|V|+|E|)
+
+        Output:
+            - leftCover, leftCover[l] is true iff node l of the left side is in the minimum vertex cover (not in the maximum independent set)
+            - leftCover, rightCover[r] is true iff node r of the right side is in the minimum vertex cover (not in the maximum independent set)
+    */
+
+    void MinimumVertexCover (VB &leftCover, VB &rightCover) {
         leftCover = VB(n + 1, true), rightCover = VB(m + 1, false);
         queue <int> q;
         dist = VI(n + 1, -1);
@@ -316,10 +458,24 @@ struct HopcroftKarp { // 1-based indexing
     }
 };
 
-void stableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI &wife) {
-    // a male m prefers w to w' if maleRank[m][w] < maleRank[m][w']
-    // returns male-optimal matching
 
+/*
+    Implementation of Gale–Shapley stable matching algorithm
+
+    Running time:
+        O(n^2)
+
+    Input:
+        - n, number of males, number of females
+        - maleRank, if male m likes female w more than female w' then maleRank[m][w] < maleRank[m][w']
+        - femaleRank, if female w likes male m more than malde m' then femaleRank[w][m] < femaleRank[w][m']
+
+    Output:
+        - wife, wife[m] contains wife of male m
+        - The matching is male optimal
+*/
+
+void StableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI &wife) {
     VI freeMen;
     VVPI fq(n);
     VI husband(n, -1);
@@ -348,6 +504,25 @@ void stableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI
     }
 }
 
+
+/*
+    Implementation of euler tour generation algorithm
+
+    Running time:
+        O(|V|+|E|)
+
+    Usage:
+        - add edges by AddEdge(), use directed = true if the graph is directed
+        - StartTour(start) will create a tour from start
+    
+    Input:
+        - graph, constructed using AddEdge()
+        - start, node index to start tour, default is 0
+
+    Output:
+        - tour, a list containing the nodes in the tour
+*/
+
 struct EulerTour {
     int n, e;
     VVPI adj;
@@ -356,7 +531,7 @@ struct EulerTour {
 
     EulerTour(int n): n(n), adj(n), ideg(n), odeg(n), e(0) {}
 
-    void addEdge(int a, int b, bool directed = false) {
+    void AddEdge(int a, int b, bool directed = false) {
         adj[a].push_back(make_pair(b, e));
         odeg[a]++, ideg[b]++;
         if (!directed) {
@@ -366,7 +541,7 @@ struct EulerTour {
         e++;
     }
 
-    void startTour(int start = 0) {
+    void StartTour(int start = 0) {
         tour.clear();
         tour.push_back(start);
         vector<VPI::iterator> iter;
@@ -393,6 +568,29 @@ struct EulerTour {
         }
     }
 };
+
+/*
+    Implementation of highest-label push-relabel maximum flow
+    with gap relabeling heuristic.
+
+    Running time:
+        O(|V|^2|E|^{1/2})
+
+    Usage:
+        - add edges by AddEdge()
+        - GetMaxFlow(s, t) returns the maximum flow from s to t
+    
+    Input:
+        - graph, constructed using AddEdge()
+        - (s, t), (source, sink)
+
+    Output:
+        - maximum flow value
+
+    Todo:
+        - implement Phase II (flow network from preflow network)
+        - implement GetMinCut()
+*/
 
 template <class T> struct Edge {
     int from, to, index;

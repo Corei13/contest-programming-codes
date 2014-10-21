@@ -7,13 +7,12 @@ Library Hierarchy
     - [x] Minimum Spanning Tree
     - [x] Dijkstra
     - [x] Articulation Point, Bridge, Biconnected Components [partially tested]
-    - [x] Hofcroft-Karp Matching + Minimum Vertex Cover (Maximum Independent Set) [Revert to 0-base index]
+    - [x] Hofcroft-Karp Matching + Minimum Vertex Cover (Maximum Independent Set)
     - [x] Stable Matching
     - [x] Euler Tour
-    - [x] Push Relabel Flow [Implement Phase II]
+    - [x] Push Relabel Flow
     - [ ] 2-Connected Component
     - [ ] Min Cost Max Flow
-    - [ ] Dinic
     - [ ] Global Min Cut
     - [ ] Edmond's Blossom Algorithm
     - [ ] Bellman-Ford
@@ -51,7 +50,7 @@ Library Hierarchy
     - [ ] KMP
     
   - **DS.cpp**
-    - [x] LIS
+    - [x] LIS <templatize>
     - [x] Union Find
     - [ ] BIT
     - [ ] Segment Tree
@@ -63,6 +62,7 @@ Library Hierarchy
     - [ ] RMQ, RMedianQ
     - [ ] Splay Tree
     - [ ] Link/Cut Tree
+    - [ ] Treap
 
   - **Parser.cpp**
     - [ ] Postfix, Infix, Prefix Converter
