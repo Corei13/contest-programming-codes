@@ -348,6 +348,51 @@ void stableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI
     }
 }
 
+struct EulerTour {
+    int n, e;
+    VVPI adj;
+    VI ideg, odeg;
+    list<int> tour;
+
+    EulerTour(int n): n(n), adj(n), ideg(n), odeg(n), e(0) {}
+
+    void addEdge(int a, int b, bool directed = false) {
+        adj[a].push_back(make_pair(b, e));
+        odeg[a]++, ideg[b]++;
+        if (!directed) {
+            adj[b].push_back(make_pair(a, e));
+            odeg[b]++, ideg[a]++;
+        }
+        e++;
+    }
+
+    void startTour(int start = 0) {
+        tour.clear();
+        tour.push_back(start);
+        vector<VPI::iterator> iter;
+        for (auto &v: adj) {
+            iter.push_back(v.begin());
+        }
+        VB visited(e, false);
+        for (auto it = tour.begin(); it != tour.end(); it++) {
+            int u = *it, v = u;
+            auto pos = next(it);
+            do {
+                while (iter[v] != adj[v].end() && visited[iter[v]->y]) {
+                        iter[v]++;
+                    }
+                    if (iter[v] == adj[v].end()) {
+                        break;
+                    } else {
+                        visited[iter[v]->y] = true;
+                        iter[v]++;
+                        v = prev(iter[v])->x;
+                        tour.insert(pos, v);
+                    }
+            } while (v != u);
+        }
+    }
+};
 
 template <class T> struct Edge {
     int from, to, index;
