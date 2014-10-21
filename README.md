@@ -7,7 +7,7 @@ Library Hierarchy
     - [x] Minimum Spanning Tree
     - [x] Dijkstra
     - [x] Articulation Point, Bridge, Biconnected Components [partially tested]
-    - [x] Hofcroft-Karp Matching + Minimum Vertex Cover (Maximum Independent Set)
+    - [x] Hofcroft-Karp Matching + Minimum Vertex Cover (Maximum Independent Set) [Revert to 0-base index]
     - [x] Stable Matching
     - [x] Push Relabel Flow [Implement Phase II]
     - [ ] 2-Connected Component
