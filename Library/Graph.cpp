@@ -17,8 +17,8 @@
 
 struct TopologicalSort {
     int n;
-    VVI adj;
-    VI sorted;
+    vector <vector <int>> adj;
+    vector <int> sorted;
 
     TopologicalSort (int n): n(n), adj(n) {}
 
@@ -26,11 +26,11 @@ struct TopologicalSort {
         adj[a].push_back(b);
     }
 
-    void DFS (int u, VB &marked) {
+    void DFS (int u, vector <bool> &marked) {
         if (marked[u]) {
             return;
         }
-        for (auto v: adj[u]) {
+        for (auto &v: adj[u]) {
             DFS(v, marked);
         }
         marked[u] = true;
@@ -38,7 +38,7 @@ struct TopologicalSort {
     }
 
     void Sort () {
-        VB marked(n, false);
+        vector <bool> marked(n, false);
         sorted.clear();
 
         for (int i = 0; i < n; ++i) {
@@ -70,9 +70,9 @@ struct TopologicalSort {
 struct StronglyConnectedComponents {
     int n;
     int totalComponents;
-    VVI adj, components;
-    VI idx, componentOf, st, low;
-    VB inStack;
+    vector <vector <int>> adj, components;
+    vector <int> idx, componentOf, st, low;
+    vector <bool> inStack;
     
     StronglyConnectedComponents (int n): n(n), adj(n) {}
 
@@ -87,7 +87,7 @@ struct StronglyConnectedComponents {
         st.push_back(v);
         inStack[v] = true;
 
-        for (auto w: adj[v]) {
+        for (auto &w: adj[v]) {
             if (idx[w] == -1) {
                 index = DFS(w, index);
                 low[v] = min(low[v], low[w]);
@@ -98,7 +98,7 @@ struct StronglyConnectedComponents {
 
         if (low[v] == idx[v]) {
             int w;
-            components.push_back(VI());
+            components.push_back(vector <int>());
             do {
                 w = st.back();
                 st.pop_back();
@@ -113,7 +113,7 @@ struct StronglyConnectedComponents {
 
     void BuildSCC () {
         totalComponents = 0;
-        idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
+        idx = vector <int>(n,-1), low = vector <int>(n), componentOf = vector <int>(n), inStack = vector <bool>(n, false);
         st.clear();
         
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
@@ -131,10 +131,10 @@ struct StronglyConnectedComponents {
         Output
             - sol, sol[i] will contain the assignment for i {0: false, 1: true}
     */
-    void Find2SATSolution (VI &sol, VI &neg) {
-        sol = VI(n, -1);
-        for (auto comp: components) {
-            for (auto j: comp) if (sol[j] == -1) {
+    void Find2SATSolution (vector <int> &sol, vector <int> &neg) {
+        sol = vector <int>(n, -1);
+        for (auto &comp: components) {
+            for (auto &j: comp) if (sol[j] == -1) {
                 sol[j] = 1;
                 sol[neg[j]] = 0;
             }
@@ -177,7 +177,7 @@ template <class T> struct Kruskal {
         T ret = 0;
         D = new DisjointSet(n);
         sort(all(edges));
-        for (auto e: edges) if (D->Union(e.y.x, e.y.y)) {
+        for (auto &e: edges) if (D->Union(e.y.x, e.y.y)) {
             ret += e.x;
             if (mst) {
                 mst->push_back(e);
@@ -212,7 +212,7 @@ template <class T> struct Kruskal {
 template <class T> struct Dijkstra {
     int n;
     bool directed;
-    VI parent;
+    vector <int> parent;
     vector <vector <pair <T, int>>> adj;
 
     Dijkstra (int n, bool directed = false): n(n), adj(n), directed(directed) {}
@@ -226,15 +226,15 @@ template <class T> struct Dijkstra {
 
     void BuildTree (int s, vector<T> &dist) {
         dist = vector <T>(n, inf);
-        parent = VI(n, -1);
+        parent = vector <int>(n, -1);
         priority_queue <pair <T, vector<pair <T, int>>>, vector<pair <T, int>>, greater<pair <T, int>>> q;
 
         dist[s] = 0;
         q.push(make_pair(dist[s], s));
         do {
-            auto u = q.top();
+            auto &u = q.top();
             q.pop();
-            for (auto e: adj[u.y]) if(u.x + e.x < dist[e.y]) {
+            for (auto &e: adj[u.y]) if(u.x + e.x < dist[e.y]) {
                 dist[e.y] = u.x + e.x;
                 parent[e.y] = u.y;
                 q.push(make_pair(dist[e.y], e.y));
@@ -269,17 +269,17 @@ template <class T> struct Dijkstra {
 struct BiconnectedComponents {
     int n;
     int totalComponents;
-    VVPI adj;
-    VPI edges;
-    VI idx, low;
-    VI cutVertices, bridges;
-    VI st;
-    VVI components;
+    vector <vector <pair <int, int>>> adj;
+    vector <pair <int, int>> edges;
+    vector <int> idx, low;
+    vector <int> cutVertices, bridges;
+    vector <int> st;
+    vector <vector <int>> components;
 
     BiconnectedComponents (int n): n(n), adj(n) {}
 
     void AddEdge (int a, int b) {
-        int i = sz(edges);
+        int i = edges.size();
         adj[a].push_back(make_pair(b, i));
         adj[b].push_back(make_pair(a, i));
         edges.push_back(make_pair(a, b));
@@ -292,7 +292,7 @@ struct BiconnectedComponents {
 
         int children = 0;
         bool ap = false;
-        for (auto w: adj[v.x]) if (w.y != v.y) {
+        for (auto &w: adj[v.x]) if (w.y != v.y) {
             if (idx[w.x] == -1) {
                 st.push_back(w.y);
                 index = DFS(w, index);
@@ -305,7 +305,7 @@ struct BiconnectedComponents {
                     if (v.y != -1 || children >= 2) {
                         ap = true;
                     }
-                    components.push_back(VI());
+                    components.push_back(vector <int>());
                     totalComponents++;
                     int u;
                     do {
@@ -326,7 +326,7 @@ struct BiconnectedComponents {
     }
 
     void BuildBCC () {
-        idx = VI(n, -1), low = VI(n);
+        idx = vector <int>(n, -1), low = vector <int>(n);
         cutVertices.clear();
         bridges.clear();
         st.clear();
@@ -367,9 +367,9 @@ struct BiconnectedComponents {
 
 struct HopcroftKarp {
     int n, m;
-    VVI adj;
-    VI right, left;
-    VI dist;
+    vector <vector <int>> adj;
+    vector <int> right, left;
+    vector <int> dist;
 
     HopcroftKarp (int n, int m): n(n), m(m), adj(n + 1) {}
 
@@ -379,7 +379,7 @@ struct HopcroftKarp {
     
     bool BFS () {
         queue <int> q;
-        dist = VI(n + 1, -1);
+        dist = vector <int>(n + 1, -1);
         for (int l = 1; l <= n; ++l) if (right[l] == 0) {
             dist[l] = 0;
             q.push(l);
@@ -389,7 +389,7 @@ struct HopcroftKarp {
             int l = q.front();
             q.pop();
             if (dist[0] == -1 || dist[l] < dist[0]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
+                for (auto &r: adj[l]) if (dist[left[r]] == -1) {
                     dist[left[r]] = dist[l] + 1;
                     q.push(left[r]);
                 }
@@ -400,7 +400,7 @@ struct HopcroftKarp {
 
     bool DFS (int l) {
         if (l != 0) {
-            for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && DFS(left[r])) {
+            for (auto &r: adj[l]) if (dist[left[r]] == dist[l] + 1 && DFS(left[r])) {
                 left[r] = l;
                 right[l] = r;
                 return true;
@@ -412,8 +412,8 @@ struct HopcroftKarp {
     }
 
     int Match () {
-        right = VI(n + 1, 0);
-        left = VI(m + 1, 0);
+        right = vector <int>(n + 1, 0);
+        left = vector <int>(m + 1, 0);
         int ret = 0;
         while (BFS()) {
             for (int l = 1; l <= n; ++l) if (right[l] == 0 && DFS(l)) {
@@ -434,10 +434,10 @@ struct HopcroftKarp {
             - leftCover, rightCover[r] is true iff node r of the right side is in the minimum vertex cover (not in the maximum independent set)
     */
 
-    void MinimumVertexCover (VB &leftCover, VB &rightCover) {
-        leftCover = VB(n + 1, true), rightCover = VB(m + 1, false);
+    void MinimumVertexCover (vector <bool> &leftCover, vector <bool> &rightCover) {
+        leftCover = vector <bool>(n + 1, true), rightCover = vector <bool>(m + 1, false);
         queue <int> q;
-        dist = VI(n + 1, -1);
+        dist = vector <int>(n + 1, -1);
         for (int l = 1; l <= n; ++l) if (right[l] == 0) {
             dist[l] = 0;
             q.push(l);
@@ -448,7 +448,7 @@ struct HopcroftKarp {
             q.pop();
             leftCover[l] = false;
             if (dist[0] == -1 || dist[l] < dist[0]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
+                for (auto &r: adj[l]) if (dist[left[r]] == -1) {
                     dist[left[r]] = dist[l] + 1;
                     rightCover[r] = true;
                     q.push(left[r]);
@@ -475,10 +475,11 @@ struct HopcroftKarp {
         - The matching is male optimal
 */
 
-void StableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI &wife) {
-    VI freeMen;
-    VVPI fq(n);
-    VI husband(n, -1);
+void StableMatching (const int n, const vector <vector <int>> &maleRank, const vector <vector <int>> &femaleRank, vector <int> &wife) {
+    vector <int> freeMen;
+    vector <vector <pair <int, int>>> fq(n);
+    vector <int> husband(n, -1);
+
     for (int m = 0; m < n; ++m) {
         for (int w = 0; w < n; ++w) {
             fq[m].push_back(make_pair(maleRank[m][w], w));
@@ -486,6 +487,7 @@ void StableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI
         sort(all(fq[m]), greater<PI>());
         freeMen.push_back(m);
     }
+    
     while (!freeMen.empty()) {
         int m = freeMen.back(), w = fq[m].back().y;
         fq[m].pop_back();
@@ -498,7 +500,7 @@ void StableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI
             husband[w] = m;
         }
     }
-    wife = VI(n);
+    wife = vector <int>(n);
     for (int w = 0; w < n; ++w) {
         wife[husband[w]] = w;
     }
@@ -525,8 +527,8 @@ void StableMatching (const int n, const VVI &maleRank, const VVI &femaleRank, VI
 
 struct EulerTour {
     int n, e;
-    VVPI adj;
-    VI ideg, odeg;
+    vector <vector <pair <int, int>>> adj;
+    vector <int> ideg, odeg;
     list<int> tour;
 
     EulerTour(int n): n(n), adj(n), ideg(n), odeg(n), e(0) {}
@@ -544,11 +546,11 @@ struct EulerTour {
     void StartTour(int start = 0) {
         tour.clear();
         tour.push_back(start);
-        vector<VPI::iterator> iter;
+        vector<vector <pair <int, int>>::iterator> iter;
         for (auto &v: adj) {
             iter.push_back(v.begin());
         }
-        VB visited(e, false);
+        vector <bool> visited(e, false);
         for (auto it = tour.begin(); it != tour.end(); it++) {
             int u = *it, v = u;
             auto pos = next(it);
@@ -603,15 +605,15 @@ template <class T> struct PushRelabel {
     int n;
     vector <vector <Edge <T>>> adj;
     vector <T> excess;
-    VI dist, count;
-    VB active;
-    VVI B;
+    vector <int> dist, count;
+    vector <bool> active;
+    vector <vector <int>> B;
     int b;
     queue <int> Q;
 
     PushRelabel (int n): n(n), adj(n) {}
 
-    void AddEdge (int from, int to, int cap) {
+    void AddEdge (int from, int to, T cap) {
         adj[from].push_back(Edge <T>(from, to, cap, 0, adj[to].size()));
         if (from == to) {
             adj[from].back().index++;
@@ -651,7 +653,7 @@ template <class T> struct PushRelabel {
     void Relabel (int v) {
         count[dist[v]]--;
         dist[v] = n;
-        for (auto e: adj[v]) if (e.cap - e.flow > 0) {
+        for (auto &e: adj[v]) if (e.cap - e.flow > 0) {
             dist[v] = min(dist[v], dist[e.to] + 1);
         }
         count[dist[v]]++;
@@ -677,7 +679,7 @@ template <class T> struct PushRelabel {
     }
 
     T GetMaxFlow (int s, int t) {
-        dist = VI(n, 0), excess = vector<T>(n, 0), count = VI(n + 1, 0), active = VB(n, false), B = VVI(n), b = 0;
+        dist = vector <int>(n, 0), excess = vector<T>(n, 0), count = vector <int>(n + 1, 0), active = vector <bool>(n, false), B = vector <vector <int>>(n), b = 0;
         
         for (auto &e: adj[s]) {
             excess[s] += e.cap;
@@ -700,6 +702,6 @@ template <class T> struct PushRelabel {
         return excess[t];
     }
 
-    T GetMinCut (int s, int t, VI &cut);
+    T GetMinCut (int s, int t, vector <int> &cut);
 };
 

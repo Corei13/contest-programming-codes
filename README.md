@@ -42,6 +42,7 @@ Library Hierarchy
     - [ ] Extended Euclid
     - [ ] Diophantine Equation
     - [ ] Reduced Row Echelon Form
+    - [ ] Matrix Class
     
   - **String.cpp**
     - [ ] Suffix Array
@@ -63,6 +64,13 @@ Library Hierarchy
     - [ ] Splay Tree
     - [ ] Link/Cut Tree
     - [ ] Treap
+
+  - **DP.cpp**
+    - [ ] Monotonous Queue [ min (j < i) { a[j] + b[j] * c[i] } ]
+    - [ ] Dynamic Monotonous Queue
+    - [ ] Knuth Optimization [ dp[i][j] = C[i][j] + min (i < k < j) { dp[i][k] + dp[k][j] }, C concave ]
+    - [ ] Divide and Conquer [ dp[i][j] = min (k < j) { dp[i - 1][k] + C[k][j] } ]
+    - [ ] dp[i] = min (j < i) { f( dp[j] ) + C[i][j] }, C concave, f = O(1)
 
   - **Parser.cpp**
     - [ ] Postfix, Infix, Prefix Converter
