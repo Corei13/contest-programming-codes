@@ -581,17 +581,15 @@ struct EulerTour {
     Usage:
         - add edges by AddEdge()
         - GetMaxFlow(s, t) returns the maximum flow from s to t
-    
+        - PreflowToFlow(s, t) converts a preflow network to a flow network
+        - GetMinCut returns minimal cuts from source and sink
+
     Input:
         - graph, constructed using AddEdge()
         - (s, t), (source, sink)
 
     Output:
         - maximum flow value
-
-    Todo:
-        - implement Phase II (flow network from preflow network)
-        - implement GetMinCut()
 */
 
 template <class T> struct Edge {
@@ -614,12 +612,10 @@ template <class T> struct PushRelabel {
     PushRelabel (int n): n(n), adj(n) {}
 
     void AddEdge (int from, int to, T cap) {
-        adj[from].push_back(Edge <T>(from, to, cap, 0, adj[to].size()));
-        if (from == to) {
-            adj[from].back().index++;
+        if (from != to) {
+            adj[from].push_back(Edge <T>(from, to, cap, 0, adj[to].size()));
+            adj[to].push_back(Edge <T>(to, from, 0, 0, adj[from].size() - 1));
         }
-        adj[to].push_back(Edge <T>(to, from, 0, 0, adj[from].size() - 1));
-
     }
 
     void Enqueue (int v) {
@@ -702,6 +698,147 @@ template <class T> struct PushRelabel {
         return excess[t];
     }
 
-    T GetMinCut (int s, int t, vector <int> &cut);
-};
+    void PreflowToFlow (int s, int t) {
+        enum color {WHITE, GREY, BLACK};
+        vector <color> rank (n, WHITE);
+        vector <int> prev (n, -1);
+        vector <typename vector <Edge <T>>::iterator> current;
+        vector <int> st;
+        for (int i = 0; i < n; ++i) {
+            current.push_back (adj[i].begin());
+        }
 
+        for (int i = 0; i < n; ++i) {
+            if (rank[i] == WHITE && excess[i] > 0 && i != s && i != t) {
+                int r = i;
+                rank[r] = GREY;
+                do {
+                    while (current[i] != adj[i].end()) {
+                        auto e = current[i];
+                        if (e->cap == 0 && e->cap - e->flow > 0 && e->to != s && e->to != t) {
+                            int j = e->to;
+                            if (rank[j] == WHITE) {
+                                rank[j] = GREY;
+                                prev[j] = i;
+                                i = j;
+                                break;
+                            } else if (rank[j] == GREY) {
+                                T amt = e->cap - e->flow;
+                                do {
+                                    amt = min (amt, current[j]->cap - current[j]->flow);
+                                    if (j != i) {
+                                        j = current[j]->to;
+                                    }
+                                } while (j != i);
+
+                                do {
+                                    e = current[j];
+                                    e->flow += amt;
+                                    adj[e->to][e->index].flow -= amt;
+                                    j = e->to;
+                                } while (j != i);
+
+                                int restart = i;
+                                for(j = current[i]->to; j != i; j = e->to) {
+                                    e = current[j];
+                                    if(rank[j] == WHITE || e->cap - e->flow == 0) {
+                                        rank[current[j]->to] = WHITE;
+                                        if(rank[j] != WHITE) {
+                                            restart = j;
+                                        }
+                                    }
+                                }
+
+                                if (restart != i) {
+                                    i = restart;
+                                    current[i]++;
+                                    break;
+                                }
+                            }
+                        }
+                        current[i]++;
+                    }
+                    if(current[i] == adj[i].end()) {
+                        rank[i] = BLACK;
+                        if(i != s) {
+                            st.push_back(i);
+                        }
+
+                        if(i != r) {
+                            i = prev[i];
+                            current[i]++;
+                        } else {
+                            break;
+                        }
+                    }
+                } while (true);
+            }
+        }
+
+        while (!st.empty()) {
+            int i = st.back();
+            st.pop_back();
+
+            auto e = adj[i].begin();
+
+            while(excess[i] > 0) {
+                if(e->cap == 0 && e->cap - e->flow > 0 ) {
+                    T amt = min( excess[i], e->cap - e->flow );
+                    e->flow += amt;
+                    adj[e->to][e->index].flow -= amt;
+                    excess[i] -= amt;
+                    excess[e->to] += amt;
+                }
+                e++;
+            }
+        }
+    }
+
+    /*
+        Finds minimal cut with source and sink
+
+        Running time:
+            O(|V|+|E|)
+
+        Output:
+            - cut, cut[u] =
+                 0, if u belongs to the minimal cut containing source,
+                 1, if u belongs to the minimal cut containing sink,
+                -1, otherwise
+    */
+
+    T GetMinCut (int s, int t, vector <int> &cut) {
+        T ret = GetMaxFlow(s, t);
+        PreflowToFlow(s, t);
+        cut = vector <int> (n, -1);
+        queue<int> Q;
+
+        Q.push(s);
+        cut[s] = 0;
+
+        while(!Q.empty()) {
+            int u = Q.front();
+            Q.pop();
+
+            for (auto &e: adj[u]) if (cut[e.to] == -1 && e.cap - e.flow > 0) {
+                Q.push(e.to);
+                cut[e.to] = 0;
+            }
+        }
+
+        Q.push(t);
+        cut[t] = 1;
+
+        while(!Q.empty()) {
+            int u = Q.front();
+            Q.pop();
+
+            for (auto &e: adj[u]) if (cut[e.to] == -1 && adj[e.to][e.index].cap - adj[e.to][e.index].flow > 0) {
+                Q.push(e.to);
+                cut[e.to] = 1;
+            }
+        }
+
+        return ret;
+    }
+};

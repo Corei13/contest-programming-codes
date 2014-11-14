@@ -17,7 +17,6 @@ Library Hierarchy
     - [ ] Edmond's Blossom Algorithm
     - [ ] Bellman-Ford
     - [ ] Heavy-Light Decomposition
-    - [ ] Euler Path
     - [ ] Suurballe's Algorithm
     - [ ] Directed MST
     - [ ] Array Represtation Of Adj. List
