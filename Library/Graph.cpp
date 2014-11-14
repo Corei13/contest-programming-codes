@@ -113,7 +113,8 @@ struct StronglyConnectedComponents {
 
     void BuildSCC () {
         totalComponents = 0;
-        idx = vector <int>(n,-1), low = vector <int>(n), componentOf = vector <int>(n), inStack = vector <bool>(n, false);
+        idx = vector <int>(n,-1), low = vector <int>(n), componentOf = vector <int>(n);
+        inStack = vector <bool>(n, false);
         st.clear();
         
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
@@ -176,7 +177,7 @@ template <class T> struct Kruskal {
     T MST (vector <pair <T, PI>>* mst = NULL) {
         T ret = 0;
         D = new DisjointSet(n);
-        sort(all(edges));
+        sort(edges.begin(), edges.end());
         for (auto &e: edges) if (D->Union(e.y.x, e.y.y)) {
             ret += e.x;
             if (mst) {
@@ -430,8 +431,10 @@ struct HopcroftKarp {
             O(|V|+|E|)
 
         Output:
-            - leftCover, leftCover[l] is true iff node l of the left side is in the minimum vertex cover (not in the maximum independent set)
-            - leftCover, rightCover[r] is true iff node r of the right side is in the minimum vertex cover (not in the maximum independent set)
+            - leftCover, leftCover[l] is true iff node l of the left side is in the minimum vertex cover
+            (not in the maximum independent set)
+            - leftCover, rightCover[r] is true iff node r of the right side is in the minimum vertex cover
+            (not in the maximum independent set)
     */
 
     void MinimumVertexCover (vector <bool> &leftCover, vector <bool> &rightCover) {
@@ -484,7 +487,7 @@ void StableMatching (const int n, const vector <vector <int>> &maleRank, const v
         for (int w = 0; w < n; ++w) {
             fq[m].push_back(make_pair(maleRank[m][w], w));
         }
-        sort(all(fq[m]), greater<PI>());
+        sort(fq[m].begin(), fq[m].end(), greater<PI>());
         freeMen.push_back(m);
     }
     
@@ -675,7 +678,9 @@ template <class T> struct PushRelabel {
     }
 
     T GetMaxFlow (int s, int t) {
-        dist = vector <int>(n, 0), excess = vector<T>(n, 0), count = vector <int>(n + 1, 0), active = vector <bool>(n, false), B = vector <vector <int>>(n), b = 0;
+        dist = vector <int>(n, 0), excess = vector<T>(n, 0), count = vector <int>(n + 1, 0);
+        active = vector <bool>(n, false), B = vector <vector <int>>(n);
+        b = 0;
         
         for (auto &e: adj[s]) {
             excess[s] += e.cap;

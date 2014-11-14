@@ -50,7 +50,7 @@ Library Hierarchy
     - [ ] KMP
     
   - **DS.cpp**
-    - [x] LIS <templatize>
+    - [x] LIS
     - [x] Union Find
     - [ ] BIT
     - [ ] Segment Tree
