@@ -61,3 +61,12 @@ double KahanSummation (VD &v) {
 	}
 	return sum;
 }
+
+// converting integer to binary string
+bitset<64>(12345).to_string()
+// converting binary string to integer
+bitset<64>("10010").to_ullong()
+bitset<64>("10010").to_ulong()
+bitset<64> foo;
+cin >> foo;
+int n = foo.to_ulong();

@@ -13,6 +13,8 @@
 
     Output:
         - sorted, vector containing the topological order
+
+    Tested Problems:
 */
 
 struct TopologicalSort {
@@ -65,6 +67,8 @@ struct TopologicalSort {
         - components, vector of vectors, where each subvector is a strongly connected component.
         Components are in topological order
         - componentOf, componentOf[i] denotes the component of the node i
+
+    Tested Problems:
 */
 
 struct StronglyConnectedComponents {
@@ -161,6 +165,8 @@ struct StronglyConnectedComponents {
     Output:
         - weight of minimum spanning tree
         - mst, if given, mst will contain the edges of the minimum spanning tree
+    
+    Tested Problems:
 */
 
 template <class T> struct Kruskal {
@@ -208,6 +214,8 @@ template <class T> struct Kruskal {
     Output:
         - dist, dist[v] is the distance of v from source
         - parent, parent[v] is the parent of v in the tree
+
+    Tested Problems:
 */
 
 template <class T> struct Dijkstra {
@@ -265,6 +273,8 @@ template <class T> struct Dijkstra {
 
     Todo:
         - Implementat 2-connected components finding algorithm
+
+    Tested Problems:
 */
 
 struct BiconnectedComponents {
@@ -364,6 +374,8 @@ struct BiconnectedComponents {
 
     Todo:
         - Probably convert to 0-base indexing
+
+    Tested Problems:
 */
 
 struct HopcroftKarp {
@@ -476,6 +488,8 @@ struct HopcroftKarp {
     Output:
         - wife, wife[m] contains wife of male m
         - The matching is male optimal
+
+    Tested Problems:
 */
 
 void StableMatching (const int n, const vector <vector <int>> &maleRank, const vector <vector <int>> &femaleRank, vector <int> &wife) {
@@ -526,6 +540,8 @@ void StableMatching (const int n, const vector <vector <int>> &maleRank, const v
 
     Output:
         - tour, a list containing the nodes in the tour
+
+    Tested Problems:
 */
 
 struct EulerTour {
@@ -593,6 +609,8 @@ struct EulerTour {
 
     Output:
         - maximum flow value
+
+    Tested Problems:
 */
 
 template <class T> struct Edge {
