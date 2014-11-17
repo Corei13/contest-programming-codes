@@ -44,14 +44,16 @@ Library Hierarchy
     - [ ] Matrix Class
     
   - **String.cpp**
+    - [x] Lexicographically Smallest Rotation (Booth's Algorithm)
     - [ ] Suffix Array
-    - [ ] Trie
     - [ ] Automata
     - [ ] KMP
     
   - **DS.cpp**
     - [x] LIS
     - [x] Union Find
+    - [x] Trie [#TODO: Implement delete function]
+    - [x] Static Trie
     - [ ] BIT
     - [ ] Segment Tree
     - [ ] 2D Segment Tree
@@ -63,6 +65,7 @@ Library Hierarchy
     - [ ] Splay Tree
     - [ ] Link/Cut Tree
     - [ ] Treap
+    - [ ] AVL Tree
 
   - **DP.cpp**
     - [ ] Monotonous Queue [ min (j < i) { a[j] + b[j] * c[i] } ]
