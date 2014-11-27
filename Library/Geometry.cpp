@@ -1,7 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define EPS 1e-15
+struct Fraction {
+    
+};
+
+/*
+    Common Geometry Routines
+    Shamelessly copied from stanford acm notebook [http://web.stanford.edu/~liszt90/acm/notebook.html]
+*/
 
 template <class T> struct Point {
     T x, y;
@@ -32,6 +39,10 @@ template <class T> struct Point {
     
     Point operator / (const T &c) const {
         return Point(x / c, y / c);
+    }
+
+    bool operator < (const point &p) const {
+        return make_pair (x, y) < make_pair (p.x, p.y);
     }
 
     friend ostream &operator << (ostream &os, Point <T> &&p) {
@@ -224,9 +235,46 @@ template <class T> struct Point {
         return true;
     }
 
+    // area x 2 of triangle (a, b, c)
+    friend T TwiceArea (Point a, Point b, Point c) {
+        return cross(a, b) + cross (b, c) + cross (c, a);
+    }
+
+    friend void ConvexHull(vector<Point> &v) {
+        sort(v.begin(), v.end());
+        vector<Point> up, dn;
+        for (auto &p: v) {
+            while (up.size() > 1 && area2(up[up.size()-2], up.back(), p) >= 0) {
+                up.pop_back();
+            }
+            while (dn.size() > 1 && area2(dn[dn.size()-2], dn.back(), p) <= 0) {
+                dn.pop_back();
+            }
+            up.push_back(p);
+            dn.push_back(p);
+        }
+        v = dn;
+        v.pop_back();
+        reverse(dn.begin(), dn.end());
+        for (auto &p: dn) {
+            v.push_back(p);
+        }
+    }
 };
 
 
+friend void ConvexHull(vector<Point> &v) {
+  sort(v.begin(), v.end());
+    vector<Point> up, dn;
+    for (int i = 0; i < pts.size(); i++) {
+while (up.size() > 1 && area2(up[up.size()-2], up.back(), pts[i]) >= 0) up.pop_back();
+while (dn.size() > 1 && area2(dn[dn.size()-2], dn.back(), pts[i]) <= 0) dn.pop_back();
+up.push_back(pts[i]);
+dn.push_back(pts[i]);
+}
+pts = dn;
+for (int i = (int) up.size() - 2; i >= 1; i--) pts.push_back(up[i]);
+}
 
 
 
