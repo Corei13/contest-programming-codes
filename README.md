@@ -23,12 +23,8 @@ Library Hierarchy
 
 
   - **Geometry.cpp**
-    - [ ] Point
-    - [ ] Segment
-    - [ ] Line
-    - [ ] Circle
-    - [ ] Segment-Segment, Line-Segment, Line-Line Intersection
-    - [ ] Point in Polygon
+    - [x] Common Geometry Routines
+    - [ ] Fraction
     - [ ] Triangulation
     - [ ] Convex Hull
     - [ ] Closest Pair of Points
@@ -45,6 +41,7 @@ Library Hierarchy
     
   - **String.cpp**
     - [x] Lexicographically Smallest Rotation (Booth's Algorithm)
+    - [ ] Longest palindromic substring
     - [ ] Suffix Array
     - [ ] Automata
     - [ ] KMP

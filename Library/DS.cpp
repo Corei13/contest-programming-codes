@@ -129,7 +129,7 @@ struct DisjointSet {
 
     Tested Problems:
         - Codeforces: 455B
-        - UVA: 760
+        - UVA: 760, 12837
 */
 
 template <class T, int n> struct Trie {
@@ -138,7 +138,7 @@ template <class T, int n> struct Trie {
 
     Trie (): words(0), prefixes(0), children (NULL) {}
 
-    int index (typename T::const_iterator it) {
+    int value (typename T::const_iterator it) {
         // return *it; // for integers
         return *it - 'a'; // for lowercase strings
         // return *it - 'A'; // for uppercase strings
@@ -149,7 +149,7 @@ template <class T, int n> struct Trie {
     void Insert (typename T::const_iterator it, typename T::const_iterator end, int val = 1) {
         prefixes += val;
         if (it != end) {
-            int i = index(it);
+            int i = value(it);
             if (!children) {
                 children = new Trie <T, n>* [n] ();
             }
@@ -170,7 +170,7 @@ template <class T, int n> struct Trie {
         if (it == end) {
             return make_pair (words, prefixes);
         } else {
-            int i = index(it);
+            int i = value(it);
             return children[i] ? children[i]->Count(++it, end) : make_pair(0, 0);
         }
     }
@@ -215,7 +215,7 @@ template <class T, int n> struct Trie {
     Tested Problems:
         - Live Archive: 4682
         - Codeforces: 455B
-        - UVA: 760, 11512
+        - UVA: 760, 11512, 12837
 */
 
 template <class T, int n> struct StaticTrie {
@@ -269,7 +269,7 @@ template <class T, int n> struct StaticTrie {
         if (it == end) {
             return make_pair (words, prefixes);
         } else {
-            int i = index(it);
+            int i = value(it);
             return children && children[i] ? children[i]->Count(++it, end) : make_pair(0, 0);
         }
     }

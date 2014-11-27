@@ -117,7 +117,7 @@ struct StronglyConnectedComponents {
 
     void BuildSCC () {
         totalComponents = 0;
-        idx = vector <int>(n,-1), low = vector <int>(n), componentOf = vector <int>(n);
+        idx = vector <int>(n, -1), low = vector <int>(n), componentOf = vector <int>(n);
         inStack = vector <bool>(n, false);
         st.clear();
         
@@ -386,7 +386,7 @@ struct HopcroftKarp {
 
     HopcroftKarp (int n, int m): n(n), m(m), adj(n + 1) {}
 
-    void addEdge (int l, int r) {
+    void AddEdge (int l, int r) {
         adj[l].push_back(r);
     }
     
@@ -700,6 +700,12 @@ template <class T> struct PushRelabel {
         active = vector <bool>(n, false), B = vector <vector <int>>(n);
         b = 0;
         
+        for (int i = 0; i < n; ++i) {
+            for (auto &e: adj[i]) {
+                e.flow = 0;
+            }
+        }
+
         for (auto &e: adj[s]) {
             excess[s] += e.cap;
         }
