@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define EPS 1e-15
+
 struct Fraction {
     
 };
@@ -41,7 +43,7 @@ template <class T> struct Point {
         return Point(x / c, y / c);
     }
 
-    bool operator < (const point &p) const {
+    bool operator < (const Point &p) const {
         return make_pair (x, y) < make_pair (p.x, p.y);
     }
 
@@ -132,7 +134,7 @@ template <class T> struct Point {
     }
 
     // compute center of circle given three points
-    friend Point ComputeCircleCenter(Point a, Point b, Point c) {
+    friend Point CircleCenter(Point a, Point b, Point c) {
         b = (a + b) / T(2);
         c = (a + c) / T(2);
         return LineLineIntersection(b, b + RotateCW90(a - b), c, c + RotateCW90(a - c));
@@ -198,7 +200,7 @@ template <class T> struct Point {
         return ret;
     }
 
-    friend T ComputeSignedArea(const vector<Point> &v) {
+    friend T SignedArea(const vector<Point> &v) {
         T area(0);
         for (auto p = v.begin(); p != v.end(); p++) {
             auto q = (next(p) == v.end() ? v.begin() : next(p));
@@ -207,13 +209,13 @@ template <class T> struct Point {
         return area / 2.0;
     }
 
-    friend T ComputeArea(const vector<Point> &v) {
-        return abs(ComputeSignedArea(v));
+    friend T Area(const vector<Point> &v) {
+        return abs(SignedArea(v));
     }
 
-    friend Point ComputeCentroid(const vector<Point> &v) {
+    friend Point Centroid(const vector<Point> &v) {
         Point c(0, 0);
-        T scale = 6.0 * ComputeSignedArea(v);
+        T scale = 6.0 * SignedArea(v);
         for (auto p = v.begin(); p != v.end(); p++) {
             auto q = (next(p) == v.end() ? v.begin() : next(p));
             c = c + (*p + *q) * (p->x * q->y - q->x * p->y);
@@ -240,6 +242,10 @@ template <class T> struct Point {
         return cross(a, b) + cross (b, c) + cross (c, a);
     }
 
+    friend T area2 (Point a, Point b, Point c) {
+        return cross(a, b) + cross(b, c) + cross(c, a);
+    }
+
     friend void ConvexHull(vector<Point> &v) {
         sort(v.begin(), v.end());
         vector<Point> up, dn;
@@ -261,20 +267,6 @@ template <class T> struct Point {
         }
     }
 };
-
-
-friend void ConvexHull(vector<Point> &v) {
-  sort(v.begin(), v.end());
-    vector<Point> up, dn;
-    for (int i = 0; i < pts.size(); i++) {
-while (up.size() > 1 && area2(up[up.size()-2], up.back(), pts[i]) >= 0) up.pop_back();
-while (dn.size() > 1 && area2(dn[dn.size()-2], dn.back(), pts[i]) <= 0) dn.pop_back();
-up.push_back(pts[i]);
-dn.push_back(pts[i]);
-}
-pts = dn;
-for (int i = (int) up.size() - 2; i >= 1; i--) pts.push_back(up[i]);
-}
 
 
 
@@ -313,7 +305,7 @@ main(){
   cerr << LineLineIntersection(Point<double>(0,0), Point<double>(2,4), Point<double>(3,1), Point<double>(-1,3)) << endl;
   
   // expected: (1,1)
-  cerr << ComputeCircleCenter(Point<double>(-3,4), Point<double>(6,1), Point<double>(4,5)) << endl;
+  cerr << CircleCenter(Point<double>(-3,4), Point<double>(6,1), Point<double>(4,5)) << endl;
   
   vector<Point<double>> v; 
   v.push_back(Point<double>(0,0));
@@ -358,8 +350,8 @@ main(){
   // centroid should be (1.1666666, 1.166666)
   Point<double> pa[] = { Point<double>(0,0), Point<double>(5,0), Point<double>(1,1), Point<double>(0,5) };
   vector<Point<double>> p(pa, pa+4);
-  Point<double> c = ComputeCentroid(p);
-  cerr << "Area: " << ComputeArea(p) << endl;
+  Point<double> c = Centroid(p);
+  cerr << "Area: " << Area(p) << endl;
   cerr << "Centroid: " << c << endl;
   
   return 0;
