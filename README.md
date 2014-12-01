@@ -24,16 +24,16 @@ Library Hierarchy
 
   - **Geometry.cpp**
     - [x] Common Geometry Routines
-    - [ ] Fraction
+    - [x] Fraction
+    - [x] Convex Hull
     - [ ] Triangulation
-    - [ ] Convex Hull
     - [ ] Closest Pair of Points
     - [ ] Rotating Calipers
     
   - **Math.cpp**
+    - [x] FFT
     - [ ] Simplex
     - [ ] Gauss-Jordan
-    - [ ] FFT
     - [ ] Extended Euclid
     - [ ] Diophantine Equation
     - [ ] Reduced Row Echelon Form
