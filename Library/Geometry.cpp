@@ -1,10 +1,187 @@
-#include <bits/stdc++.h>
-using namespace std;
+using namespace std::rel_ops;
 
-#define EPS 1e-15
+/*
+    Full featured fraction class
+*/
 
-struct Fraction {
-    
+template <class T> struct Fraction {
+    T a, b;
+
+    Fraction (T a = T(0), T b = T(1)): a(a), b(b) {
+        this->Normalize();
+    }
+
+    Fraction (const Fraction &f): a(f.a), b(f.b) {}
+
+    Fraction (double r, int factor = 4) {
+        this->b = 1;
+        for (int i = 0; i < factor; ++i) {
+            this->b *= T(10);
+        }
+        this->a = T(this->b * r + 0.5);
+        this->Normalize();
+    }
+
+    Fraction (int a = 0, int b = 1): Fraction(T(a), T(b)) {}
+
+    void Normalize () {
+        T d = __gcd (a, b);
+        a /= d, b /= d;
+        if (b < 0) {
+            a = -a, b = -b;
+        }
+    }
+
+    Fraction operator - () const {
+        return Fraction (-this->a, this->b);
+    }
+
+    Fraction& operator += (const Fraction& rhs) {
+        T a = this->a * rhs.b + this->b * rhs.a, b = this->b * rhs.b;
+        this->a = a, this->b = b;
+        this->Normalize();
+        return *this;
+    }
+
+    friend inline Fraction operator + (Fraction lhs, const Fraction& rhs) {
+        lhs += rhs;
+        return lhs;
+    }
+
+    Fraction& operator += (const T& rhs) {
+        this->a += this->b * rhs;
+        return *this;
+    }
+
+    friend inline Fraction operator + (Fraction lhs, const T& rhs) {
+        lhs += rhs;
+        return lhs;
+    }
+
+    Fraction& operator -= (const Fraction& rhs) {
+        T a = this->a * rhs.b - this->b * rhs.a, b = this->b * rhs.b;
+        this->a = a, this->b = b;
+        this->Normalize();
+        return *this;
+    }
+
+    friend inline Fraction operator - (Fraction lhs, const Fraction& rhs) {
+        lhs -= rhs;
+        return lhs;
+    }
+
+    Fraction& operator -= (const T& rhs) {
+        this->a -= this->b * rhs;
+        return *this;
+    }
+
+    friend inline Fraction operator - (Fraction lhs, const T& rhs) {
+        lhs -= rhs;
+        return lhs;
+    }
+
+    Fraction& operator *= (const Fraction &rhs) {
+        this->a *= rhs.a, this->b *= rhs.b;
+        this->Normalize();
+        return *this;
+    }
+
+    friend inline Fraction operator * (Fraction lhs, const Fraction& rhs) {
+        lhs *= rhs;
+        return lhs;
+    }
+
+    Fraction& operator *= (const T& rhs) {
+        this->a *= rhs;
+        this->Normalize();
+        return *this;
+    }
+
+    friend inline Fraction operator * (Fraction lhs, const T& rhs) {
+        lhs *= rhs;
+        return lhs;
+    }
+
+    Fraction& operator /= (const Fraction& rhs) {
+        this->a *= rhs.b, this->b *= rhs.a;
+        this->Normalize();
+        return *this;
+    }
+
+    friend inline Fraction operator / (Fraction lhs, const Fraction& rhs) {
+        lhs /= rhs;
+        return lhs;
+    }
+
+    Fraction& operator /= (const T& rhs) {
+        this->b *= rhs;
+        this->Normalize();
+        return *this;
+    }
+
+    friend inline Fraction operator / (Fraction lhs, const T& rhs) {
+        lhs /= rhs;
+        return lhs;
+    }
+
+    friend inline Fraction abs (const Fraction& f) {
+        return Fraction (abs(f.a), f.b);
+    }
+
+    friend inline Fraction floor (const Fraction& f) {
+        return f.a / f.b;
+    }
+
+    friend inline Fraction ceil (const Fraction& f) {
+        return f.b == 1 ? f.a : f.a / f.b + T(1);
+    }
+
+    friend inline Fraction sqrt (const Fraction& f) {
+        return Fraction(sqrt(f.a / double(f.b)));
+    }
+
+    Fraction& operator %= (const Fraction& rhs) {
+        T n = floor(*this / rhs);
+        *this -= rhs * n;
+        return *this;
+    }
+
+    friend inline Fraction operator % (Fraction lhs, const Fraction& rhs) {
+        lhs %= rhs;
+        return lhs;
+    }
+
+    bool operator == (const Fraction& rhs) const {
+        return this->a == rhs.a && this->b == rhs.b;
+    }
+
+    bool operator == (const T& rhs) const {
+        return this->a == rhs && this->b == T(1);
+    }
+
+    bool operator < (const Fraction& rhs) const {
+        return this->a * rhs.b < this->b * rhs.a;
+    }
+
+    bool operator < (const T& rhs) const {
+        return this->a < this->b * rhs;
+    }
+
+    friend ostream &operator << (ostream &os, Fraction <T> &&f) {
+        os << f.a;
+        if (f.b != T(1)) {
+            os << "/" << f.b;
+        }
+        return os;
+    }
+
+    friend ostream &operator << (ostream &os, Fraction <T> &f) {
+        os << f.a;
+        if (f.b != T(1)) {
+            os << "/" << f.b;
+        }
+        return os;
+    }
 };
 
 /*
@@ -18,41 +195,83 @@ template <class T> struct Point {
     Point (T x, T y): x(x), y(y) {}
     
     Point (const Point &p): x(p.x), y(p.y) {}
-    
-    Point operator + (const Point &p) const {
-        return Point(x + p.x, y + p.y);
+
+    Point& operator += (const Point &p) {
+        x += p.x, y += p.y;
+        return *this;
     }
     
-    Point operator - (const Point &p) const {
-        return Point(x - p.x, y - p.y);
-    }
-    
-    Point operator + (const T &c) const {
-        return Point(x + c, y + c);
+    friend inline Point operator + (Point lhs, const Point& rhs) {
+        lhs += rhs;
+        return lhs;
     }
 
-    Point operator - (const T &c) const {
-        return Point(x - c, y - c);
-    }
-
-    Point operator * (const T &c) const {
-        return Point(x * c, y * c);
+    Point& operator -= (const Point &p) {
+        x -= p.x, y -= p.y;
+        return *this;
     }
     
-    Point operator / (const T &c) const {
-        return Point(x / c, y / c);
+    friend inline Point operator - (Point lhs, const Point& rhs) {
+        lhs -= rhs;
+        return lhs;
+    }
+
+    Point& operator += (const T &c) {
+        x += c, y += c;
+        return *this;
+    }
+    
+    friend inline Point operator + (Point lhs, const T& rhs) {
+        lhs += rhs;
+        return lhs;
+    }
+
+    Point& operator -= (const T &c) {
+        x -= c, y -= c;
+        return *this;
+    }
+    
+    friend inline Point operator - (Point lhs, const T& rhs) {
+        lhs -= rhs;
+        return lhs;
+    }
+
+    Point& operator *= (const T &c) {
+        x *= c, y *= c;
+        return *this;
+    }
+    
+    friend inline Point operator * (Point lhs, const T& rhs) {
+        lhs *= rhs;
+        return lhs;
+    }
+    
+    Point& operator /= (const T &c) {
+        x /= c, y /= c;
+        return *this;
+    }
+    
+    friend inline Point operator / (Point lhs, const T& rhs) {
+        lhs /= rhs;
+        return lhs;
+    }
+
+    bool operator == (const Point &p) const {
+        return abs(x - p.x) <= EPS && abs(y - p.y) <= EPS;
     }
 
     bool operator < (const Point &p) const {
-        return make_pair (x, y) < make_pair (p.x, p.y);
+        return x < p.x || (x == p.x && y < p.y);
     }
 
     friend ostream &operator << (ostream &os, Point <T> &&p) {
         os << "(" << p.x << ", " << p.y << ")";
+        return os;
     }
 
     friend ostream &operator << (ostream &os, Point <T> &p) {
         os << "(" << p.x << ", " << p.y << ")";
+        return os;
     }
 
     friend Point RotateCCW90 (Point p) {
@@ -88,7 +307,7 @@ template <class T> struct Point {
     // project point c onto line segment [a, b]
     friend Point ProjectPointSegment(Point a, Point b, Point c) {
         T r = dot(b - a, b - a);
-        if (abs(r) < EPS) {
+        if (abs(r) <= EPS) {
             return a;
         }
         r = dot(c - a, b - a) / r;
@@ -103,18 +322,18 @@ template <class T> struct Point {
     }
 
     // determine if lines (a, b) and (c, d) are parallel or collinear
-    friend bool LinesParallel(Point a, Point b, Point c, Point d) { 
-        return abs(cross(b - a, c - d)) < EPS;
+    friend bool LinesParallel(Point a, Point b, Point c, Point d) {
+            return abs(cross(b - a, c - d)) <= EPS;
     }
 
-    friend bool LinesCollinear(Point a, Point b, Point c, Point d) { 
-        return LinesParallel(a, b, c, d) && abs(cross(a - b, a - c)) < EPS && abs(cross(c - d, c - a)) < EPS;
+    friend bool LinesCollinear(Point a, Point b, Point c, Point d) {
+        return LinesParallel(a, b, c, d) && abs(cross(a - b, a - c)) <= EPS && abs(cross(c - d, c - a)) <= EPS;
     }
 
     // determine if line segment [a, b] intersects with line segment [c, d]
     friend bool SegmentsIntersect(Point a, Point b, Point c, Point d) {
         if (LinesCollinear(a, b, c, d)) {
-            if (dist2(a, c) < EPS || dist2(a, d) < EPS || dist2(b, c) < EPS || dist2(b, d) < EPS) {
+            if (dist2(a, c) <= EPS || dist2(a, d) <= EPS || dist2(b, c) <= EPS || dist2(b, d) <= EPS) {
                 return true;
             } else if (dot(c - a, c - b) > T(0) && dot(d - a, d - b) > T(0) && dot(c - b, d - b) > T(0)) {
                 return false;
@@ -129,7 +348,7 @@ template <class T> struct Point {
     // intersection point between lines (a, b) and (c, d)
     friend Point LineLineIntersection(Point a, Point b, Point c, Point d) {
         b = b - a, d = c - d, c = c - a;
-        assert(dot(b, b) > EPS && dot(d, d) > EPS);
+        assert(dot(b, b) >= EPS && dot(d, d) >= EPS);
         return a + b * cross(c, d) / cross(b, d);
     }
 
@@ -157,7 +376,7 @@ template <class T> struct Point {
     friend bool PointOnPolygon(const vector<Point> &v, Point p) {
         for (auto q = v.begin(); q != v.end(); q++) {
             auto r = (next(q) == v.end() ? v.begin() : next(q));
-            if (dist2(ProjectPointSegment(*q, *r, p), p) < EPS) {
+            if (dist2(ProjectPointSegment(*q, *r, p), p) <= EPS) {
                 return true;
             }
         }
@@ -173,11 +392,11 @@ template <class T> struct Point {
         T B = dot(a, b);
         T C = dot(a, a) - r * r;
         T D = B * B - A * C;
-        if (D < -EPS) {
+        if (D <= -EPS) {
             return ret;
         }
         ret.push_back(c + a + b * (-B + sqrt(D + EPS)) / A);
-        if (D > EPS)  {
+        if (D >= EPS)  {
             ret.push_back(c + a + b * (-B - sqrt(D)) / A);
         }
         return ret;
@@ -267,92 +486,3 @@ template <class T> struct Point {
         }
     }
 };
-
-
-
-
-
-main(){
-//   // expected: (-5,2)
-  cerr << RotateCCW(Point<double>(2,5), M_PI/2) << endl;
-  
-//   // expected: (5,2)
-  cerr << ProjectPointLine(Point<double>(-5,-2), Point<double>(10,4), Point<double>(3,7)) << endl;
-  
-  // expected: (5,2) (7.5,3) (2.5,1)
-  cerr << ProjectPointSegment(Point<double>(-5,-2), Point<double>(10,4), Point<double>(3,7)) << " "
-       << ProjectPointSegment(Point<double>(7.5,3), Point<double>(10,4), Point<double>(3,7)) << " "
-       << ProjectPointSegment(Point<double>(-5,-2), Point<double>(2.5,1), Point<double>(3,7)) << endl;
-  
-  
-  // expected: 1 0 1
-  cerr << LinesParallel(Point<double>(1,1), Point<double>(3,5), Point<double>(2,1), Point<double>(4,5)) << " "
-       << LinesParallel(Point<double>(1,1), Point<double>(3,5), Point<double>(2,0), Point<double>(4,5)) << " "
-       << LinesParallel(Point<double>(1,1), Point<double>(3,5), Point<double>(5,9), Point<double>(7,13)) << endl;
-  
-  // expected: 0 0 1
-  cerr << LinesCollinear(Point<double>(1,1), Point<double>(3,5), Point<double>(2,1), Point<double>(4,5)) << " "
-       << LinesCollinear(Point<double>(1,1), Point<double>(3,5), Point<double>(2,0), Point<double>(4,5)) << " "
-       << LinesCollinear(Point<double>(1,1), Point<double>(3,5), Point<double>(5,9), Point<double>(7,13)) << endl;
-  
-  // expected: 1 1 1 0
-  cerr << SegmentsIntersect(Point<double>(0,0), Point<double>(2,4), Point<double>(3,1), Point<double>(-1,3)) << " "
-       << SegmentsIntersect(Point<double>(0,0), Point<double>(2,4), Point<double>(4,3), Point<double>(0,5)) << " "
-       << SegmentsIntersect(Point<double>(0,0), Point<double>(2,4), Point<double>(2,-1), Point<double>(-2,1)) << " "
-       << SegmentsIntersect(Point<double>(0,0), Point<double>(2,4), Point<double>(5,5), Point<double>(1,7)) << endl;
-  
-  // expected: (1,2)
-  cerr << LineLineIntersection(Point<double>(0,0), Point<double>(2,4), Point<double>(3,1), Point<double>(-1,3)) << endl;
-  
-  // expected: (1,1)
-  cerr << CircleCenter(Point<double>(-3,4), Point<double>(6,1), Point<double>(4,5)) << endl;
-  
-  vector<Point<double>> v; 
-  v.push_back(Point<double>(0,0));
-  v.push_back(Point<double>(5,0));
-  v.push_back(Point<double>(5,5));
-  v.push_back(Point<double>(0,5));
-  
-  // expected: 1 1 1 0 0
-  cerr << PointInPolygon(v, Point<double>(2,2)) << " "
-       << PointInPolygon(v, Point<double>(2,0)) << " "
-       << PointInPolygon(v, Point<double>(0,2)) << " "
-       << PointInPolygon(v, Point<double>(5,2)) << " "
-       << PointInPolygon(v, Point<double>(2,5)) << endl;
-  
-  // expected: 0 1 1 1 1
-  cerr << PointOnPolygon(v, Point<double>(2,2)) << " "
-       << PointOnPolygon(v, Point<double>(2,0)) << " "
-       << PointOnPolygon(v, Point<double>(0,2)) << " "
-       << PointOnPolygon(v, Point<double>(5,2)) << " "
-       << PointOnPolygon(v, Point<double>(2,5)) << endl;
-  
-  // expected: (1,6)
-  //           (5,4) (4,5)
-  //           blank line
-  //           (4,5) (5,4)
-  //           blank line
-  //           (4,5) (5,4)
-  vector<Point<double>> u = CircleLineIntersection(Point<double>(0,6), Point<double>(2,6), Point<double>(1,1), 5);
-  for (int i = 0; i < u.size(); i++) cerr << u[i] << " "; cerr << endl;
-  u = CircleLineIntersection(Point<double>(0,9), Point<double>(9,0), Point<double>(1,1), 5);
-  for (int i = 0; i < u.size(); i++) cerr << u[i] << " "; cerr << endl;
-  u = CircleCircleIntersection(Point<double>(1,1), Point<double>(10,10), 5, 5);
-  for (int i = 0; i < u.size(); i++) cerr << u[i] << " "; cerr << endl;
-  u = CircleCircleIntersection(Point<double>(1,1), Point<double>(8,8), 5, 5);
-  for (int i = 0; i < u.size(); i++) cerr << u[i] << " "; cerr << endl;
-  u = CircleCircleIntersection(Point<double>(1,1), Point<double>(4.5,4.5), 10, sqrt(2.0)/2.0);
-  for (int i = 0; i < u.size(); i++) cerr << u[i] << " "; cerr << endl;
-  u = CircleCircleIntersection(Point<double>(1,1), Point<double>(4.5,4.5), 5, sqrt(2.0)/2.0);
-  for (int i = 0; i < u.size(); i++) cerr << u[i] << " "; cerr << endl;
-  
-  // area should be 5.0
-  // centroid should be (1.1666666, 1.166666)
-  Point<double> pa[] = { Point<double>(0,0), Point<double>(5,0), Point<double>(1,1), Point<double>(0,5) };
-  vector<Point<double>> p(pa, pa+4);
-  Point<double> c = Centroid(p);
-  cerr << "Area: " << Area(p) << endl;
-  cerr << "Centroid: " << c << endl;
-  
-  return 0;
-}
