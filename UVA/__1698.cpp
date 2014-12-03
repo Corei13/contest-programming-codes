@@ -25,7 +25,7 @@ typedef vector<VPI> VVPI;
 typedef vector<double> VD;
 typedef vector<VD> VVD;
 
-vector<pair<int,PI>> disc;
+vector<pair<int, PI>> disc;
 VPI cont;
 
 double findMax (double W) {
@@ -35,7 +35,7 @@ double findMax (double W) {
     double ib = 0.0, limit, dW;
     for (int i = 0; i < n; ++i) {
         ib += 1.0 / (2.0 * cont[i].b);
-        limit = (cont[i].a - cont[i+1].a) * ib;
+        limit = (cont[i].a - cont[i + 1].a) * ib;
         dW = min(W, limit);
         for (int j = 0; j <= i; ++j) {
             w[j] += dW / (2.0 * cont[j].b * ib);
@@ -77,7 +77,7 @@ int main(int argc, char const *argv[]) {
         double ans = 0.0;
         VD dp(W + 1, -inf);
         dp[W] = 0.0;
-        for (auto d: disc) {
+        for (auto d : disc) {
             for (int w =  W; w > 0; w--) {
                 for (int i = 0; d.a * i <= w; ++i) {
                     dp[W]
@@ -85,6 +85,6 @@ int main(int argc, char const *argv[]) {
             }
         }
     }
-    
+
     return 0;
 }

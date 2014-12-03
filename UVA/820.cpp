@@ -63,13 +63,13 @@ template <class T> struct PushRelabel {
         }
     }
 
-    void Push (Edge <T> &e) {
+    void Push (Edge <T>& e) {
         int amt = int(min(excess[e.from], e.cap - e.flow));
         if (dist[e.from] == dist[e.to] + 1 && amt > T(0)) { // == -> >=
             // cout << ">    " << e.from+1 << " -> " << e.to+1 << endl;
             e.flow += amt;
             adj[e.to][e.index].flow -= amt;
-            excess[e.to] += amt;    
+            excess[e.to] += amt;
             excess[e.from] -= amt;
             Enqueue(e.to);
         }
@@ -77,11 +77,11 @@ template <class T> struct PushRelabel {
 
     void Gap (int k) {
         for (int v = 0; v < n; v++) if (dist[v] >= k) {
-            count[dist[v]]--;
-            dist[v] = max(dist[v], n); // n -> n+1
-            count[dist[v]]++;
-            Enqueue(v);
-        }
+                count[dist[v]]--;
+                dist[v] = max(dist[v], n); // n -> n+1
+                count[dist[v]]++;
+                Enqueue(v);
+            }
     }
 
     void GlobalRelabel () {
@@ -92,7 +92,7 @@ template <class T> struct PushRelabel {
         while (!Q.empty()) {
             int v = Q.front();
             Q.pop();
-            for (auto e: adj[v]) {
+            for (auto e : adj[v]) {
                 int w = e.to;
                 if (dist[w] == n && adj[w][e.index].cap > adj[w][e.index].flow) {
                     dist[w] = dist[v] + 1;
@@ -112,16 +112,16 @@ template <class T> struct PushRelabel {
     void Relabel (int v) {
         count[dist[v]]--;
         dist[v] = n;
-        for (auto e: adj[v]) if (e.cap - e.flow > 0) {
-            dist[v] = min(dist[v], dist[e.to] + 1);
-        }
+        for (auto e : adj[v]) if (e.cap - e.flow > 0) {
+                dist[v] = min(dist[v], dist[e.to] + 1);
+            }
         count[dist[v]]++;
         Enqueue(v);
         relabels++;
     }
 
     void Discharge(int v) {
-        for (auto &e: adj[v]) {
+        for (auto& e : adj[v]) {
             if (excess[v] > 0) {
                 Push(e);
             } else {
@@ -131,7 +131,7 @@ template <class T> struct PushRelabel {
 
         if (excess[v] > 0) {
             if (count[dist[v]] == 1) {
-                Gap(dist[v]); 
+                Gap(dist[v]);
             } else {
                 Relabel(v);
             }
@@ -141,15 +141,15 @@ template <class T> struct PushRelabel {
     T GetMaxFlow (int s, int t) {
         src = s, sink = t;
         dist = VI(n, 0), excess = vector<T>(n, 0), count = VI(n + 1, 0), active = VB(n, false), B = VVI(n), b = 0, relabels = 0;
-        
-        for (auto &e: adj[s]) {
+
+        for (auto& e : adj[s]) {
             excess[s] += e.cap;
         }
 
         count[0] = n;
         Enqueue(s);
         active[t] = true;
-        
+
         while (b >= 0) {
             if (!B[b].empty()) {
                 int v = B[b].back();
@@ -166,7 +166,7 @@ template <class T> struct PushRelabel {
         return excess[t];
     }
 
-    T GetMinCut (int s, int t, VI &cut);
+    T GetMinCut (int s, int t, VI& cut);
 };
 
 
@@ -184,10 +184,10 @@ int main (int argc, char const *argv[]) {
         for (int i = 0; i < m; ++i) {
             int a, b, c;
             cin >> a >> b >> c;
-            P->AddEdge(a-1, b-1, c);
-            P->AddEdge(b-1, a-1, c);
+            P->AddEdge(a - 1, b - 1, c);
+            P->AddEdge(b - 1, a - 1, c);
         }
-        cout << "Network " << ++cs << endl << "The bandwidth is " << P->GetMaxFlow(s-1, t-1) << "." << endl << endl;
+        cout << "Network " << ++cs << endl << "The bandwidth is " << P->GetMaxFlow(s - 1, t - 1) << "." << endl << endl;
     }
 
     return 0;

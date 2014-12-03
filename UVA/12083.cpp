@@ -36,23 +36,23 @@ struct HopcroftKarp {
     void addEdge (int l, int r) {
         adj[l].push_back(r);
     }
-    
+
     bool bfs () {
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 0; l < n; ++l) if (right[l] == m) {
-            dist[l] = 0;
-            q.push(l);
-        }
+                dist[l] = 0;
+                q.push(l);
+            }
 
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             if (dist[n] == -1 || dist[l] < dist[n]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    q.push(left[r]);
-                }
+                for (auto r : adj[l]) if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        q.push(left[r]);
+                    }
             }
         }
         return dist[n] != -1;
@@ -60,11 +60,11 @@ struct HopcroftKarp {
 
     bool dfs (int l) {
         if (l != n) {
-            for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
-                left[r] = l;
-                right[l] = r;
-                return true;
-            }
+            for (auto r : adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
+                    left[r] = l;
+                    right[l] = r;
+                    return true;
+                }
             dist[l] = -1;
             return false;
         }
@@ -77,31 +77,31 @@ struct HopcroftKarp {
         int ret = 0;
         while (bfs()) {
             for (int l = 0; l < n; ++l) if (right[l] == m && dfs(l)) {
-                ret++;
-            }
+                    ret++;
+                }
         }
         return ret;
     }
 
-    void minimumVertexCover (VB &leftCover, VB &rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
+    void minimumVertexCover (VB& leftCover, VB& rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
         leftCover = VB(n, true), rightCover = VB(m, false);
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 0; l < n; ++l) if (right[l] == m) {
-            dist[l] = 0;
-            q.push(l);
-        }
+                dist[l] = 0;
+                q.push(l);
+            }
 
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             leftCover[l] = false;
             if (dist[n] == -1 || dist[l] < dist[n]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    rightCover[r] = true;
-                    q.push(left[r]);
-                }
+                for (auto r : adj[l]) if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        rightCover[r] = true;
+                        q.push(left[r]);
+                    }
             }
         }
     }
@@ -114,25 +114,25 @@ struct person {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
-    HopcroftKarp* G;
+    HopcroftKarp *G;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
         int n;
         cin >> n;
         vector<person> students(n);
-        for (auto &s: students) {
+        for (auto& s : students) {
             cin >> s.height >> s.sex >> s.music >> s.sport;
         }
         G = new HopcroftKarp(n, n);
         for (int i = 0; i < n; ++i) if (students[i].sex == "F") {
-            for (int j = 0; j < n; ++j) if (students[j].sex == "M") {
-                if (abs(students[i].height - students[j].height) <= 40 && students[i].music == students[j].music && students[i].sport != students[j].sport) {
-                    G->addEdge(i, j);
-                }
+                for (int j = 0; j < n; ++j) if (students[j].sex == "M") {
+                        if (abs(students[i].height - students[j].height) <= 40 && students[i].music == students[j].music && students[i].sport != students[j].sport) {
+                            G->addEdge(i, j);
+                        }
+                    }
             }
-        }
         cout << n - G->match() << endl;
     }
     return 0;

@@ -55,7 +55,7 @@ struct DisjointSet {
 template <class T> struct Kruskal {
     int n;
     vector <pair <pair<T, int>, PI>> edges;
-    DisjointSet* D;
+    DisjointSet *D;
 
     Kruskal (int n): n(n) {}
 
@@ -69,22 +69,22 @@ template <class T> struct Kruskal {
         VI idx;
         sort(all(edges));
         cnt = 0, D = new DisjointSet(n);
-        for (auto e: edges) if (D->Union(e.y.x, e.y.y)) {
-            ret.x += e.x.x;
-            cnt += 1;
-            idx.push_back(e.x.y);
-        }
+        for (auto e : edges) if (D->Union(e.y.x, e.y.y)) {
+                ret.x += e.x.x;
+                cnt += 1;
+                idx.push_back(e.x.y);
+            }
         if (cnt != n - 1) {
             return make_pair(-1, -1);
         }
 
-        for (auto i: idx) {
+        for (auto i : idx) {
             T tmp = 0;
             cnt = 0, D = new DisjointSet(n);
-            for (auto e: edges) if (e.x.y != i && D->Union(e.y.x, e.y.y)) {
-                tmp += e.x.x;
-                cnt += 1;
-            }
+            for (auto e : edges) if (e.x.y != i && D->Union(e.y.x, e.y.y)) {
+                    tmp += e.x.x;
+                    cnt += 1;
+                }
             if (cnt == n - 1) {
                 ret.y = min(ret.y, tmp);
             }
@@ -99,9 +99,9 @@ template <class T> struct Kruskal {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
-    Kruskal<ll>* K;
+    Kruskal<ll> *K;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
         int n, m;
@@ -111,7 +111,7 @@ int main(int argc, char const *argv[]) {
             int a, b;
             ll c;
             cin >> a >> b >> c;
-            K->addEdge(a-1, b-1, c, i);
+            K->addEdge(a - 1, b - 1, c, i);
         }
 
         cout << "Case #" << cs + 1 << " : ";

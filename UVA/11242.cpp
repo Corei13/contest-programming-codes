@@ -31,22 +31,22 @@ int main(int argc, char const *argv[]) {
     while (cin >> n && n != 0) {
         cin >> m;
         VD a(n), b(m), ratio;
-        for (auto &f: a) {
+        for (auto& f : a) {
             cin >> f;
         }
-        for (auto &r: b) {
+        for (auto& r : b) {
             cin >> r;
-            for (auto f: a) {
+            for (auto f : a) {
                 ratio.push_back(r / f);
             }
         }
         sort(all(ratio));
         long double ans = 0;
-        for (int i = 0; i < sz(ratio)-1; ++i) {
-            ans = max(ans, ratio[i+1] / ratio[i]);
+        for (int i = 0; i < sz(ratio) - 1; ++i) {
+            ans = max(ans, ratio[i + 1] / ratio[i]);
         }
         cout << fixed << setprecision(2) << ans << endl;
     }
-    
+
     return 0;
 }

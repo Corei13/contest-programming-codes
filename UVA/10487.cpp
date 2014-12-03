@@ -30,7 +30,7 @@ int main(int argc, char const *argv[]) {
     int n, cs = 0;
     while (cin >> n && n != 0) {
         VI a(n);
-        for (auto &i: a) {
+        for (auto& i : a) {
             cin >> i;
         }
         int q;
@@ -49,6 +49,6 @@ int main(int argc, char const *argv[]) {
             cout << "Closest sum to " << s << " is " << ans << "." << endl;
         }
     }
-    
+
     return 0;
 }

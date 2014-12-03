@@ -47,7 +47,7 @@ struct EulerTour {
         tour.clear();
         tour.push_back(start);
         vector<VPI::iterator> iter;
-        for (auto &v: adj) {
+        for (auto& v : adj) {
             iter.push_back(v.begin());
         }
         VB visited(e, false);
@@ -56,16 +56,16 @@ struct EulerTour {
             auto pos = next(it);
             do {
                 while (iter[v] != adj[v].end() && visited[iter[v]->y]) {
-                        iter[v]++;
-                    }
-                    if (iter[v] == adj[v].end()) {
-                        break;
-                    } else {
-                        visited[iter[v]->y] = true;
-                        iter[v]++;
-                        v = prev(iter[v])->x;
-                        tour.insert(pos, v);
-                    }
+                    iter[v]++;
+                }
+                if (iter[v] == adj[v].end()) {
+                    break;
+                } else {
+                    visited[iter[v]->y] = true;
+                    iter[v]++;
+                    v = prev(iter[v])->x;
+                    tour.insert(pos, v);
+                }
             } while (v != u);
         }
     }
@@ -82,22 +82,22 @@ struct HopcroftKarp { // 1-based indexing
     void addEdge (int l, int r) {
         adj[l + 1].push_back(r + 1);
     }
-    
+
     bool bfs () {
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 1; l <= n; ++l) if (right[l] == 0) {
-            dist[l] = 0;
-            q.push(l);
-        }
+                dist[l] = 0;
+                q.push(l);
+            }
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             if (dist[0] == -1 || dist[l] < dist[0]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    q.push(left[r]);
-                }
+                for (auto r : adj[l]) if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        q.push(left[r]);
+                    }
             }
         }
         return dist[0] != -1;
@@ -105,11 +105,11 @@ struct HopcroftKarp { // 1-based indexing
 
     bool dfs (int l) {
         if (l != 0) {
-            for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
-                left[r] = l;
-                right[l] = r;
-                return true;
-            }
+            for (auto r : adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
+                    left[r] = l;
+                    right[l] = r;
+                    return true;
+                }
             dist[l] = -1;
             return false;
         }
@@ -122,31 +122,31 @@ struct HopcroftKarp { // 1-based indexing
         int ret = 0;
         while (bfs()) {
             for (int l = 1; l <= n; ++l) if (right[l] == 0 && dfs(l)) {
-                ret++;
-            }
+                    ret++;
+                }
         }
         return ret;
     }
 
-    void minimumVertexCover (VB &leftCover, VB &rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
+    void minimumVertexCover (VB& leftCover, VB& rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
         leftCover = VB(n + 1, true), rightCover = VB(m + 1, false);
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 1; l <= n; ++l) if (right[l] == 0) {
-            dist[l] = 0;
-            q.push(l);
-        }
+                dist[l] = 0;
+                q.push(l);
+            }
 
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             leftCover[l] = false;
             if (dist[0] == -1 || dist[l] < dist[0]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    rightCover[r] = true;
-                    q.push(left[r]);
-                }
+                for (auto r : adj[l]) if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        rightCover[r] = true;
+                        q.push(left[r]);
+                    }
             }
         }
     }
@@ -158,7 +158,7 @@ int main(int argc, char const *argv[]) {
 
     int t;
     HopcroftKarp *G;
-    EulerTour* E;
+    EulerTour *E;
     cin >> t;
 
     for (int cs = 0; cs < t; ++cs) {
@@ -174,13 +174,13 @@ int main(int argc, char const *argv[]) {
         }
         bool possible = true;
         for (int i = 1; i <= n; ++i) if (d[i] % 2 == 1) {
-            possible = false;
-        }
+                possible = false;
+            }
         if (possible) {
             G = new HopcroftKarp(e, e);
             for (int i = 1, cnt = 0; i <= n; cnt += d[i] / 2, i += 1) {
                 for (int k = 0; k < d[i] / 2; ++k) {
-                    idx[cnt+k] = i;
+                    idx[cnt + k] = i;
                 }
                 for (int j = 0; j < e; ++j) {
                     if (edges[j].y.y == i) {
@@ -205,7 +205,7 @@ int main(int argc, char const *argv[]) {
         if (possible) {
             E = new EulerTour(n);
             for (int i = 0; i < e; ++i) {
-                E->addEdge(((edges[i].y.x ^ edges[i].y.y) ^ idx[G->right[i+1]-1]) - 1, idx[G->right[i+1]-1] - 1, true);
+                E->addEdge(((edges[i].y.x ^ edges[i].y.y) ^ idx[G->right[i + 1] - 1]) - 1, idx[G->right[i + 1] - 1] - 1, true);
             }
             E->startTour();
             for (auto it = E->tour.begin(); it != E->tour.end(); it++) {

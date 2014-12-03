@@ -36,23 +36,23 @@ struct HopcroftKarp {
     void addEdge (int l, int r) {
         adj[l].push_back(r);
     }
-    
+
     bool bfs () {
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 0; l < n; ++l) if (right[l] == m) {
-            dist[l] = 0;
-            q.push(l);
-        }
+                dist[l] = 0;
+                q.push(l);
+            }
 
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             if (dist[n] == -1 || dist[l] < dist[n]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    q.push(left[r]);
-                }
+                for (auto r : adj[l]) if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        q.push(left[r]);
+                    }
             }
         }
         return dist[n] != -1;
@@ -60,11 +60,11 @@ struct HopcroftKarp {
 
     bool dfs (int l) {
         if (l != n) {
-            for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
-                left[r] = l;
-                right[l] = r;
-                return true;
-            }
+            for (auto r : adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
+                    left[r] = l;
+                    right[l] = r;
+                    return true;
+                }
             dist[l] = -1;
             return false;
         }
@@ -77,31 +77,31 @@ struct HopcroftKarp {
         int ret = 0;
         while (bfs()) {
             for (int l = 0; l < n; ++l) if (right[l] == m && dfs(l)) {
-                ret++;
-            }
+                    ret++;
+                }
         }
         return ret;
     }
 
-    void getMinimumVertexCover(VB &leftCover, VB &rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
+    void getMinimumVertexCover(VB& leftCover, VB& rightCover) { // {side}Cover[i] = true iff i of {side} in the the vertex cover (not in maximum independent set)
         leftCover = VB(n, true), rightCover = VB(m, false);
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 0; l < n; ++l) if (right[l] == m) {
-            dist[l] = 0;
-            q.push(l);
-        }
+                dist[l] = 0;
+                q.push(l);
+            }
 
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             leftCover[l] = false;
             if (dist[n] == -1 || dist[l] < dist[n]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    rightCover[r] = true;
-                    q.push(left[r]);
-                }
+                for (auto r : adj[l]) if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        rightCover[r] = true;
+                        q.push(left[r]);
+                    }
             }
         }
     }
@@ -109,9 +109,9 @@ struct HopcroftKarp {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, m;
-    HopcroftKarp* G;
+    HopcroftKarp *G;
     while (cin >> n >> m && n != 0) {
         G = new HopcroftKarp(n, m);
         int k;
@@ -125,11 +125,11 @@ int main(int argc, char const *argv[]) {
         VB l, r;
         G->getMinimumVertexCover(l, r);
         for (int i = 0; i < n; ++i) if (l[i]) {
-            cout << " r" << (i+1);
-        }
+                cout << " r" << (i + 1);
+            }
         for (int j = 0; j < m; ++j) if (r[j]) {
-            cout << " c" << (j+1);
-        }
+                cout << " c" << (j + 1);
+            }
         cout << endl;
     }
 

@@ -31,7 +31,7 @@ struct TarjanSCC {
     VVI adj, components;
     VI idx, componentOf, st, low;
     VB inStack;
-    
+
     TarjanSCC (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b) {
@@ -45,12 +45,12 @@ struct TarjanSCC {
         st.push_back(v);
         inStack[v] = true;
 
-        for (auto w: adj[v]) {
+        for (auto w : adj[v]) {
             if (idx[w] == -1) {
                 index = DFS(w, index);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
-                low[v] = min(low[v], low[w]);                
+                low[v] = min(low[v], low[w]);
             }
         }
 
@@ -71,25 +71,25 @@ struct TarjanSCC {
 
     void buildSCC () {
         totalComponents = 0;
-        idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
+        idx = VI(n, -1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
         st.clear();
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i, 0);
-        }
+                DFS(i, 0);
+            }
     }
 
     /*
         Finds an asignment for a 2-SAT problem and stores in sol
         neg[i] is the inverse of i
     */
-    void find2SATSolution (VI &sol, VI &neg) {
+    void find2SATSolution (VI& sol, VI& neg) {
         sol = VI(n, -1);
-        for (auto comp: components) {
-            for (auto j: comp) if (sol[j] == -1) {
-                sol[j] = 1;
-                sol[neg[j]] = 0;
-            }
+        for (auto comp : components) {
+            for (auto j : comp) if (sol[j] == -1) {
+                    sol[j] = 1;
+                    sol[neg[j]] = 0;
+                }
         }
     }
 };
@@ -97,7 +97,7 @@ struct TarjanSCC {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, m;
     while (cin >> n >> m && n >= 1) {
         TarjanSCC T(n);
@@ -105,12 +105,12 @@ int main(int argc, char const *argv[]) {
         for (int i = 0; i < n; ++i) {
             string a, b;
             cin >> a >> b;
-            f[a+b] = i;
+            f[a + b] = i;
         }
         for (int i = 0; i < m; ++i) {
             string a, b, c, d;
             cin >> a >> b >> c >> d;
-            T.addEdge(f[a+b], f[c+d]);
+            T.addEdge(f[a + b], f[c + d]);
         }
         T.buildSCC();
         cout << sz(T.components) << endl;

@@ -22,11 +22,11 @@ typedef vector <VL> VVL;
 typedef vector <long double> VD;
 typedef vector <VD> VVD;
 
-void divisor(int N, VI &d) {
-    for (int i = 1; i*i <= N; ++i) if (N % i == 0) {
-        d.pb(i);
-        if (i * i != N)  d.pb(N / i);
-    }
+void divisor(int N, VI& d) {
+    for (int i = 1; i * i <= N; ++i) if (N % i == 0) {
+            d.pb(i);
+            if (i * i != N)  d.pb(N / i);
+        }
 }
 
 int main(int argc, char const *argv[]) {
@@ -37,9 +37,9 @@ int main(int argc, char const *argv[]) {
         int N = 0;
         VI x(n);
         for (int i = 0; i < n; ++i) {
-           cin >> x[i];
-           N += x[i];
-           x[i] = N;
+            cin >> x[i];
+            N += x[i];
+            x[i] = N;
         }
         VI d;
         divisor(N, d);
@@ -48,12 +48,12 @@ int main(int argc, char const *argv[]) {
         for (int i = sz(d) - 1; d[i] >= 3 && i >= 0 && ans == -1; i--) {
             map <int, int> cnt;
             for (int j = 0; j < n; ++j) {
-                cnt[x[j] % (N/d[i])] = cnt[x[j] % (N/d[i])] + 1;
+                cnt[x[j] % (N / d[i])] = cnt[x[j] % (N / d[i])] + 1;
             }
             for (map<int, int>::iterator it = cnt.begin(); it != cnt.end(); it++) if (it->y == d[i]) {
-                ans = n - d[i];
-                break;
-            }   
+                    ans = n - d[i];
+                    break;
+                }
         }
         cout << ans << endl;
     }

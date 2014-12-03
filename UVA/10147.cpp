@@ -55,7 +55,7 @@ struct DisjointSet {
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
-    DisjointSet* D;
+    DisjointSet *D;
 
     Kruskal (int n): n(n) {}
 
@@ -63,25 +63,25 @@ template <class T> struct Kruskal {
         edges.push_back(make_pair(d, make_pair(s, t)));
     }
 
-    T MST (vector <pair <T, PI>>* mst = NULL) {
+    T MST (vector <pair <T, PI>> *mst = NULL) {
         T ret = 0;
         D = new DisjointSet(n);
         sort(all(edges));
-        for (auto e: edges) if (D->Union(e.y.x, e.y.y)) {
-            ret += e.x;
-            if (mst && e.x >= 0) {
-                mst->push_back(e);
+        for (auto e : edges) if (D->Union(e.y.x, e.y.y)) {
+                ret += e.x;
+                if (mst && e.x >= 0) {
+                    mst->push_back(e);
+                }
             }
-        }
         return ret;
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
-    Kruskal<ll>* K;
+    Kruskal<ll> *K;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
         int n, m;
@@ -98,7 +98,7 @@ int main(int argc, char const *argv[]) {
         for (int i = 0; i < m; ++i) {
             int a, b;
             cin >> a >> b;
-            K->addEdge(a-1, b-1, -1);
+            K->addEdge(a - 1, b - 1, -1);
         }
 
         if (cs != 0) {
@@ -110,7 +110,7 @@ int main(int argc, char const *argv[]) {
         if (mst.empty()) {
             cout << "No new highways need" << endl;
         } else {
-            for (auto e: mst) {
+            for (auto e : mst) {
                 cout << e.y.x + 1 << ' ' << e.y.y + 1 << endl;
             }
         }

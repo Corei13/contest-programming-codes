@@ -32,9 +32,9 @@ template <class T, int n> struct Trie {
         if (it != end) {
             int i = value(it);
             if (!children) {
-                children = new Trie <T, n>* [n] ();
+                children = new Trie <T, n> *[n] ();
             }
-            if (!children[i]){
+            if (!children[i]) {
                 (*tail)++;
                 children[i] = this + (*tail - index);
                 children[i]->Init(tail);
@@ -65,9 +65,9 @@ template <class T, int n> struct Trie {
     void Print (int tab = 0) {
         cout << "Words: " << words << ", Prefixes: " << prefixes << ", Childrens:" << endl;
         for (int i = 0; i < n; ++i) if (children[i]) {
-            cout << setw(tab) << i << " -> ";
-            children[i]->Print(tab + 4);
-        }
+                cout << setw(tab) << i << " -> ";
+                children[i]->Print(tab + 4);
+            }
     }
 
     ~Trie () {
@@ -77,7 +77,7 @@ template <class T, int n> struct Trie {
     }
 };
 
-long long getMax (Trie <string, 2>* T, long long a, int i = 31) {
+long long getMax (Trie <string, 2> *T, long long a, int i = 31) {
     if (i == -1) {
         return 0;
     } else {
@@ -95,9 +95,9 @@ long long getMax (Trie <string, 2>* T, long long a, int i = 31) {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     Trie <string, 2> *root = new Trie <string, 2> [2 * 1024 * 1024] ();
-    
+
     int t;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {

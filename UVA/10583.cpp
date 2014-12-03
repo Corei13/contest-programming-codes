@@ -54,9 +54,9 @@ struct DisjointSet {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, m, cs = 0;
-    DisjointSet* D;
+    DisjointSet *D;
     while (cin >> n >> m && n) {
         D = new DisjointSet(n);
         for (int i = 0; i < m; ++i) {
@@ -66,8 +66,8 @@ int main(int argc, char const *argv[]) {
         }
         int religion = 0;
         for (int i = 0; i < n; ++i) if (D->Find(i) == i) {
-            religion++;
-        }
+                religion++;
+            }
         cout << "Case " << ++cs << ": " << religion << endl;
     }
 

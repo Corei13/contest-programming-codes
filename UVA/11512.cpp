@@ -51,9 +51,9 @@ template <class T, int n> struct StaticTrie {
         if (it != end) {
             int i = value(it);
             if (!children) {
-                children = new StaticTrie <T, n>* [n] ();
+                children = new StaticTrie <T, n> *[n] ();
             }
-            if (!children[i]){
+            if (!children[i]) {
                 (*tail)++;
                 children[i] = this + (*tail - index);
                 children[i]->Init(tail);
@@ -75,9 +75,9 @@ template <class T, int n> struct StaticTrie {
         cout << "maxrep: " << maxrep << ", Prefixes: " << prefixes << ", Childrens:" << endl;
         if (children) {
             for (int i = 0; i < n; ++i) if (children[i]) {
-                cout << setw(tab) << i["ACGT"] << " -> ";
-                children[i]->Print(tab + 4);
-            }
+                    cout << setw(tab) << i["ACGT"] << " -> ";
+                    children[i]->Print(tab + 4);
+                }
         }
     }
 
@@ -95,10 +95,10 @@ void Print (StaticTrie <string, 4> *T, string *s) {
         cout << *s << ' ' << T->prefixes << endl;
     } else if (T->children) {
         for (int i = 0; i < 4; ++i) if (T->children[i] && T->children[i]->maxrep == T->maxrep - 1) {
-            s->push_back(i["ACGT"]);
-            Print (T->children[i], s);
-            return;
-        }
+                s->push_back(i["ACGT"]);
+                Print (T->children[i], s);
+                return;
+            }
     } else while (true) {}
 }
 

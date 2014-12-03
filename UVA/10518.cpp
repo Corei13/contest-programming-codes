@@ -26,10 +26,10 @@ typedef vector<double> VD;
 typedef vector<VD> VVD;
 
 VVL mul (VVL a, VVL b, ll mod) {
-    return VVL{
-                VL{(a[0][0] * b[0][0] + a[0][1] * b[1][0]) % mod, (a[0][0] * b[0][1] + a[0][1] * b[1][1]) % mod},
-                VL{(a[1][0] * b[0][0] + a[1][1] * b[1][0]) % mod, (a[1][0] * b[0][1] + a[1][1] * b[1][1]) % mod}
-            };
+    return VVL {
+        VL{(a[0][0] * b[0][0] + a[0][1] * b[1][0]) % mod, (a[0][0] * b[0][1] + a[0][1] * b[1][1]) % mod},
+        VL{(a[1][0] * b[0][0] + a[1][1] * b[1][0]) % mod, (a[1][0] * b[0][1] + a[1][1] * b[1][1]) % mod}
+    };
 }
 
 VVL fpow (VVL a, ll p, ll mod) {
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[]) {
             cout << ((a[0][0] + a[0][1]) * 2LL + mod - 1LL) % mod << endl;
         }
     }
-    
-    
+
+
     return 0;
 }

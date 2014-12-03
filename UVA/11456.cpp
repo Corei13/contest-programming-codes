@@ -38,7 +38,7 @@ struct LIS {
 
     LIS (int n): n(n), a(n) {}
 
-    void buildLIS (int ord, VI &idx) {
+    void buildLIS (int ord, VI& idx) {
         VPI best;
         idx = VI(n, 0);
 
@@ -71,13 +71,13 @@ int main(int argc, char const *argv[]) {
 
         LIS L(n);
         VI inc, dec;
-        
+
         for (int i = 0; i < n; ++i) {
             cin >> L.a[i];
         }
         reverse(all(L.a));
         L.buildLIS(+1, inc);
-        
+
         L.buildLIS(-1, dec);
 
         int ans = 0;
@@ -86,6 +86,6 @@ int main(int argc, char const *argv[]) {
         }
         cout << ans << endl;
     }
-    
+
     return 0;
 }

@@ -26,7 +26,7 @@ typedef vector<VD> VVD;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
     cin >> t;
 
@@ -36,7 +36,7 @@ int main(int argc, char const *argv[]) {
         VPI hash(n, mp(0, 0));
         string s;
         getline(cin, s);
-        while(getline(cin, s) && s != "") {
+        while (getline(cin, s) && s != "") {
             stringstream ss(s);
             int a, b;
             ss >> a >> b;

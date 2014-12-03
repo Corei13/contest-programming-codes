@@ -55,7 +55,7 @@ struct DisjointSet {
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
-    DisjointSet* D;
+    DisjointSet *D;
 
     Kruskal (int n): n(n) {}
 
@@ -68,10 +68,10 @@ template <class T> struct Kruskal {
         T ret = 0;
         D = new DisjointSet(n);
         sort(all(edges));
-        for (auto e: edges) if (D->Union(e.y.x, e.y.y)) {
-            cnt++;
-            ret += e.x;
-        }
+        for (auto e : edges) if (D->Union(e.y.x, e.y.y)) {
+                cnt++;
+                ret += e.x;
+            }
         return cnt == n - 1 ? ret : -1;
     }
 };
@@ -81,7 +81,7 @@ int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
 
     int n, m;
-    Kruskal<int>* K;
+    Kruskal<int> *K;
     while (cin >> n >> m && n != 0) {
         K = new Kruskal<int>(n);
         map<string, int> f;

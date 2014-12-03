@@ -59,12 +59,12 @@ template <class T> struct PushRelabel {
         }
     }
 
-    void Push (Edge <T> &e) {
+    void Push (Edge <T>& e) {
         T amt = min(excess[e.from], e.cap - e.flow);
         if (dist[e.from] == dist[e.to] + 1 && amt > T(0)) {
             e.flow += amt;
             adj[e.to][e.index].flow -= amt;
-            excess[e.to] += amt;    
+            excess[e.to] += amt;
             excess[e.from] -= amt;
             Enqueue(e.to);
         }
@@ -72,25 +72,25 @@ template <class T> struct PushRelabel {
 
     void Gap (int k) {
         for (int v = 0; v < n; v++) if (dist[v] >= k) {
-            count[dist[v]]--;
-            dist[v] = max(dist[v], n);
-            count[dist[v]]++;
-            Enqueue(v);
-        }
+                count[dist[v]]--;
+                dist[v] = max(dist[v], n);
+                count[dist[v]]++;
+                Enqueue(v);
+            }
     }
 
     void Relabel (int v) {
         count[dist[v]]--;
         dist[v] = n;
-        for (auto &e: adj[v]) if (e.cap - e.flow > 0) {
-            dist[v] = min(dist[v], dist[e.to] + 1);
-        }
+        for (auto& e : adj[v]) if (e.cap - e.flow > 0) {
+                dist[v] = min(dist[v], dist[e.to] + 1);
+            }
         count[dist[v]]++;
         Enqueue(v);
     }
 
     void Discharge(int v) {
-        for (auto &e: adj[v]) {
+        for (auto& e : adj[v]) {
             if (excess[v] > 0) {
                 Push(e);
             } else {
@@ -100,7 +100,7 @@ template <class T> struct PushRelabel {
 
         if (excess[v] > 0) {
             if (count[dist[v]] == 1) {
-                Gap(dist[v]); 
+                Gap(dist[v]);
             } else {
                 Relabel(v);
             }
@@ -111,7 +111,7 @@ template <class T> struct PushRelabel {
         excess = VI(n, 0);
         active = vector <bool>(n, false);
         for (int i = 0; i < n; ++i) {
-            for (auto &e: adj[i]) {
+            for (auto& e : adj[i]) {
                 e.flow = 0;
             }
         }
@@ -121,8 +121,8 @@ template <class T> struct PushRelabel {
         dist = vector <int>(n, 0), count = vector <int>(n + 1, 0);
         B = vector <vector <int>>(n);
         b = 0;
-        
-        for (auto &e: adj[s]) {
+
+        for (auto& e : adj[s]) {
             excess[s] += e.cap;
         }
 
@@ -131,7 +131,7 @@ template <class T> struct PushRelabel {
             Enqueue(i);
         }
         active[t] = true;
-        
+
         while (b >= 0) {
             if (!B[b].empty()) {
                 int v = B[b].back();
@@ -186,11 +186,11 @@ template <class T> struct PushRelabel {
                                 } while (j != i);
 
                                 int restart = i;
-                                for(j = current[i]->to; j != i; j = e->to) {
+                                for (j = current[i]->to; j != i; j = e->to) {
                                     e = current[j];
-                                    if(rank[j] == WHITE || e->cap - e->flow == 0) {
+                                    if (rank[j] == WHITE || e->cap - e->flow == 0) {
                                         rank[current[j]->to] = WHITE;
-                                        if(rank[j] != WHITE) {
+                                        if (rank[j] != WHITE) {
                                             restart = j;
                                         }
                                     }
@@ -205,13 +205,13 @@ template <class T> struct PushRelabel {
                         }
                         current[i]++;
                     }
-                    if(current[i] == adj[i].end()) {
+                    if (current[i] == adj[i].end()) {
                         rank[i] = BLACK;
-                        if(i != s) {
+                        if (i != s) {
                             st.push_back(i);
                         }
 
-                        if(i != r) {
+                        if (i != r) {
                             i = prev[i];
                             current[i]++;
                         } else {
@@ -228,8 +228,8 @@ template <class T> struct PushRelabel {
 
             auto e = adj[i].begin();
 
-            while(excess[i] > 0) {
-                if(e->cap == 0 && e->cap - e->flow > 0 ) {
+            while (excess[i] > 0) {
+                if (e->cap == 0 && e->cap - e->flow > 0 ) {
                     T amt = min( excess[i], e->cap - e->flow );
                     e->flow += amt;
                     adj[e->to][e->index].flow -= amt;
@@ -254,7 +254,7 @@ template <class T> struct PushRelabel {
                 -1, otherwise
     */
 
-    T GetMinCut (int s, int t, vector <int> &cut) {
+    T GetMinCut (int s, int t, vector <int>& cut) {
         T ret = GetMaxFlow(s, t);
         PreflowToFlow(s, t);
         cut = vector <int> (n, -1);
@@ -263,27 +263,27 @@ template <class T> struct PushRelabel {
         Q.push(s);
         cut[s] = 0;
 
-        while(!Q.empty()) {
+        while (!Q.empty()) {
             int u = Q.front();
             Q.pop();
 
-            for (auto &e: adj[u]) if (cut[e.to] == -1 && e.cap - e.flow > 0) {
-                Q.push(e.to);
-                cut[e.to] = 0;
-            }
+            for (auto& e : adj[u]) if (cut[e.to] == -1 && e.cap - e.flow > 0) {
+                    Q.push(e.to);
+                    cut[e.to] = 0;
+                }
         }
 
         Q.push(t);
         cut[t] = 1;
 
-        while(!Q.empty()) {
+        while (!Q.empty()) {
             int u = Q.front();
             Q.pop();
 
-            for (auto &e: adj[u]) if (cut[e.to] == -1 && adj[e.to][e.index].cap - adj[e.to][e.index].flow > 0) {
-                Q.push(e.to);
-                cut[e.to] = 1;
-            }
+            for (auto& e : adj[u]) if (cut[e.to] == -1 && adj[e.to][e.index].cap - adj[e.to][e.index].flow > 0) {
+                    Q.push(e.to);
+                    cut[e.to] = 1;
+                }
         }
 
         return ret;
@@ -301,10 +301,10 @@ int main(int argc, char const *argv[]) {
     int n, m, k, s, t;
     while (cin >> n >> m >> k >> s >> t) {
         --s, --t;
-        
+
         int l = n + k;
         G = new PushRelabel <int> (n * (l + 1) + 2);
-        
+
         VPI edges;
 
         for (int i = 0; i < m; ++i) {
@@ -316,7 +316,7 @@ int main(int argc, char const *argv[]) {
 
         G->Init();
         for (int i = 1; i <= l; ++i) {
-            for (auto &e: edges) {
+            for (auto& e : edges) {
                 G->AddEdge((i - 1) * n + e.x, i * n + e.y, 1);
                 G->AddEdge((i - 1) * n + e.y, i * n + e.x, 1);
             }
@@ -332,19 +332,19 @@ int main(int argc, char const *argv[]) {
                 for (int u = 0; u < k; ++u) {
                     int current = n * (l + 1);
                     do {
-                        for (auto &e: G->adj[current]) if (e.flow > 0) {
-                            e.flow--;
-                            current = e.to;
-                            if ((e.to - e.from) % n != 0 && e.to % n != s) {
-                                path[e.to / n].push_back(make_pair(u, e.to % n));
+                        for (auto& e : G->adj[current]) if (e.flow > 0) {
+                                e.flow--;
+                                current = e.to;
+                                if ((e.to - e.from) % n != 0 && e.to % n != s) {
+                                    path[e.to / n].push_back(make_pair(u, e.to % n));
+                                }
+                                break;
                             }
-                            break;
-                        }
                     } while (current % n != t);
                 }
                 for (int j = 1; j <= i; ++j) {
                     cout << int(path[j].size());
-                    for (auto p: path[j]) {
+                    for (auto p : path[j]) {
                         cout << " " << p.x + 1 << " " << p.y + 1;
                     }
                     cout << endl;

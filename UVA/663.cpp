@@ -37,18 +37,18 @@ struct HopcroftKarp {
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 0; l < n; ++l) if (right[l] == m) {
-            dist[l] = 0;
-            q.push(l);
-        }
+                dist[l] = 0;
+                q.push(l);
+            }
 
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             if (dist[n] == -1 || dist[l] < dist[n]) {
                 for (int r = 0; r < m; r++) if (w[l][r] && dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    q.push(left[r]);
-                }
+                        dist[left[r]] = dist[l] + 1;
+                        q.push(left[r]);
+                    }
             }
         }
         return dist[n] != -1;
@@ -57,10 +57,10 @@ struct HopcroftKarp {
     bool dfs (int l) {
         if (l != n) {
             for (int r = 0; r < m; r++) if (w[l][r] && dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
-                left[r] = l;
-                right[l] = r;
-                return true;
-            }
+                    left[r] = l;
+                    right[l] = r;
+                    return true;
+                }
             dist[l] = -1;
             return false;
         }
@@ -73,8 +73,8 @@ struct HopcroftKarp {
         int ret = 0;
         while (bfs()) {
             for (int l = 0; l < n; ++l) if (right[l] == m && dfs(l)) {
-                ret++;
-            }
+                    ret++;
+                }
         }
         return ret;
     }
@@ -82,9 +82,9 @@ struct HopcroftKarp {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, cs = 0;
-    HopcroftKarp* G;
+    HopcroftKarp *G;
     while (cin >> n && n != 0) {
         vector<pair<PI, PI>> slide(n);
         VPI label(n);
@@ -108,12 +108,12 @@ int main(int argc, char const *argv[]) {
 
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < n; ++j) if (G->w[i][j]) {
-                G->w[i][j] = false;
-                if (G->getMatching() != n) {
-                    unique.push_back(i);
+                    G->w[i][j] = false;
+                    if (G->getMatching() != n) {
+                        unique.push_back(i);
+                    }
+                    G->w[i][j] = true;
                 }
-                G->w[i][j] = true;
-            }
         }
         G->getMatching();
         cout << "Heap " << ++cs << endl;
@@ -124,7 +124,7 @@ int main(int argc, char const *argv[]) {
             if (i != 0) {
                 cout << " ";
             }
-            cout << "(" << char(unique[i]+'A') << "," << G->right[unique[i]] + 1 << ")";
+            cout << "(" << char(unique[i] + 'A') << "," << G->right[unique[i]] + 1 << ")";
         }
         cout << endl << endl;
     }

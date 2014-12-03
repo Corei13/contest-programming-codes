@@ -51,33 +51,33 @@ struct BiconnectedComponents {
 
         int children = 0;
         bool ap = false;
-        for (auto w: adj[v.x]) if (w.y != v.y) {
-            if (idx[w.x] == -1) {
-                st.push_back(w.y);
-                index = DFS(w, index);
-                low[v.x] = min(low[v.x], low[w.x]);
-                if (low[w.x] > idx[v.x]) {
-                    bridges.push_back(w.y);
-                }
-                children++;
-                if (low[w.x] >= idx[v.x]) {
-                    if (v.y != -1 || children >= 2) {
-                        ap = true;
+        for (auto w : adj[v.x]) if (w.y != v.y) {
+                if (idx[w.x] == -1) {
+                    st.push_back(w.y);
+                    index = DFS(w, index);
+                    low[v.x] = min(low[v.x], low[w.x]);
+                    if (low[w.x] > idx[v.x]) {
+                        bridges.push_back(w.y);
                     }
-                    components.push_back(VI());
-                    totalComponents++;
-                    int u;
-                    do {
-                        u = st.back();
-                        st.pop_back();
-                        components.back().push_back(u);
-                    } while (u != w.y);
+                    children++;
+                    if (low[w.x] >= idx[v.x]) {
+                        if (v.y != -1 || children >= 2) {
+                            ap = true;
+                        }
+                        components.push_back(VI());
+                        totalComponents++;
+                        int u;
+                        do {
+                            u = st.back();
+                            st.pop_back();
+                            components.back().push_back(u);
+                        } while (u != w.y);
+                    }
+                } else if (idx[w.x] < idx[v.x]) {
+                    st.push_back(w.y);
+                    low[v.x] = min(low[v.x], idx[w.x]);
                 }
-            } else if (idx[w.x] < idx[v.x]) {
-                st.push_back(w.y);
-                low[v.x] = min(low[v.x], idx[w.x]);
             }
-        }
         if (ap) {
             cutVertices.push_back(v.x);
         }
@@ -93,16 +93,16 @@ struct BiconnectedComponents {
         totalComponents++;
 
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(make_pair(i, -1), 0);
-        }
+                DFS(make_pair(i, -1), 0);
+            }
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, m;
-    BiconnectedComponents* G;
+    BiconnectedComponents *G;
     while (cin >> n >> m && n != 0) {
         G = new BiconnectedComponents(n);
         for (int i = 0; i < m; ++i) {
@@ -112,12 +112,12 @@ int main(int argc, char const *argv[]) {
         }
         G->buildBCC();
         VPI bridges;
-        for (auto i: G->bridges) {
+        for (auto i : G->bridges) {
             bridges.push_back(G->edges[i]);
         }
         sort(all(bridges));
         cout << sz(bridges);
-        for (auto e: bridges) {
+        for (auto e : bridges) {
             cout << ' ' << e.x << ' ' << e.y;
         }
         cout << endl;

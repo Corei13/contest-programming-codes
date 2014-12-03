@@ -28,7 +28,7 @@ typedef pair<ll, ll> PI;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     map <string, string> f;
 
     f["HELLO"] = "ENGLISH";
@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
     f["BONJOUR"] = "FRENCH";
     f["CIAO"] = "ITALIAN";
     f["ZDRAVSTVUJTE"] = "RUSSIAN";
-    
+
     int cs = 0;
     string s;
     while (cin >> s && s != "#") {

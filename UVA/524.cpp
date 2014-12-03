@@ -22,7 +22,7 @@ typedef vector <bool> VB;
 typedef vector <long double> VD;
 typedef vector <VD> VVD;
 
-void backtrack (int i, int n, int mask, VI &a, VB &isPrime) {
+void backtrack (int i, int n, int mask, VI& a, VB& isPrime) {
     if (i == n) {
         if (isPrime[a.front() + a.back()]) {
             for (int j = 0; j < n; ++j) {
@@ -31,22 +31,22 @@ void backtrack (int i, int n, int mask, VI &a, VB &isPrime) {
         }
     } else {
         for (int j = 0; j < n; ++j) if (!(mask & (1 << j)) && isPrime[a.back() + j + 1]) {
-            a.push_back(j + 1);
-            backtrack(i + 1, n, mask | (1 << j), a, isPrime);
-            a.pop_back();
-        }
+                a.push_back(j + 1);
+                backtrack(i + 1, n, mask | (1 << j), a, isPrime);
+                a.pop_back();
+            }
     }
 }
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     VB isPrime(32, false);
     for (int n = 2; n < 32; ++n) {
         isPrime[n] = true;
         for (int i = 2; i < n; ++i) if (n % i == 0) {
-            isPrime[n] = false;
-        }
+                isPrime[n] = false;
+            }
     }
 
     int n, cs = 0;
@@ -57,6 +57,6 @@ int main(int argc, char const *argv[]) {
         cout << "Case " << ++cs << ":" << endl;
         backtrack(1, n, 1, a, isPrime);
     }
-    
+
     return 0;
 }

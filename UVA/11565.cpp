@@ -29,7 +29,7 @@ bool check (ll x, ll y, ll z, ll a, ll c) {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     VVL div (10000 + 1);
     for (int d = 1; d <= 10000; ++d) {
         for (int n = d * d; n <= 10000; n += d) {
@@ -45,7 +45,7 @@ int main(int argc, char const *argv[]) {
         vector <pair <int, PI>> sol;
         for (auto x : div[xyz]) {
             ll yz = xyz / x;
-            for (auto y: div[yz]) {
+            for (auto y : div[yz]) {
                 ll z = yz / y;
                 if (check (+x, +y, +z, a, c)) sol.pb (mp(+x, mp(+y, +z)));
                 if (check (-x, -y, +z, a, c)) sol.pb (mp(-x, mp(-y, +z)));
@@ -61,6 +61,6 @@ int main(int argc, char const *argv[]) {
         }
 
     }
-    
+
     return 0;
 }

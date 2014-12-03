@@ -30,8 +30,8 @@ int main(int argc, char const *argv[]) {
         {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31}
     };
     for (int i = 0; i < 12; ++i) {
-        s[0][i+1] += s[0][i];
-        s[1][i+1] += s[1][i];
+        s[0][i + 1] += s[0][i];
+        s[1][i + 1] += s[1][i];
     }
     int n;
     while (cin >> n && n != 0) {

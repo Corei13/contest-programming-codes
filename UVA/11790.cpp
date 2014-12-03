@@ -32,10 +32,10 @@ int main(int argc, char const *argv[]) {
         cin >> n;
 
         VI h(n), w(n), inc(n), dec(n);
-        for (auto &a: h) {
+        for (auto& a : h) {
             cin >> a;
         }
-        for (auto &a: w) {
+        for (auto& a : w) {
             cin >> a;
         }
         for (int i = 0; i < n; ++i) {
@@ -49,10 +49,10 @@ int main(int argc, char const *argv[]) {
             }
         }
         int il = 0, dl = 0;
-        for (auto l: inc) {
+        for (auto l : inc) {
             il = max(il, l);
         }
-        for (auto l: dec) {
+        for (auto l : dec) {
             dl = max(dl, l);
         }
         cout << "Case " << cs + 1 << ". ";
@@ -62,6 +62,6 @@ int main(int argc, char const *argv[]) {
             cout << "Decreasing (" << dl << "). Increasing (" << il << ")." << endl;
         }
     }
-    
+
     return 0;
 }

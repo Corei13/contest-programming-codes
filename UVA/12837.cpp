@@ -37,9 +37,9 @@ template <class T, int n> struct Trie {
 
     bool Extend (int i) {
         if (!children) {
-            children = new Trie <T, n>* [n] ();
+            children = new Trie <T, n> *[n] ();
         }
-        if (!children[i]){
+        if (!children[i]) {
             children[i] = new Trie <T, n> ();
             return true;
         }
@@ -74,8 +74,8 @@ template <class T, int n> struct Trie {
     ~Trie () {
         if (children) {
             for (int i = 0; i < n; ++i) if (children[i]) {
-                delete children[i];
-            }
+                    delete children[i];
+                }
             delete[] children;
         }
     }
@@ -124,7 +124,7 @@ int main() {
                     for (int k = i, l = 0; k <= x; k++) {
                         if (tmp->children && tmp->children[s[k] - 'a']) {
                             tmp = tmp->children[s[k] - 'a'];
-                            
+
                             if (tmp->children[26]) {
                                 auto nxt = tmp->children[26];
                                 int y = max (i, j - K + 1);

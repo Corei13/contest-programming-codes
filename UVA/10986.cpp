@@ -38,7 +38,7 @@ template <class T> struct Dijkstra {
         }
     }
 
-    void buildTree(int s, vector<T> &dist) {
+    void buildTree(int s, vector<T>& dist) {
         dist = vector <T>(n, inf);
         priority_queue <pair <T, vector<pair <T, int>>>, VPI, greater<pair <T, int>>> q;
 
@@ -47,19 +47,19 @@ template <class T> struct Dijkstra {
         do {
             PI u = q.top();
             q.pop();
-            for (auto e: adj[u.y]) if(u.x + e.x < dist[e.y]) {
-                dist[e.y] = u.x + e.x;
-                q.push(make_pair(dist[e.y], e.y));
-            }
+            for (auto e : adj[u.y]) if (u.x + e.x < dist[e.y]) {
+                    dist[e.y] = u.x + e.x;
+                    q.push(make_pair(dist[e.y], e.y));
+                }
         } while (!q.empty());
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
-    Dijkstra <ll>* D;
+    Dijkstra <ll> *D;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
         int n, m, s, t;
@@ -72,7 +72,7 @@ int main(int argc, char const *argv[]) {
         }
         VL dist;
         D->buildTree(s, dist);
-        cout << "Case #" << cs + 1<< ": ";
+        cout << "Case #" << cs + 1 << ": ";
         if (dist[t] == inf) {
             cout << "unreachable" << endl;
         } else {

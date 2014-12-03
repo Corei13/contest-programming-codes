@@ -38,11 +38,11 @@ int main(int argc, char const *argv[]) {
         int t;
         cin >> t;
         int i = 0;
-        for (auto a: s) if (2 * a <= t && s.find(t - a) != s.end()) {
-            i = max(i, a);
-        }
+        for (auto a : s) if (2 * a <= t && s.find(t - a) != s.end()) {
+                i = max(i, a);
+            }
         cout << "Peter should buy books whose prices are " << i << " and " << t - i << "." << endl << endl;
     }
-    
+
     return 0;
 }

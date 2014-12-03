@@ -28,7 +28,7 @@ typedef pair<ll, ll> PI;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
     cin >> t;
     cout << "Lumberjacks:" << endl;
@@ -41,14 +41,14 @@ int main(int argc, char const *argv[]) {
         sort(all(ord));
         string ans = "Ordered";
         for (int i = 0; i < 10; ++i) if (ord[i] != x[i]) {
-            ans = "Unordered";
-        }
+                ans = "Unordered";
+            }
         if (ans == "Unordered") {
             ans = "Ordered";
             reverse(all(ord));
             for (int i = 0; i < 10; ++i) if (ord[i] != x[i]) {
-                ans = "Unordered";
-            }
+                    ans = "Unordered";
+                }
         }
         cout << ans << endl;
     }

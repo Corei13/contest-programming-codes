@@ -25,7 +25,7 @@ typedef vector<VPI> VVPI;
 typedef vector<double> VD;
 typedef vector<VD> VVD;
 
-void stableMatching (int n, VVI &maleRank, VVI &femaleRank, VI &wife) {
+void stableMatching (int n, VVI& maleRank, VVI& femaleRank, VI& wife) {
     // a male m prefers w to w' if maleRank[m][w] < maleRank[m][w']
     // returns male-optimal matching
 
@@ -70,14 +70,14 @@ int main(int argc, char const *argv[]) {
             for (int i = 0; i < n; ++i) {
                 int m;
                 cin >> m;
-                frank[w][m-1] = i;
+                frank[w][m - 1] = i;
             }
         }
         for (int m = 0; m < n; ++m) {
             for (int i = 0; i < n; ++i) {
                 int w;
                 cin >> w;
-                mrank[m][w-1] = i;
+                mrank[m][w - 1] = i;
             }
         }
         VI match;

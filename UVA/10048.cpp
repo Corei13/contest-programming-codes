@@ -27,7 +27,7 @@ const ll inf = 2000000000;
 struct Dijkstra {
     int n;
     VVPI adj;
-    
+
     Dijkstra (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b, ll d) {
@@ -35,7 +35,7 @@ struct Dijkstra {
         adj[b].push_back(make_pair(d, a));
     }
 
-    void buildTree(int s, VL &dist) {
+    void buildTree(int s, VL& dist) {
         dist = VL(n, inf);
         priority_queue <PI, VPI, greater<PI>> q;
 
@@ -44,21 +44,21 @@ struct Dijkstra {
         do {
             PI u = q.top();
             q.pop();
-            for (auto e: adj[u.y]) if(max(u.x, e.x) < dist[e.y]) {
-                dist[e.y] = max(u.x, e.x);
-                q.push(make_pair(dist[e.y], e.y));
-            }
+            for (auto e : adj[u.y]) if (max(u.x, e.x) < dist[e.y]) {
+                    dist[e.y] = max(u.x, e.x);
+                    q.push(make_pair(dist[e.y], e.y));
+                }
         } while (!q.empty());
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int cs = 0;
     int n, m, q;
 
-    while(cin >> n >> m >> q && n != 0) {
+    while (cin >> n >> m >> q && n != 0) {
         VVL dist(n, VL(n, inf));
         for (int i = 0; i < m; ++i) {
             int a, b, d;

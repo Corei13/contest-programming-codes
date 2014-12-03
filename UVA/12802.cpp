@@ -32,15 +32,15 @@ bool check (string n) {
             return true;
         }
     }
-    for (int i = 0; i < sz(n); ++i) if (n[i] != n[sz(n)-i-1]) {
-        return true;
-    }
+    for (int i = 0; i < sz(n); ++i) if (n[i] != n[sz(n) - i - 1]) {
+            return true;
+        }
     return false;
 }
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     string n;
     do {
         cin >> n;

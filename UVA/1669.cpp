@@ -35,11 +35,11 @@ VVPI adj;
 
 PI dfs (int i, ll w, int p) { // returns <child, answer for tree>
     PI ret = make_pair(0, 0);
-    for (auto u: adj[i]) if (u.x != p) {
-        PI res = dfs(u.x, u.y, i);
-        ret.x += res.x;
-        ret.y += res.y;
-    }
+    for (auto u : adj[i]) if (u.x != p) {
+            PI res = dfs(u.x, u.y, i);
+            ret.x += res.x;
+            ret.y += res.y;
+        }
     ret.x += 1;
     ret.y += w * (ll) min(ret.x, n - ret.x);
     return ret;
@@ -63,6 +63,6 @@ int main(int argc, char const *argv[]) {
         }
         cout << "Case #" << cs + 1 << ": " << 2LL * dfs(0, 0, -1).y << endl;
     }
-    
+
     return 0;
 }

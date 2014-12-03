@@ -28,7 +28,7 @@ typedef pair<ll, ll> PI;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, p, cs = 0;
     while (cin >> n >> p && n != 0) {
         string dummy, name, best;

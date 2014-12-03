@@ -23,14 +23,14 @@ typedef vector <string> VS;
 typedef vector <long double> VD;
 typedef vector <VD> VVD;
 
-void backtrack (int curr, int k, VI &seq, VI &s) {
+void backtrack (int curr, int k, VI& seq, VI& s) {
     if (sz(seq) == k) {
         for (int i = 0; i < k; ++i) {
             cout << s[seq[i]] << (i + 1 == k ? "\n" : " ");
         }
         return;
     }
-    
+
     for (int i = curr; i < sz(s); ++i) {
         seq.push_back(i);
         backtrack(i + 1, k, seq, s);
@@ -47,12 +47,12 @@ int main(int argc, char const *argv[]) {
             cout << endl;
         }
         VI s(n);
-        for (auto &a: s) {
+        for (auto& a : s) {
             cin >> a;
         }
         VI seq;
         backtrack(0, 6, seq, s);
     }
-    
+
     return 0;
 }

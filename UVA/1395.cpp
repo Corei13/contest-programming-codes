@@ -56,7 +56,7 @@ struct DisjointSet {
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
-    DisjointSet* D;
+    DisjointSet *D;
 
     Kruskal (int n): n(n) {}
 
@@ -92,7 +92,7 @@ int main(int argc, char const *argv[]) {
         for (int i = 0; i < m; ++i) {
             int a, b, d;
             cin >> a >> b >> d;
-            K->addEdge(a-1, b-1, d);
+            K->addEdge(a - 1, b - 1, d);
         }
         int ans = 1000000000;
         for (int i = 0; i < m; ++i) {
@@ -103,6 +103,6 @@ int main(int argc, char const *argv[]) {
         }
         cout << (ans == 1000000000 ? -1 : ans) << endl;
     }
-    
+
     return 0;
 }

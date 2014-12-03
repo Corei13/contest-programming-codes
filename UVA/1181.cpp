@@ -40,25 +40,25 @@ int main(int argc, char const *argv[]) {
             for (int j = -1; j < sz(b); ++j) {
                 for (int k = 0; k < sz(c); ++k) {
                     if (i >= 0) {
-                        dp[0][k+1][i+1][j+1] = dp[0][k+1][i][j+1];
+                        dp[0][k + 1][i + 1][j + 1] = dp[0][k + 1][i][j + 1];
                         if (a[i] == c[k]) {
-                            dp[0][k+1][i+1][j+1] += (dp[0][k][i][j+1] + dp[1][k][i][j+1]);
+                            dp[0][k + 1][i + 1][j + 1] += (dp[0][k][i][j + 1] + dp[1][k][i][j + 1]);
                         }
                     }
                     if (j >= 0) {
-                        dp[1][k+1][i+1][j+1] = dp[1][k+1][i+1][j];
+                        dp[1][k + 1][i + 1][j + 1] = dp[1][k + 1][i + 1][j];
                         if (b[j] == c[k]) {
-                            dp[1][k+1][i+1][j+1] += (dp[0][k][i+1][j] + dp[1][k][i+1][j]);
+                            dp[1][k + 1][i + 1][j + 1] += (dp[0][k][i + 1][j] + dp[1][k][i + 1][j]);
                         }
                     }
 
-                    dp[0][k+1][i+1][j+1] %= mod;
-                    dp[1][k+1][i+1][j+1] %= mod;
+                    dp[0][k + 1][i + 1][j + 1] %= mod;
+                    dp[1][k + 1][i + 1][j + 1] %= mod;
                 }
             }
         }
         cout << (dp[0][c.size()][a.size()][b.size()] + dp[1][c.size()][a.size()][b.size()]) % mod << endl;
     }
-    
+
     return 0;
 }

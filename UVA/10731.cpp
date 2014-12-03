@@ -32,7 +32,7 @@ struct TarjanSCC {
     VS   components;
     VI idx, componentOf, st, low;
     VB inStack;
-    
+
     TarjanSCC (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b) {
@@ -46,12 +46,12 @@ struct TarjanSCC {
         st.push_back(v);
         inStack[v] = true;
 
-        for (auto w: adj[v]) {
+        for (auto w : adj[v]) {
             if (idx[w] == -1) {
                 DFS(w);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
-                low[v] = min(low[v], low[w]);                
+                low[v] = min(low[v], low[w]);
             }
         }
 
@@ -72,18 +72,18 @@ struct TarjanSCC {
 
     void buildSCC () {
         index = 0, totalComponents = 0;
-        idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
+        idx = VI(n, -1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
         st.clear();
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i);
-        }
+                DFS(i);
+            }
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, cs = 0;
     while (cin >> n && n != 0) {
         TarjanSCC T(26);
@@ -92,11 +92,11 @@ int main(int argc, char const *argv[]) {
             char a[5], x;
             for (int j = 0; j < 5; j++) {
                 cin >> a[j];
-                valid[a[j]-'A'] = true;
+                valid[a[j] - 'A'] = true;
             }
             cin >> x;
             for (int j = 0; j < 5; j++) {
-                T.addEdge(x-'A', a[j]-'A');
+                T.addEdge(x - 'A', a[j] - 'A');
             }
         }
         T.buildSCC();
@@ -106,13 +106,13 @@ int main(int argc, char const *argv[]) {
         }
 
         sort(all(T.components));
-        for (auto s: T.components) if (valid[s.front()-'A']) {
-            for (auto c: s) {
-                if (c != s.front()) cout << ' ';
-                cout << c;
+        for (auto s : T.components) if (valid[s.front() - 'A']) {
+                for (auto c : s) {
+                    if (c != s.front()) cout << ' ';
+                    cout << c;
+                }
+                cout << endl;
             }
-            cout << endl;
-        }
     }
 
     return 0;

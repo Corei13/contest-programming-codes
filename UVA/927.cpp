@@ -32,7 +32,7 @@ int main(int argc, char const *argv[]) {
         cin >> n;
 
         VL a(n + 1);
-        for (auto &c: a) {
+        for (auto& c : a) {
             cin >> c;
         }
         reverse(all(a));
@@ -41,12 +41,12 @@ int main(int argc, char const *argv[]) {
         r = 2.0 * k / d;
         ll m = ceil(-0.5 + sqrt(0.25 + r));
         ll ans = 0;
-        for (auto c: a) {
+        for (auto c : a) {
             ans *= m;
             ans += c;
         }
         cout << ans << endl;
     }
-    
+
     return 0;
 }

@@ -36,23 +36,23 @@ struct HopcroftKarp {
     void addEdge (int l, int r) {
         adj[l].push_back(r);
     }
-    
+
     bool bfs () {
         queue <int> q;
         dist = VI(n + 1, -1);
         for (int l = 0; l < n; ++l) if (right[l] == m) {
-            dist[l] = 0;
-            q.push(l);
-        }
+                dist[l] = 0;
+                q.push(l);
+            }
 
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             if (dist[n] == -1 || dist[l] < dist[n]) {
-                for (auto r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    q.push(left[r]);
-                }
+                for (auto r : adj[l]) if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        q.push(left[r]);
+                    }
             }
         }
         return dist[n] != -1;
@@ -60,11 +60,11 @@ struct HopcroftKarp {
 
     bool dfs (int l) {
         if (l != n) {
-            for (auto r: adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
-                left[r] = l;
-                right[l] = r;
-                return true;
-            }
+            for (auto r : adj[l]) if (dist[left[r]] == dist[l] + 1 && dfs(left[r])) {
+                    left[r] = l;
+                    right[l] = r;
+                    return true;
+                }
             dist[l] = -1;
             return false;
         }
@@ -77,8 +77,8 @@ struct HopcroftKarp {
         int ret = 0;
         while (bfs()) {
             for (int l = 0; l < n; ++l) if (right[l] == m && dfs(l)) {
-                ret++;
-            }
+                    ret++;
+                }
         }
         return ret;
     }
@@ -86,7 +86,7 @@ struct HopcroftKarp {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
     HopcroftKarp *G;
     cin >> t;
@@ -95,12 +95,12 @@ int main(int argc, char const *argv[]) {
         int n, m;
         cin >> n;
         VI a(n);
-        for (auto &i: a) {
+        for (auto& i : a) {
             cin >> i;
         }
         cin >> m;
         VI b(m);
-        for (auto &i: b) {
+        for (auto& i : b) {
             cin >> i;
         }
         G = new HopcroftKarp(n, m);

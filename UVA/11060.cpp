@@ -40,20 +40,20 @@ struct TopSort {
     void sort () {
         VI in(n, 0);
         for (int i = 0; i < n; ++i) {
-            for (auto j: adj[i]) {
+            for (auto j : adj[i]) {
                 in[j]++;
             }
         }
         sorted.clear();
         set<int> s;
 
-        for (int i = 0; i < n; ++i) if(in[i] == 0) {
-            s.insert(i);
-        }
+        for (int i = 0; i < n; ++i) if (in[i] == 0) {
+                s.insert(i);
+            }
         while (!s.empty()) {
             auto it = s.begin();
             sorted.push_back(*it);
-            for (auto i: adj[*it]) {
+            for (auto i : adj[*it]) {
                 --in[i];
                 if (in[i] == 0) {
                     s.insert(i);
@@ -66,7 +66,7 @@ struct TopSort {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, cs = 0;
     while (cin >> n) {
         TopSort T(n);
@@ -87,7 +87,7 @@ int main(int argc, char const *argv[]) {
         }
         T.sort();
         cout << "Case #" << ++cs << ": Dilbert should drink beverages in this order:";
-        for (auto i: T.sorted) {
+        for (auto i : T.sorted) {
             cout << " " << s[i];
         }
         cout << "." << endl << endl;

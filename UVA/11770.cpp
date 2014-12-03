@@ -32,7 +32,7 @@ struct TarjanSCC {
     VS   components;
     VI idx, componentOf, st, low;
     VB inStack;
-    
+
     TarjanSCC (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b) {
@@ -46,12 +46,12 @@ struct TarjanSCC {
         st.push_back(v);
         inStack[v] = true;
 
-        for (auto w: adj[v]) {
+        for (auto w : adj[v]) {
             if (idx[w] == -1) {
                 DFS(w);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
-                low[v] = min(low[v], low[w]);                
+                low[v] = min(low[v], low[w]);
             }
         }
 
@@ -72,18 +72,18 @@ struct TarjanSCC {
 
     void buildSCC () {
         index = 0, totalComponents = 0;
-        idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
+        idx = VI(n, -1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
         st.clear();
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i);
-        }
+                DFS(i);
+            }
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t, n, m;
     cin >> t;
     for (int cs = 0; cs < t; cs++) {
@@ -92,22 +92,22 @@ int main(int argc, char const *argv[]) {
         for (int i = 0; i < m; ++i) {
             int a, b;
             cin >> a >> b;
-            T.addEdge(a-1, b-1);
+            T.addEdge(a - 1, b - 1);
         }
         T.buildSCC();
         VB root(T.totalComponents, true);
 
         for (int i = 0; i < n; i++) {
-            for (auto j: T.adj[i]) if (T.componentOf[i] != T.componentOf[j]) {
-                root[T.componentOf[j]] = false;
-            }
+            for (auto j : T.adj[i]) if (T.componentOf[i] != T.componentOf[j]) {
+                    root[T.componentOf[j]] = false;
+                }
         }
 
         int ans = 0;
-        for (auto r: root) if (r) {
-            ans++;
-        }
-        cout << "Case " << cs+1 << ": " << ans << endl;
+        for (auto r : root) if (r) {
+                ans++;
+            }
+        cout << "Case " << cs + 1 << ": " << ans << endl;
     }
 
     return 0;

@@ -54,7 +54,7 @@ struct DisjointSet {
 struct Kruskal {
     int n;
     vector <pair <double, PI>> edges;
-    DisjointSet* D;
+    DisjointSet *D;
 
     Kruskal (int n): n(n), D(new DisjointSet(n)) {}
 
@@ -65,18 +65,18 @@ struct Kruskal {
     double MST () {
         double ret = 0.0;
         sort(all(edges));
-        for (auto e: edges) if (D->Union(e.y.x, e.y.y)) {
-            ret += e.x;
-        }
+        for (auto e : edges) if (D->Union(e.y.x, e.y.y)) {
+                ret += e.x;
+            }
         return ret;
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n;
-    Kruskal* K;
+    Kruskal *K;
 
     while (cin >> n) {
         VD x(n), y(n);
@@ -85,7 +85,7 @@ int main(int argc, char const *argv[]) {
         for (int i = 0; i < n; ++i) {
             cin >> x[i] >> y[i];
             for (int j = 0; j < i; ++j) {
-                K->addEdge(i, j, sqrt((x[i]-x[j]) * (x[i]-x[j]) + (y[i]-y[j]) * (y[i]-y[j])));
+                K->addEdge(i, j, sqrt((x[i] - x[j]) * (x[i] - x[j]) + (y[i] - y[j]) * (y[i] - y[j])));
             }
         }
 

@@ -33,20 +33,20 @@ int main(int argc, char const *argv[]) {
 
         for (int l = 1; l <= n; ++l) {
             for (int i = 0, j = l; j <= n; ++i, ++j) {
-                dp[i][j] = s[i] == s[j-1] ? dp[i+1][j-1] : min(dp[i+1][j], dp[i][j-1]) + 1;
+                dp[i][j] = s[i] == s[j - 1] ? dp[i + 1][j - 1] : min(dp[i + 1][j], dp[i][j - 1]) + 1;
             }
         }
 
         string head, tail;
 
         for (int i = 0, j = n; i < j;) {
-            if (s[i] == s[j-1]) {
+            if (s[i] == s[j - 1]) {
                 head += s[i];
                 if (i != j - 1) {
                     tail += s[j - 1];
                 }
                 i++, j--;
-            } else if (dp[i][j] == dp[i+1][j] + 1) {
+            } else if (dp[i][j] == dp[i + 1][j] + 1) {
                 head += s[i];
                 tail += s[i];
                 i++;
@@ -57,9 +57,9 @@ int main(int argc, char const *argv[]) {
             }
         }
         reverse(all(tail));
-        
+
         cout << dp[0][n] << ' ' << head + tail << endl;
     }
-    
+
     return 0;
 }

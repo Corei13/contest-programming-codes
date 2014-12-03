@@ -63,10 +63,10 @@ struct DisjointSet {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n;
     cin >> n;
-    DisjointSet* D = new DisjointSet(n);
+    DisjointSet *D = new DisjointSet(n);
     enum {
         done,
         setFriends,
@@ -75,34 +75,34 @@ int main(int argc, char const *argv[]) {
         areEnemies
     } cmd;
     int c, x, y;
-    while (cin >> c >> x >> y){
+    while (cin >> c >> x >> y) {
         switch (c) {
-            case setFriends:
-                if(!D->Union(x, y, 0)) {
-                    cout << -1 << endl;
-                }
-                break;
-            case setEnemies:
-                if(!D->Union(x, y, 1)) {
-                    cout << -1 << endl;
-                }
-                break;
-            case areFriends:
-                if(D->Find(x) == D->Find(y) && (D->parity[x] ^ D->parity[y]) == 0) {
-                    cout << 1 << endl;
-                } else {
-                    cout << 0 << endl;
-                }
-                break;
-            case areEnemies:
-                if(D->Find(x) == D->Find(y) && (D->parity[x] ^ D->parity[y]) == 1) {
-                    cout << 1 << endl;
-                } else {
-                    cout << 0 << endl;
-                }
-                break;
-            default:
-                return 0;
+        case setFriends:
+            if (!D->Union(x, y, 0)) {
+                cout << -1 << endl;
+            }
+            break;
+        case setEnemies:
+            if (!D->Union(x, y, 1)) {
+                cout << -1 << endl;
+            }
+            break;
+        case areFriends:
+            if (D->Find(x) == D->Find(y) && (D->parity[x] ^ D->parity[y]) == 0) {
+                cout << 1 << endl;
+            } else {
+                cout << 0 << endl;
+            }
+            break;
+        case areEnemies:
+            if (D->Find(x) == D->Find(y) && (D->parity[x] ^ D->parity[y]) == 1) {
+                cout << 1 << endl;
+            } else {
+                cout << 0 << endl;
+            }
+            break;
+        default:
+            return 0;
         }
     }
 }

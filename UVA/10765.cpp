@@ -49,22 +49,22 @@ struct CutVerticesAndBridges {
 
         int children = 0;
         bool ap = false;
-        for (auto w: adj[v.x]) if (w.y != v.y) {
-            if (idx[w.x] == -1) {
-                index = DFS(w, index);
-                low[v.x] = min(low[v.x], low[w.x]);
-                if (low[w.x] > idx[v.x]) {
-                    bridges.push_back(w.x);
+        for (auto w : adj[v.x]) if (w.y != v.y) {
+                if (idx[w.x] == -1) {
+                    index = DFS(w, index);
+                    low[v.x] = min(low[v.x], low[w.x]);
+                    if (low[w.x] > idx[v.x]) {
+                        bridges.push_back(w.x);
+                    }
+                    children++;
+                    if ((v.y == -1 && children >= 2) || (v.y != -1 && low[w.x] >= idx[v.x])) {
+                        ap = true;
+                        pigeon[v.x].x++;
+                    }
+                } else {
+                    low[v.x] = min(low[v.x], idx[w.x]);
                 }
-                children++;
-                if ((v.y == -1 && children >= 2) || (v.y != -1 && low[w.x] >= idx[v.x])) {
-                    ap = true;
-                    pigeon[v.x].x++;
-                }
-            } else {
-                low[v.x] = min(low[v.x], idx[w.x]);
             }
-        }
         if (ap) {
             cutVertices.push_back(v.x);
         }
@@ -72,24 +72,24 @@ struct CutVerticesAndBridges {
     }
 
     void build () {
-        idx = VI(n,-1), low = VI(n);
+        idx = VI(n, -1), low = VI(n);
         cutVertices.clear();
         bridges.clear();
         pigeon = VPI(n);
         for (int i = 0; i < n; ++i) {
             pigeon[i] = make_pair(1, -i);
         }
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(make_pair(i, -1), 0);
-        }
+                DFS(make_pair(i, -1), 0);
+            }
     }
 };
 
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, k;
     CutVerticesAndBridges *C;
     while (cin >> n >> k && n != 0) {
@@ -105,6 +105,6 @@ int main(int argc, char const *argv[]) {
         }
         cout << endl;
     }
-    
+
     return 0;
 }

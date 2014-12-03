@@ -55,11 +55,11 @@ struct DisjointSet {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
-    DisjointSet* D;
+
+    DisjointSet *D;
     int t;
     cin >> t;
-    
+
     for (int cs = 0; cs < t; ++cs) {
         char n;
         cin >> n;

@@ -37,7 +37,7 @@ int main(int argc, char const *argv[]) {
         VVI dp(n + 2, VI(n + 2, 0)), r(n + 1, VI(n + 1));
         for (int i = 1; i <= n; ++i) {
             cin >> s[i];
-            s[i] += s[i-1];
+            s[i] += s[i - 1];
         }
 
         for (int i = 1; i <= n; ++i) {
@@ -47,9 +47,9 @@ int main(int argc, char const *argv[]) {
         for (int l = 2; l <= n; ++l) {
             for (int i = 1, j = l; j <= n; ++i, ++j) {
                 dp[i][j] = inf;
-                for (int k = r[i][j-1]; k <= r[i+1][j]; ++k) {
-                    if (dp[i][k-1] + dp[k+1][j] + (s[j] - s[k]) + (s[k-1] - s[i-1]) < dp[i][j]) {
-                        dp[i][j] = dp[i][k-1] + dp[k+1][j] + (s[j] - s[k]) + (s[k-1] - s[i-1]);
+                for (int k = r[i][j - 1]; k <= r[i + 1][j]; ++k) {
+                    if (dp[i][k - 1] + dp[k + 1][j] + (s[j] - s[k]) + (s[k - 1] - s[i - 1]) < dp[i][j]) {
+                        dp[i][j] = dp[i][k - 1] + dp[k + 1][j] + (s[j] - s[k]) + (s[k - 1] - s[i - 1]);
                         r[i][j] = k;
                     }
                 }
@@ -58,6 +58,6 @@ int main(int argc, char const *argv[]) {
 
         cout << dp[1][n] << endl;
     }
-    
+
     return 0;
 }

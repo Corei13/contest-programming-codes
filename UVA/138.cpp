@@ -26,7 +26,7 @@ typedef vector<double> VD;
 typedef vector<VD> VVD;
 
 template <int n> struct ans {
-    const static ll a = 3LL * ans<n-1>::a + 2LL * ans<n-1>::b, b = 4LL * ans<n-1>::a + 3LL * ans<n-1>::b;
+    const static ll a = 3LL * ans < n - 1 >::a + 2LL * ans < n - 1 >::b, b = 4LL * ans < n - 1 >::a + 3LL * ans < n - 1 >::b;
 };
 template <> struct ans <0> {
     const static ll a = 12, b = 17;

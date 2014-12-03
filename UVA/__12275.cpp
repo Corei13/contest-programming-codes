@@ -56,7 +56,7 @@ struct DisjointSet {
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
-    DisjointSet* D;
+    DisjointSet *D;
 
     Kruskal (int n): n(n) {}
 
@@ -64,7 +64,7 @@ template <class T> struct Kruskal {
         edges.push_back(make_pair(d, make_pair(s, t)));
     }
 
-    T MST (int start, T best, int &last) {
+    T MST (int start, T best, int& last) {
         if (last + 1 >= sz(edges) || edges[last + 1].x - edges[start].x >= best) {
             last = max(last, start + n - 1);
             return -2;
@@ -117,6 +117,6 @@ int main(int argc, char const *argv[]) {
         }
         cout << ans << endl;
     }
-    
+
     return 0;
 }

@@ -33,7 +33,7 @@ double get (int at, int l, int r, int i) {
         return pr[at][i];
     } else if (l == r) {
         return pr[at][i] = 1.0;
-    } else{
+    } else {
         pr[at][i] = 0.0;
         int mid = (l + r) / 2;
         if (i <= mid) {

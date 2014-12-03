@@ -13,12 +13,10 @@ using namespace std;
 
 int T, N;
 
-int main()
-{
-    while(cin >> N && N > 0)
-    {
+int main() {
+    while (cin >> N && N > 0) {
         cout << "Case " << ++T << ": " << (int)(ceil(log2(N))) << '\n';
     }
-        
+
     return 0;
 }

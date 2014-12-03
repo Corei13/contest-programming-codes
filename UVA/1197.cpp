@@ -54,9 +54,9 @@ struct DisjointSet {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, m;
-    DisjointSet* D;
+    DisjointSet *D;
     while (cin >> n >> m && n != 0) {
         D = new DisjointSet(n);
         for (int i = 0; i < m; ++i) {

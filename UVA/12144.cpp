@@ -28,10 +28,10 @@ VI from, to, dist;
 VVPI adj, revadj;
 
 void dijkstraForward ( int src ) {
-    from = VI(n, inf);    
+    from = VI(n, inf);
     from[src] = 0;
     set <PI> pq;
-    
+
     pq.insert(mp(0, src));
     do {
         set<PI>::iterator u = pq.begin();
@@ -49,7 +49,7 @@ void dijkstraBackward (int src) {
     to = VI(n, inf);
     to[src] = 0;
     set <PI> pq;
-    
+
     pq.insert(mp(0, src));
     do {
         set<PI>::iterator u = pq.begin();
@@ -67,7 +67,7 @@ int dijkstraLast (int src, int dst, int shortestDist) {
     dist = VI(n, inf);
     dist[src] = 0;
     set <PI> pq;
-    
+
     pq.insert(mp(0, src));
     do {
         set<PI>::iterator u = pq.begin();

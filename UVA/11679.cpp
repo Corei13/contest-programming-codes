@@ -28,7 +28,7 @@ typedef pair<ll, ll> PI;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, m;
     while (cin >> n >> m && n != 0) {
         VI r(n);
@@ -43,9 +43,9 @@ int main(int argc, char const *argv[]) {
         }
         char ans = 'S';
         for (int i = 0; i < n; ++i) if (r[i] < 0) {
-            ans = 'N';
-            break;    
-        }
+                ans = 'N';
+                break;
+            }
         cout << ans << endl;
     }
 

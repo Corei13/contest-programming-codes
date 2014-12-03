@@ -46,8 +46,8 @@ int main(int argc, char const *argv[]) {
             int p, idx = -1;
             cin >> p;
             for (int j = 0; j < n && idx != -2; ++j) if (l[j] <= p && p <= r[j]) {
-                idx = idx == -1 ? j : -2;
-            }
+                    idx = idx == -1 ? j : -2;
+                }
             cout << (idx < 0 ? "UNDETERMINED" : s[idx]) << endl;
         }
     }

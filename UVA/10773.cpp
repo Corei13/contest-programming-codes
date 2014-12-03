@@ -24,7 +24,7 @@ typedef vector <VD> VVD;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
@@ -37,6 +37,6 @@ int main(int argc, char const *argv[]) {
             cout << fixed << setprecision(3) << d / sqrt(u * u - v * v) - d / u << endl;
         }
     }
-    
+
     return 0;
 }

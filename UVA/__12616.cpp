@@ -53,38 +53,38 @@ struct BiconnectedComponents {
 
         int children = 0;
         bool ap = false;
-        for (auto w: adj[v.x]) if (w.y != v.y) {
-            if (idx[w.x] == -1) {
-                st.push_back(w.y);
-                index = DFS(w, index);
-                low[v.x] = min(low[v.x], low[w.x]);
-                if (low[w.x] > idx[v.x]) {
-                    bridges.push_back(w.y);
-                }
-                children++;
-                if (low[w.x] >= idx[v.x]) {
-                    if (v.y != -1 || children >= 2) {
-                        ap = true;
+        for (auto w : adj[v.x]) if (w.y != v.y) {
+                if (idx[w.x] == -1) {
+                    st.push_back(w.y);
+                    index = DFS(w, index);
+                    low[v.x] = min(low[v.x], low[w.x]);
+                    if (low[w.x] > idx[v.x]) {
+                        bridges.push_back(w.y);
                     }
-                    components.push_back(VI());
-                    totalComponents++;
-                    int u;
-                    do {
-                        u = st.back();
-                        st.pop_back();
-                        components.back().push_back(u);
-                    } while (u != w.y);
-                    S[v.x] += total[w.x];
-                    SS[v.x] += total[w.x] * total[w.x];
+                    children++;
+                    if (low[w.x] >= idx[v.x]) {
+                        if (v.y != -1 || children >= 2) {
+                            ap = true;
+                        }
+                        components.push_back(VI());
+                        totalComponents++;
+                        int u;
+                        do {
+                            u = st.back();
+                            st.pop_back();
+                            components.back().push_back(u);
+                        } while (u != w.y);
+                        S[v.x] += total[w.x];
+                        SS[v.x] += total[w.x] * total[w.x];
+                    }
+                } else if (idx[w.x] < idx[v.x]) {
+                    st.push_back(w.y);
+                    low[v.x] = min(low[v.x], idx[w.x]);
                 }
-            } else if (idx[w.x] < idx[v.x]) {
-                st.push_back(w.y);
-                low[v.x] = min(low[v.x], idx[w.x]);
+                if (idx[w.x] > idx[v.x] && low[w.x] >= low[v.x]) {
+                    total[v.x] += total[w.x];
+                }
             }
-            if (idx[w.x] > idx[v.x] && low[w.x] >= low[v.x]) {
-                total[v.x] += total[w.x];
-            }
-        }
         if (ap) {
             cutVertices.push_back(v.x);
         }
@@ -102,22 +102,22 @@ struct BiconnectedComponents {
         S = VL(n, 0), SS = VL(n, 0), total = VL(n, 1);
         int cnt = 0;
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(make_pair(i, -1), 0);
-            for (int j = cnt; j < sz(cutVertices); ++j) {
-                cout << i << ' ' << total[i] << ' ' << cutVertices[j] << ' ' << total[cutVertices[j]] << endl;
-                S[cutVertices[j]] += total[i] - total[cutVertices[j]];
-                SS[cutVertices[j]] += (total[i] - total[cutVertices[j]]) * (total[i] - total[cutVertices[j]]);
+                DFS(make_pair(i, -1), 0);
+                for (int j = cnt; j < sz(cutVertices); ++j) {
+                    cout << i << ' ' << total[i] << ' ' << cutVertices[j] << ' ' << total[cutVertices[j]] << endl;
+                    S[cutVertices[j]] += total[i] - total[cutVertices[j]];
+                    SS[cutVertices[j]] += (total[i] - total[cutVertices[j]]) * (total[i] - total[cutVertices[j]]);
+                }
+                cnt = sz(cutVertices);
             }
-            cnt = sz(cutVertices);
-        }
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
-    BiconnectedComponents* G;
+    BiconnectedComponents *G;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
         int n, m;
@@ -130,7 +130,7 @@ int main(int argc, char const *argv[]) {
         }
         G->buildBCC();
         ll ans = 0;
-        for (auto i: G->cutVertices) {
+        for (auto i : G->cutVertices) {
             cout << i << ' ' << G->S[i] << ' ' << G->SS[i] << endl;
             ans += G->S[i] * G->S[i] - G->SS[i];
         }

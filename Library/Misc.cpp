@@ -1,20 +1,29 @@
 // C++11 Examples
 
-VI v{12213, 2134214, 1231, 241,2341 ,21421 };
+VI v {12213, 2134214, 1231, 241, 2341, 21421};
 
 // Lambda format [capture] (params) -> return_type {statement}. Type is function<return_type, (params)>
-auto f = [v](int &i, int *j) -> int {return -i+*j;};
-auto g = [v](function<int (int&, int*)> f) {for (auto i: v) cout << f(i, &i) << endl;};
+auto f = [v](int& i, int *j) -> int {return -i + *j;};
+auto g = [v](function<int (int&, int *)> f) {
+    for (auto i : v) cout << f(i, &i) << endl;
+};
 
-sort (all(v), [](int i, int j) {i < j});
+sort (all(v), [](int i, int j) {
+    return i < j;
+});
 
-auto comp = [](int a, int b) { return a*a < b*b; };
+auto comp = [](int a, int b) {
+    return a * a < b * b;
+};
+
 set<int, decltype(comp)>(comp);
 
-set<int, function<bool (int, int)>>s([](int i, int j) {return i*i > j*j;});
+set<int, function<bool (int, int)>>s([](int i, int j) {
+    return i * i > j * j;
+});
 
-for_each(all(v), [](i){
-	cout << i << endl;
+for_each(all(v), [](i) {
+    cout << i << endl;
 })
 
 // Some STL Functions
@@ -23,10 +32,16 @@ for_each(all(v), [](i){
 // {all_of, any_of, none_of}(all(v), f)
 
 //transform example
-VI a{1,2,3,4,5}, b{10,20,30,40,50}, c(5);
-transform(all(a), b.begin(), c.begin(), [](int i, int j){return (i*9 % j);}); // c[i] = (a[i] * 9) % b[i]
-transform(all(a), b.begin(), [](int i){return i*7;}); // b[i] = a[i] * 7
-transform(all(a), a.begin(), [](int i){return i*i;}); // a[i] *= a[i]
+VI a {1, 2, 3, 4, 5}, b {10, 20, 30, 40, 50}, c(5);
+transform(all(a), b.begin(), c.begin(), [](int i, int j) {
+    return (i * 9 % j);
+}); // c[i] = (a[i] * 9) % b[i]
+transform(all(a), b.begin(), [](int i) {
+    return i * 7;
+}); // b[i] = a[i] * 7
+transform(all(a), a.begin(), [](int i) {
+    return i * i;
+}); // a[i] *= a[i]
 
 // merge (all(a), all(b), c.begin(), f) merge sorted ranges by f()
 // inplace_merge(a.begin(), a.begin()+100, a.end(), f)
@@ -47,19 +62,23 @@ transform(all(a), a.begin(), [](int i){return i*i;}); // a[i] *= a[i]
 
 // Bit Hacks
 // Looping Over all subsets of a number
-for (int i = n; i != 0; i = (i - 1) & n) { cout << i << endl; }
+for (int i = n; i != 0; i = (i - 1) & n) {
+    cout << i << endl;
+}
 // Looping Over all set bits of a number
-for (int m = n, i = (m & (m - 1)) ^ m; m != 0; m &= (m - 1), i = (m & (m - 1)) ^ m) { cout << i << endl; }
+for (int m = n, i = (m & (m - 1)) ^ m; m != 0; m &= (m - 1), i = (m & (m - 1)) ^ m) {
+    cout << i << endl;
+}
 
-double KahanSummation (VD &v) {
-	double sum = 0.0, c = 0.0;
-	for (auto a: v) {
-		double y = a - c;
-		double t = sum + y;
-		c = (t - sum) - y;
-		sum = t;
-	}
-	return sum;
+double KahanSummation (VD& v) {
+    double sum = 0.0, c = 0.0;
+    for (auto a : v) {
+        double y = a - c;
+        double t = sum + y;
+        c = (t - sum) - y;
+        sum = t;
+    }
+    return sum;
 }
 
 // converting integer to binary string

@@ -24,7 +24,7 @@ typedef vector <VD> VVD;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     VVL dp(25, VL(150, 0));
     VL p6(25);
     dp[0][0] = 1;
@@ -52,6 +52,6 @@ int main(int argc, char const *argv[]) {
             cout << a / __gcd(a, b) << '/' << b / __gcd(a, b) << endl;
         }
     }
-    
+
     return 0;
 }

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void FFT (int n, const vector <complex <double>> &f, vector <complex <double>> &F, int dir = 1) {
+void FFT (int n, const vector <complex <double>>& f, vector <complex <double>>& F, int dir = 1) {
     F.clear();
     F.resize(n);
     copy (f.begin(), f.end(), F.begin());
@@ -40,7 +40,7 @@ void FFT (int n, const vector <complex <double>> &f, vector <complex <double>> &
     }
 }
 
-void Multiply (const vector <complex <double>> &f, const vector <complex <double>> &g, vector <complex <double>> &h) {
+void Multiply (const vector <complex <double>>& f, const vector <complex <double>>& g, vector <complex <double>>& h) {
     vector <complex <double>> F, G;
     int N = 1;
 
@@ -57,31 +57,34 @@ void Multiply (const vector <complex <double>> &f, const vector <complex <double
     FFT (N, F, h, -1);
 }
 
-int main(void)
-{
+int main(void) {
     ios::sync_with_stdio(false);
     int n;
     while (cin >> n) {
-        vector <complex <double>> f (200005, 0.0), F;
+        vector <complex <double>> f (1), F;
+        int last = 0;
         f[0] = 1.0;
         for (int i = 0; i < n; ++i) {
             int k;
             cin >> k;
+            if (k > last) {
+                last = max (last, k);
+                f.resize (last + 1);
+            }
             f[k] = 1.0;
         }
         Multiply (f, f, F);
         int m, ans = 0;
         cin >> m;
-        for (int i = 0; i < m; ++i)
-        {
+        for (int i = 0; i < m; ++i) {
             int a;
             cin >> a;
-            if (F[a].real() > .5) {
+            if (a <= int(F.size()) && F[a].real() > .5) {
                 ans++;
             }
         }
         cout << ans << endl;
     }
-  
-  return 0;
+
+    return 0;
 }

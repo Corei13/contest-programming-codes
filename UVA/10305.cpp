@@ -36,11 +36,11 @@ struct TopSort {
         adj[a].push_back(b);
     }
 
-    void dfs (int u, VB &marked) {
+    void dfs (int u, VB& marked) {
         if (marked[u]) {
             return;
         }
-        for (auto v: adj[u]) {
+        for (auto v : adj[u]) {
             dfs(v, marked);
         }
         marked[u] = true;
@@ -59,18 +59,18 @@ struct TopSort {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, m;
     while (cin >> n >> m && n >= 1) {
         TopSort T(n);
         for (int i = 0; i < m; ++i) {
             int a, b;
             cin >> a >> b;
-            T.addEdge(b-1, a-1);
+            T.addEdge(b - 1, a - 1);
         }
         T.sort();
-        for (auto i: T.sorted) {
-            cout << (i == T.sorted.front() ? "": " ") << i + 1;
+        for (auto i : T.sorted) {
+            cout << (i == T.sorted.front() ? "" : " ") << i + 1;
         }
         cout << endl;
     }

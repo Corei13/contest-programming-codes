@@ -28,7 +28,7 @@ typedef pair<ll, ll> PI;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, k;
     double down, owe;
     while (cin >> n >> down >> owe >> k && n >= 0) {

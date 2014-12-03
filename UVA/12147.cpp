@@ -35,14 +35,14 @@ int main(int argc, char const *argv[]) {
         for (int i = 0; i < a; ++i) {
             for (int j = 0; j < b; ++j) {
                 if (s[i] == t[j]) {
-                    match[i+1][j+1] = 1 + match[i][j];
+                    match[i + 1][j + 1] = 1 + match[i][j];
                 }
-                lcs[0][i+1][j+1] = max(max(lcs[0][i][j+1], lcs[1][i][j+1]), max(lcs[0][i+1][j], lcs[1][i+1][j]));
-                if (match[i+1][j+1] >= n) {
-                    lcs[1][i+1][j+1] = n + max(lcs[0][i-n+1][j-n+1], lcs[1][i-n+1][j-n+1]);
+                lcs[0][i + 1][j + 1] = max(max(lcs[0][i][j + 1], lcs[1][i][j + 1]), max(lcs[0][i + 1][j], lcs[1][i + 1][j]));
+                if (match[i + 1][j + 1] >= n) {
+                    lcs[1][i + 1][j + 1] = n + max(lcs[0][i - n + 1][j - n + 1], lcs[1][i - n + 1][j - n + 1]);
                 }
-                if (match[i+1][j+1] > n) {
-                    lcs[1][i+1][j+1] = max(lcs[1][i+1][j+1], 1 + lcs[1][i][j]);
+                if (match[i + 1][j + 1] > n) {
+                    lcs[1][i + 1][j + 1] = max(lcs[1][i + 1][j + 1], 1 + lcs[1][i][j]);
                 }
             }
         }

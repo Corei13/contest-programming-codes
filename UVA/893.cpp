@@ -28,7 +28,7 @@ typedef pair<ll, ll> PI;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int offset, y, m, d;
     int t[2][12] = {
         {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31},
@@ -38,11 +38,11 @@ int main(int argc, char const *argv[]) {
     s[1][0] = 0;
     for (int j = 0; j < 2; ++j) {
         for (int i = 0; i < 12; ++i) {
-            s[j][i+1] = s[j][i] + t[j][i];
+            s[j][i + 1] = s[j][i] + t[j][i];
         }
     }
-    
-    #define isLeap(y) ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
+
+#define isLeap(y) ((y) % 4 == 0 && ((y) % 100 != 0 || (y) % 400 == 0))
 
     while (cin >> offset >> d >> m >> y && !(offset == 0 && d == 0 && m == 0 && y == 0)) {
         --d, --m, --y;
@@ -65,11 +65,11 @@ int main(int argc, char const *argv[]) {
         y += tmp;
         d -= 365 * tmp;
         //cout << ">>> " << d << endl;
-        while (d >= t[isLeap(y+1)][m]) {
-            d -= t[isLeap(y+1)][m];
+        while (d >= t[isLeap(y + 1)][m]) {
+            d -= t[isLeap(y + 1)][m];
             m++;
         }
-        cout << d + 1 << ' ' << m + 1 << ' ' << y + 1<< endl;
+        cout << d + 1 << ' ' << m + 1 << ' ' << y + 1 << endl;
 
     }
 

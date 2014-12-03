@@ -32,14 +32,14 @@ int main(int argc, char const *argv[]) {
             continue;
         }
         VI x(m);
-        for (auto &i: x) {
+        for (auto& i : x) {
             cin >> i;
         }
-        
+
         sort(all(x));
         if (n == 1) {
             int a = -1;
-            for (auto i: x) {
+            for (auto i : x) {
                 if (i != 0) {
                     a = i;
                     break;
@@ -67,10 +67,10 @@ int main(int argc, char const *argv[]) {
         while (!q.empty()) {
             int u = q.front();
             q.pop();
-            for (auto j: adj[u]) if (dist[j] == -1 && !(u == n && j == 0)) {
-                dist[j] = dist[u] + 1;
-                q.push(j);
-            }
+            for (auto j : adj[u]) if (dist[j] == -1 && !(u == n && j == 0)) {
+                    dist[j] = dist[u] + 1;
+                    q.push(j);
+                }
         }
         if (dist[0] == -1) {
             cout << 0 << endl;
@@ -78,14 +78,14 @@ int main(int argc, char const *argv[]) {
             int curr = 0;
             do {
                 for (int j = 0; j < m; ++j) if (dist[next[curr][j]] == dist[curr] - 1) {
-                    cout << x[j];
-                    curr = next[curr][j];
-                    break;
-                }
+                        cout << x[j];
+                        curr = next[curr][j];
+                        break;
+                    }
             } while (curr != n);
             cout << endl;
         }
     }
-    
+
     return 0;
 }

@@ -28,7 +28,7 @@ template <class T, class F = less_equal<T>> struct LongestIncreasingSubsequence 
     vector <int> lis, idx;
 
     struct {
-        bool operator () (const pair <T, int> &a, const pair <T, int> &b) const {
+        bool operator () (const pair <T, int>& a, const pair <T, int>& b) const {
             return F()(a.x, b.x);
         }
     } Compare;
@@ -39,7 +39,7 @@ template <class T, class F = less_equal<T>> struct LongestIncreasingSubsequence 
         vector <pair <T, int>> best;
         vector <int> prev(n, -1);
         idx = vector <int>(n, 0);
-        
+
         for (int i = 0; i < n; i++) {
             auto u = make_pair(a[i], i);
             // cout << a[i] << endl;
@@ -134,7 +134,7 @@ struct DisjointSet {
 
 template <class T, int n> struct Trie {
     int words, prefixes;
-    Trie <T, n>** children;
+    Trie <T, n> **children;
 
     Trie (): words(0), prefixes(0), children (NULL) {}
 
@@ -151,9 +151,9 @@ template <class T, int n> struct Trie {
         if (it != end) {
             int i = value(it);
             if (!children) {
-                children = new Trie <T, n>* [n] ();
+                children = new Trie <T, n> *[n] ();
             }
-            if (!children[i]){
+            if (!children[i]) {
                 children[i] = new Trie <T, n> ();
             }
             children[i]->Insert(++it, end, val);
@@ -182,16 +182,16 @@ template <class T, int n> struct Trie {
     void Print (int tab = 0) {
         cout << "Words: " << words << ", Prefixes: " << prefixes << ", Childrens:" << endl;
         for (int i = 0; i < n; ++i) if (children[i]) {
-            cout << setw(tab) << i << " -> ";
-            children[i]->Print(tab + 4);
-        }
+                cout << setw(tab) << i << " -> ";
+                children[i]->Print(tab + 4);
+            }
     }
 
     ~Trie () {
         if (children) {
             for (int i = 0; i < n; ++i) if (children[i]) {
-                delete children[i];
-            }
+                    delete children[i];
+                }
             delete[] children;
         }
     }
@@ -248,9 +248,9 @@ template <class T, int n> struct StaticTrie {
         if (it != end) {
             int i = value(it);
             if (!children) {
-                children = new StaticTrie <T, n>* [n] ();
+                children = new StaticTrie <T, n> *[n] ();
             }
-            if (!children[i]){
+            if (!children[i]) {
                 (*tail)++;
                 children[i] = this + (*tail - index);
                 children[i]->Init(tail);
@@ -282,9 +282,9 @@ template <class T, int n> struct StaticTrie {
         cout << "Words: " << words << ", Prefixes: " << prefixes << ", Childrens:" << endl;
         if (children) {
             for (int i = 0; i < n; ++i) if (children[i]) {
-                cout << setw(tab) << i << " -> ";
-                children[i]->Print(tab + 4);
-            }
+                    cout << setw(tab) << i << " -> ";
+                    children[i]->Print(tab + 4);
+                }
         }
     }
 

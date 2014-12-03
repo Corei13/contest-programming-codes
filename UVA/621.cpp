@@ -28,7 +28,7 @@ typedef pair<ll, ll> PI;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
@@ -36,7 +36,7 @@ int main(int argc, char const *argv[]) {
         cin >> s;
         if (s == "1" || s == "4" || s == "78") {
             cout << '+' << endl;
-        } else if (sz(s) >= 3 && s.substr(sz(s)-2) == "35") {
+        } else if (sz(s) >= 3 && s.substr(sz(s) - 2) == "35") {
             cout << '-' << endl;
         } else if (sz(s) >= 3 && s.front() == '9' && s.back() == '4') {
             cout << '*' << endl;

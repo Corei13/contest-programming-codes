@@ -50,21 +50,21 @@ struct CutVerticesAndBridges {
 
         int children = 0;
         bool ap = false;
-        for (auto w: adj[v.x]) if (w.y != v.y) {
-            if (idx[w.x] == -1) {
-                index = DFS(w, index);
-                low[v.x] = min(low[v.x], low[w.x]);
-                if (low[w.x] > idx[v.x]) {
-                    bridges.push_back(w.y);
+        for (auto w : adj[v.x]) if (w.y != v.y) {
+                if (idx[w.x] == -1) {
+                    index = DFS(w, index);
+                    low[v.x] = min(low[v.x], low[w.x]);
+                    if (low[w.x] > idx[v.x]) {
+                        bridges.push_back(w.y);
+                    }
+                    children++;
+                    if ((v.y == -1 && children >= 2) || (v.y != -1 && low[w.x] >= idx[v.x])) {
+                        ap = true;
+                    }
+                } else {
+                    low[v.x] = min(low[v.x], idx[w.x]);
                 }
-                children++;
-                if ((v.y == -1 && children >= 2) || (v.y != -1 && low[w.x] >= idx[v.x])) {
-                    ap = true;
-                }
-            } else {
-                low[v.x] = min(low[v.x], idx[w.x]);
             }
-        }
         if (ap) {
             cutVertices.push_back(names[v.x]);
         }
@@ -72,20 +72,20 @@ struct CutVerticesAndBridges {
     }
 
     void build () {
-        idx = VI(n,-1), low = VI(n);
+        idx = VI(n, -1), low = VI(n);
         cutVertices.clear();
         bridges.clear();
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(make_pair(i, -1), 0);
-        }
+                DFS(make_pair(i, -1), 0);
+            }
     }
 };
 
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, cs = 0;;
     CutVerticesAndBridges *C;
     while (cin >> n && n != 0) {
@@ -108,10 +108,10 @@ int main(int argc, char const *argv[]) {
             cout << endl;
         }
         cout << "City map #" << ++cs << ": " << sz(C->cutVertices) << " camera(s) found" << endl;
-        for (auto s: C->cutVertices) {
+        for (auto s : C->cutVertices) {
             cout << s << endl;
         }
     }
-    
+
     return 0;
 }

@@ -59,11 +59,10 @@ struct Fraction {
         return (sign * a) / (long double)(b);
     }
 
-    bool operator < (const Fraction &f) const {
+    bool operator < (const Fraction& f) const {
         if (sign != f.sign) {
             return sign < f.sign;
-        } 
-        else {
+        } else {
             ll i = a / b, fi = f.a / f.b;
             if (i == fi) {
                 if (f.a % f.b == 0) {
@@ -79,27 +78,27 @@ struct Fraction {
         }
     }
 
-    bool operator == (const Fraction &f) const {
+    bool operator == (const Fraction& f) const {
         return a == f.a && b == f.b && sign == f.sign;
     }
 
-    bool operator >= (const Fraction &f) const {
+    bool operator >= (const Fraction& f) const {
         return !(*this < f);
     }
 
-    long double operator - (const Fraction &f) const {
+    long double operator - (const Fraction& f) const {
         return this->value() - f.value();
     }
 
-    long double operator * (const long double &f) const {
+    long double operator * (const long double& f) const {
         return this->value() * f;
     }
 
-    int comapare (const Fraction &f) const {
+    int comapare (const Fraction& f) const {
         return ( mp(sign * a, b) == mp(f.sign * f.a, f.b) ) ? 0 : ( value() < f.value() ? -1 : 1 );
     }
 
-    friend ostream &operator << (ostream &os, const Fraction &f) {
+    friend ostream& operator << (ostream& os, const Fraction& f) {
         os << f.value();
         return os;
     }
@@ -110,15 +109,15 @@ struct Point {
 
     Point (Fraction x = Fraction(), Fraction y = Fraction()): x(x), y(y) {}
 
-    bool operator < (const Point &P) const {
+    bool operator < (const Point& P) const {
         return x.comapare(P.x) * 2 + y.comapare(P.y) < 0;
     }
 
-    bool operator >= (const Point &P) const {
+    bool operator >= (const Point& P) const {
         return x == P.x ? (y >= P.y) : (x >= P.x);
     }
 
-    friend ostream &operator << (ostream &os, const Point &P) {
+    friend ostream& operator << (ostream& os, const Point& P) {
         os << "[ " << P.x << ", " << P.y << " ]";
         return os;
     }
@@ -137,7 +136,7 @@ int cross (Point a, Point b, Point c) {
 
 struct Edge {
     Point a, b;
-    
+
     Edge (Point a = Point(), Point b = Point()) : a(a), b(b) {}
 
     bool intersect (Edge e) {
@@ -152,11 +151,11 @@ struct Edge {
         return contains(e.a) && contains(e.b);
     }
 
-    bool operator < (const Edge &e) const {
+    bool operator < (const Edge& e) const {
         return mp(a, b) < mp(e.a, e.b);
     }
 
-    bool operator != (const Edge &e) const {
+    bool operator != (const Edge& e) const {
         return (*this < e) || (e < *this);
     }
 
@@ -164,13 +163,13 @@ struct Edge {
         return Edge(b, a);
     }
 
-    friend ostream &operator << (ostream &os, const Edge &e) {
+    friend ostream& operator << (ostream& os, const Edge& e) {
         os << "( " << e.a << " -> " << e.b << " )";
         return os;
     }
 };
 
-Point __center, inf = Point (2*maxd+2, 2*maxd+3);
+Point __center, inf = Point (2 * maxd + 2, 2 * maxd + 3);
 
 int e;
 VPI p[2];
@@ -185,31 +184,31 @@ int findCross () {
     set <Point> v;
     vector <Point> points;
     map <Edge, Edge> nxt;
-    map < Point, vector <Point> > adj;
+    map <Point, vector <Point>> adj;
     map <Edge, int> label;
 
     for (int i = 0; i < e; ++i) {
         v.clear();
-        for (int j = 0; j < e; ++j) if(i != j) {
-            
-            if (cross (p[0][i], p[0][j], p[1][i]) * cross (p[0][i], p[1][j], p[1][i]) > 0 || cross (p[0][j], p[0][i], p[1][j]) * cross (p[0][j], p[1][i], p[1][j]) > 0) {
-                continue;
+        for (int j = 0; j < e; ++j) if (i != j) {
+
+                if (cross (p[0][i], p[0][j], p[1][i]) * cross (p[0][i], p[1][j], p[1][i]) > 0 || cross (p[0][j], p[0][i], p[1][j]) * cross (p[0][j], p[1][i], p[1][j]) > 0) {
+                    continue;
+                }
+
+                ll D = ( p[0][i].y - p[1][i].y ) * ( p[0][j].x - p[1][j].x ) - ( p[0][j].y - p[1][j].y ) * ( p[0][i].x - p[1][i].x );
+                if (D != 0) {
+                    v.insert(Point(
+                                 Fraction( ( p[0][i].x * p[1][i].y - p[0][i].y * p[1][i].x ) * ( p[0][j].x - p[1][j].x ) - ( p[0][j].x * p[1][j].y - p[0][j].y * p[1][j].x ) * ( p[0][i].x - p[1][i].x ), -D ),
+                                 Fraction( ( p[0][i].x * p[1][i].y - p[0][i].y * p[1][i].x ) * ( p[0][j].y - p[1][j].y ) - ( p[0][j].x * p[1][j].y - p[0][j].y * p[1][j].x ) * ( p[0][i].y - p[1][i].y ), -D )
+                             ));
+                }
+
             }
 
-            ll D = ( p[0][i].y - p[1][i].y ) * ( p[0][j].x - p[1][j].x ) - ( p[0][j].y - p[1][j].y ) * ( p[0][i].x - p[1][i].x );
-            if(D != 0) {
-                v.insert(Point(
-                    Fraction( ( p[0][i].x * p[1][i].y - p[0][i].y * p[1][i].x ) * ( p[0][j].x - p[1][j].x ) - ( p[0][j].x * p[1][j].y - p[0][j].y * p[1][j].x ) * ( p[0][i].x - p[1][i].x ), -D ),
-                    Fraction( ( p[0][i].x * p[1][i].y - p[0][i].y * p[1][i].x ) * ( p[0][j].y - p[1][j].y ) - ( p[0][j].x * p[1][j].y - p[0][j].y * p[1][j].x ) * ( p[0][i].y - p[1][i].y ), -D )
-                ));
+        for (auto p : v) if (adj.find(p) == adj.end()) {
+                adj[p] = vector <Point> ();
+                points.push_back(p);
             }
-
-        }
-
-        for (auto p: v) if(adj.find(p) == adj.end()) {
-            adj[p] = vector <Point> ();
-            points.push_back(p);
-        }
 
         for (auto it = v.begin(); it != v.end();) {
             Point p = *it;
@@ -221,43 +220,43 @@ int findCross () {
         }
 
     }
-    for (auto p: points) {
+    for (auto p : points) {
         __center = p;
         sort(all(adj[p]), atancomp);
 
-        if(!adj[p].empty()) {
+        if (!adj[p].empty()) {
             adj[p].pb(adj[p].front());
         }
         for (int i = 0; i < sz(adj[p]) - 1; ++i) {
-            nxt[Edge(adj[p][i], p)] = Edge(p, adj[p][i+1]);
+            nxt[Edge(adj[p][i], p)] = Edge(p, adj[p][i + 1]);
         }
     }
 
     int regions = 0, srcRegion = -1, dstRegion = -1;
-    for (auto it: nxt) if(label.find(it.x) == label.end()) {
-        Edge ed = it.x;
-        int srcIn = 0, dstIn = 0;
-        do {
-            label[ed] = regions;
-            if (ed.intersect(Edge(src, Point(src.x.value()+2*maxd+157, src.y.value()+2*maxd+237)))) {
-                srcIn += 1;
+    for (auto it : nxt) if (label.find(it.x) == label.end()) {
+            Edge ed = it.x;
+            int srcIn = 0, dstIn = 0;
+            do {
+                label[ed] = regions;
+                if (ed.intersect(Edge(src, Point(src.x.value() + 2 * maxd + 157, src.y.value() + 2 * maxd + 237)))) {
+                    srcIn += 1;
+                }
+                if (ed.intersect(Edge(dst, Point(dst.x.value() + 2 * maxd + 157, dst.y.value() + 2 * maxd + 237)))) {
+                    dstIn += 1;
+                }
+                ed = nxt[ed];
+            } while (ed != it.x);
+            if ((srcIn % 2 == 1) && (srcRegion == -1 || label[periEdge] != regions)) {
+                srcRegion = regions;
             }
-            if (ed.intersect(Edge(dst, Point(dst.x.value()+2*maxd+157, dst.y.value()+2*maxd+237)))) {
-                dstIn += 1;
+            if ((dstIn % 2 == 1) && (dstRegion == -1 || label[periEdge] != regions)) {
+                dstRegion = regions;
             }
-            ed = nxt[ed];
-        } while(ed != it.x);
-        if ((srcIn % 2 == 1) && (srcRegion == -1 || label[periEdge] != regions)) {
-            srcRegion = regions;
+            regions++;
         }
-        if ((dstIn % 2 == 1) && (dstRegion == -1 || label[periEdge] != regions)) {
-            dstRegion = regions;
-        }
-        regions++;
-    }
-    
-    vector < map < int, int > > adjRegion(regions);
-    for (auto it: label) {
+
+    vector <map <int, int>> adjRegion(regions);
+    for (auto it : label) {
         int u = label[-it.x];
         if (adjRegion[it.y].find(u) == adjRegion[it.y].end()) {
             adjRegion[it.y][u] = 1;
@@ -276,7 +275,7 @@ int findCross () {
     while (!st.empty()) {
         int u = st.front();
         st.pop_front();
-        for (auto p: adjRegion[u]) {
+        for (auto p : adjRegion[u]) {
             if (distance[p.x] == -1 || distance[u] + p.y < distance[p.x]) {
                 distance[p.x] = distance[u] + p.y;
                 if (p.y == 1) {
@@ -287,26 +286,26 @@ int findCross () {
             }
         }
     }
-    while (distance[dstRegion] == -1){}
+    while (distance[dstRegion] == -1) {}
     return distance[dstRegion];
 }
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     ll sx, sy, dx, dy;
-    while(cin >> e >> sx >> sy >> dx >> dy) {
+    while (cin >> e >> sx >> sy >> dx >> dy) {
         src = Point(Fraction(sx), Fraction(sy));
         dst = Point(Fraction(dx), Fraction(dy));
-        srcEdge = Edge(src, Point(Fraction(-2*maxd), Fraction(-2*maxd-1)));
-        dstEdge = Edge(dst, Point(Fraction(2*maxd), Fraction(-2*maxd-1)));
+        srcEdge = Edge(src, Point(Fraction(-2 * maxd), Fraction(-2 * maxd - 1)));
+        dstEdge = Edge(dst, Point(Fraction(2 * maxd), Fraction(-2 * maxd - 1)));
         periEdge = Edge(Point(Fraction(-maxd), Fraction(-maxd)), Point(Fraction(-maxd), Fraction(maxd)));
         p[0].clear();
         p[1].clear();
         p[0].push_back(mp(sx, sy));
-        p[1].push_back(mp(-2*maxd, -2*maxd-1));
+        p[1].push_back(mp(-2 * maxd, -2 * maxd - 1));
         p[0].push_back(mp(dx, dy));
-        p[1].push_back(mp(2*maxd, -2*maxd-1));
+        p[1].push_back(mp(2 * maxd, -2 * maxd - 1));
 
         p[0].push_back(mp(-maxd, -maxd));
         p[1].push_back(mp(-maxd,  maxd));

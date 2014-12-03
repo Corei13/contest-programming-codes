@@ -31,7 +31,7 @@ struct TarjanSCC {
     VVI adj, components;
     VI idx, componentOf, st, low;
     VB inStack;
-    
+
     TarjanSCC (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b) {
@@ -45,12 +45,12 @@ struct TarjanSCC {
         st.push_back(v);
         inStack[v] = true;
 
-        for (auto w: adj[v]) {
+        for (auto w : adj[v]) {
             if (idx[w] == -1) {
                 DFS(w);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
-                low[v] = min(low[v], low[w]);                
+                low[v] = min(low[v], low[w]);
             }
         }
 
@@ -70,18 +70,18 @@ struct TarjanSCC {
 
     void buildSCC () {
         index = 0, totalComponents = 0;
-        idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
+        idx = VI(n, -1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
         st.clear();
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i);
-        }
+                DFS(i);
+            }
     }
 };
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int m, n, cs = 0;
     while (cin >> n >> m && n != 0) {
         TarjanSCC T(n);
@@ -107,7 +107,7 @@ int main(int argc, char const *argv[]) {
             cout << endl;
         }
         cout << "Calling circles for data set " << ++cs << ":" << endl;
-        for (auto v: T.components) {
+        for (auto v : T.components) {
             cout << names[v.front()];
             for (int i = 1; i < sz(v); ++i) {
                 cout << ", " << names[v[i]];

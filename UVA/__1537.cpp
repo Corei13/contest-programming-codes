@@ -56,7 +56,7 @@ struct DisjointSet {
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
-    DisjointSet* D;
+    DisjointSet *D;
 
     Kruskal (int n): n(n) {}
 
@@ -67,11 +67,11 @@ template <class T> struct Kruskal {
     T MST (int park, ll mask) {
         T ret = 0;
         D = new DisjointSet(n);
-        for (auto e: edges) if(e.y.x != park || (mask & (1LL << e.y.y))) {
-            if (D->Union(e.y.x, e.y.y)) {
-                ret += e.x;
+        for (auto e : edges) if (e.y.x != park || (mask & (1LL << e.y.y))) {
+                if (D->Union(e.y.x, e.y.y)) {
+                    ret += e.x;
+                }
             }
-        }
         return ret;
     }
 };
@@ -107,7 +107,7 @@ int main(int argc, char const *argv[]) {
             }
         }
         K = new Kruskal<ll> (n);
-        for (auto e: edges) {
+        for (auto e : edges) {
             K->addEdge(e.y.x, e.y.y, e.x);
         }
         sort(all(K->edges));
@@ -116,14 +116,14 @@ int main(int argc, char const *argv[]) {
         int direct = __builtin_popcount(mask), park = f["Park"];
         ll ans = numeric_limits<ll>::max();
         for (ll i = mask; i != 0; i = (i - 1LL) & mask) if (__builtin_popcount(i) == min(maxToPark, direct)) {
-            ans = min(ans, K->MST(park, i));
-        }
+                ans = min(ans, K->MST(park, i));
+            }
         if (cs != 0) {
             cout << endl;
         }
         cout << "Total miles driven: " << ans << endl;
     }
-    
-    
+
+
     return 0;
 }

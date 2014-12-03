@@ -11,7 +11,7 @@
         - UVA: 719
 */
 
-int LexicographicallySmallestRotation (string &s) {
+int LexicographicallySmallestRotation (string& s) {
     int n = s.size();
     string t = s + s;
     vector <int> f (2 * n, -1);

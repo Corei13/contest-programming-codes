@@ -61,9 +61,9 @@ struct DisjointSet {
 };
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, e;
-    DisjointSet* D;
+    DisjointSet *D;
     while (cin >> n >> e) {
         D = new DisjointSet(256);
         for (int i = 0; i < e; ++i) {
@@ -73,8 +73,8 @@ int main(int argc, char const *argv[]) {
         }
         int face = 1;
         for (int i = 0; i < D->n; ++i) if (D->Find(i) == i) {
-            face += D->e[i] - D->v[i] + 1;
-        }
+                face += D->e[i] - D->v[i] + 1;
+            }
         cout << face << endl;
     }
 }

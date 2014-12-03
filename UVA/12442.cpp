@@ -22,7 +22,7 @@ typedef vector <bool> VB;
 typedef vector <long double> VD;
 typedef vector <VD> VVD;
 
-PI dfs (int u, VI &next, VI &reach) {
+PI dfs (int u, VI& next, VI& reach) {
     if (u == -1) {
         return mp(0, -1);
     } else if (reach[u] == -1) {
@@ -35,7 +35,7 @@ PI dfs (int u, VI &next, VI &reach) {
     }
 }
 
-int ammend (int u, VI &next, VI &reach) {
+int ammend (int u, VI& next, VI& reach) {
     int len = 0, v = u;
     do {
         len = max(len, reach[v]);
@@ -49,7 +49,7 @@ int ammend (int u, VI &next, VI &reach) {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
     cin >> t;
     for (int cs = 0; cs < t; cs++) {
@@ -69,9 +69,9 @@ int main(int argc, char const *argv[]) {
         }
         int ans = 0, idx = 0;
         for (int i = 0; i < n; ++i) if (ans < reach[i]) {
-            idx = i;
-            ans = reach[i];
-        }
+                idx = i;
+                ans = reach[i];
+            }
         cout << "Case " << cs + 1 << ": " << idx + 1 << endl;
     }
 

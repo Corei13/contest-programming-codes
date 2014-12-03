@@ -24,7 +24,7 @@ typedef vector <VD> VVD;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
     cin >> t;
 
@@ -50,6 +50,6 @@ int main(int argc, char const *argv[]) {
         }
         cout << ans << endl;
     }
-    
+
     return 0;
 }

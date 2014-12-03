@@ -31,26 +31,26 @@ struct Vector {
     double x, y, z;
 
     Vector () {}
-    
+
     Vector (double x, double y, double z): x(x), y(y), z(z) {}
 
-    Vector operator + (const Vector &v) const {
+    Vector operator + (const Vector& v) const {
         return Vector (x + v.x, y + v.y, z + v.z);
     }
 
-    Vector operator - (const Vector &v) const {
+    Vector operator - (const Vector& v) const {
         return Vector (x - v.x, y - v.y, z - v.z);
     }
 
-    double operator * (const Vector &v) const {
+    double operator * (const Vector& v) const {
         return (x * v.x + y * v.y + z * v.z);
     }
 
-    Vector operator * (const double &r) const {
+    Vector operator * (const double& r) const {
         return Vector (x * r, y * r, z * r);
     }
 
-    double operator ^ (const Vector &v) const { // distance
+    double operator ^ (const Vector& v) const { // distance
         return (*this - v) * (*this - v);
     }
 };
@@ -61,7 +61,7 @@ struct Asteroid {
 
     Asteroid (): t(0.0) {};
 
-    Vector operator + (const double &t) const {
+    Vector operator + (const double& t) const {
         return r + v * t;
     }
 };
@@ -103,7 +103,7 @@ VVB taken;
 
 bool MST (double t) {
     bool changed = false;
-    DisjointSet* D = new DisjointSet(n);
+    DisjointSet *D = new DisjointSet(n);
     for (int i = 0; i < sz(edges); ++i) {
         edges[i].x = (a[edges[i].y.x] + t) ^ (a[edges[i].y.y] + t);
     }
@@ -144,29 +144,29 @@ int main(int argc, char const *argv[]) {
                 edges.push_back(make_pair(a[i].r ^ a[j].r, make_pair(i, j)));
                 for (int k = i; k < n; ++k) {
                     for (int l = k + 1; l < n; ++l) if (k > i || l > j) {
-                        double A = (a[i].v - a[j].v) * (a[i].v - a[j].v) - (a[k].v - a[l].v) * (a[k].v - a[l].v);
-                        double B = (a[i].v - a[j].v) * (a[i].r - a[j].r) - (a[k].v - a[l].v) * (a[k].r - a[l].r);
-                        double C = (a[i].r - a[j].r) * (a[i].r - a[j].r) - (a[k].r - a[l].r) * (a[k].r - a[l].r);
-                        if (fabs(A) < eps) {
-                            if (fabs(B) > eps) {
-                                double t = - C / (B * 2.0);
-                                if (t > 0.0) {
-                                    collision.push_back(make_pair(t, make_pair(make_pair(i, j), make_pair(k, l))));
+                            double A = (a[i].v - a[j].v) * (a[i].v - a[j].v) - (a[k].v - a[l].v) * (a[k].v - a[l].v);
+                            double B = (a[i].v - a[j].v) * (a[i].r - a[j].r) - (a[k].v - a[l].v) * (a[k].r - a[l].r);
+                            double C = (a[i].r - a[j].r) * (a[i].r - a[j].r) - (a[k].r - a[l].r) * (a[k].r - a[l].r);
+                            if (fabs(A) < eps) {
+                                if (fabs(B) > eps) {
+                                    double t = - C / (B * 2.0);
+                                    if (t > 0.0) {
+                                        collision.push_back(make_pair(t, make_pair(make_pair(i, j), make_pair(k, l))));
+                                    }
                                 }
-                            }
-                        } else {
-                            if (B * B >= A * C) {
-                                double D = sqrt(B * B - A * C);
-                                double t[2] = { (-B + D) / A, (-B - D) / A };
-                                if (t[0] > 0.0) {
-                                    collision.push_back(make_pair(t[0], make_pair(make_pair(i, j), make_pair(k, l))));
-                                }
-                                if (t[1] > 0.0) {
-                                    collision.push_back(make_pair(t[1], make_pair(make_pair(i, j), make_pair(k, l))));
+                            } else {
+                                if (B * B >= A * C) {
+                                    double D = sqrt(B * B - A * C);
+                                    double t[2] = { (-B + D) / A, (-B - D) / A };
+                                    if (t[0] > 0.0) {
+                                        collision.push_back(make_pair(t[0], make_pair(make_pair(i, j), make_pair(k, l))));
+                                    }
+                                    if (t[1] > 0.0) {
+                                        collision.push_back(make_pair(t[1], make_pair(make_pair(i, j), make_pair(k, l))));
+                                    }
                                 }
                             }
                         }
-                    }
                 }
             }
         }

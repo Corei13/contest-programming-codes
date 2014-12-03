@@ -27,7 +27,7 @@ typedef vector<VD> VVD;
 
 template <class T, int n> struct Trie {
     int words, prefixes, lcs;
-    Trie <T, n>** children;
+    Trie <T, n> **children;
 
     Trie (): words(0), prefixes(0), lcs(0), children(NULL) {}
 
@@ -43,9 +43,9 @@ template <class T, int n> struct Trie {
         if (it != end) {
             int i = index(it);
             if (!children) {
-                children = new Trie <T, n>* [n] ();
+                children = new Trie <T, n> *[n] ();
             }
-            if (!children[i]){
+            if (!children[i]) {
                 children[i] = new Trie <T, n> ();
             }
             children[i]->Insert(++it, end, val);
@@ -78,17 +78,17 @@ template <class T, int n> struct Trie {
         cout << "LCS: " << lcs << ", Prefixes: " << prefixes << ", Childrens:" << endl;
         if (children) {
             for (int i = 0; i < n; ++i) if (children[i]) {
-                cout << setw(tab) << i["acgt"] << " -> ";
-                children[i]->Print(tab + 4);
-            }
+                    cout << setw(tab) << i["acgt"] << " -> ";
+                    children[i]->Print(tab + 4);
+                }
         }
     }
 
     ~Trie () {
         if (children) {
             for (int i = 0; i < n; ++i) if (children[i]) {
-                delete children[i];
-            }
+                    delete children[i];
+                }
             delete[] children;
         }
     }
@@ -99,10 +99,10 @@ void PrintLCS (Trie <string, 4> *T, string *s) {
         cout << *s << endl;
     } else if (T->children) {
         for (int i = 0; i < 4; ++i) if (T->children[i] && T->children[i]->lcs == T->lcs - 1) {
-            s->push_back("acgt"[i]);
-            PrintLCS(T->children[i], s);
-            s->pop_back();
-        }
+                s->push_back("acgt"[i]);
+                PrintLCS(T->children[i], s);
+                s->pop_back();
+            }
     }
 }
 

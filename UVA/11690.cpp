@@ -56,16 +56,15 @@ struct DisjointSet {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
-    DisjointSet* D;
+    DisjointSet *D;
     cin >> t;
-    for (int cs = 0; cs < t; ++cs)
-    {
+    for (int cs = 0; cs < t; ++cs) {
         int n, m;
         cin >> n >> m;
         D = new DisjointSet(n);
-        for (auto &a: D->total) {
+        for (auto& a : D->total) {
             cin >> a;
         }
         for (int i = 0; i < m; ++i) {
@@ -75,8 +74,8 @@ int main(int argc, char const *argv[]) {
         }
         string ans = "POSSIBLE";
         for (int i = 0; i < n; ++i) if (D->Find(i) == i && D->total[i] != 0) {
-            ans = "IMPOSSIBLE";
-        }
+                ans = "IMPOSSIBLE";
+            }
         cout << ans << endl;
     }
 

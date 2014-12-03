@@ -14,13 +14,11 @@ using namespace std;
 int M, N;
 
 
-int main()
-{
-    while(cin >> M >> N)
-    {
-        cout << M*N-1 << '\n';
+int main() {
+    while (cin >> M >> N) {
+        cout << M *N - 1 << '\n';
     }
-        
+
     return 0;
 }
 

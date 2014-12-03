@@ -56,7 +56,7 @@ struct DisjointSet {
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
-    DisjointSet* D;
+    DisjointSet *D;
 
     Kruskal (int n): n(n) {}
 
@@ -67,11 +67,11 @@ template <class T> struct Kruskal {
     T MST (int s, int t) {
         D = new DisjointSet(n);
         sort(all(edges));
-        for (auto e: edges) if (D->Union(e.y.x, e.y.y)) {
-            if (D->Find(s) == D->Find(t)) {
-                return e.x;
+        for (auto e : edges) if (D->Union(e.y.x, e.y.y)) {
+                if (D->Find(s) == D->Find(t)) {
+                    return e.x;
+                }
             }
-        }
         return 0;
     }
 };
@@ -106,6 +106,6 @@ int main(int argc, char const *argv[]) {
         }
         cout << "Scenario #" << ++cs << endl << -K->MST(f[s], f[t]) << " tons" << endl << endl;
     }
-    
+
     return 0;
 }

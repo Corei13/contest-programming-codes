@@ -11,7 +11,7 @@ template <class T> struct Fraction {
         this->Normalize();
     }
 
-    Fraction (const Fraction &f): a(f.a), b(f.b) {}
+    Fraction (const Fraction& f): a(f.a), b(f.b) {}
 
     Fraction (double r, int factor = 4) {
         this->b = 1;
@@ -80,7 +80,7 @@ template <class T> struct Fraction {
         return lhs;
     }
 
-    Fraction& operator *= (const Fraction &rhs) {
+    Fraction& operator *= (const Fraction& rhs) {
         this->a *= rhs.a, this->b *= rhs.b;
         this->Normalize();
         return *this;
@@ -167,7 +167,7 @@ template <class T> struct Fraction {
         return this->a < this->b * rhs;
     }
 
-    friend ostream &operator << (ostream &os, Fraction <T> &&f) {
+    friend ostream& operator << (ostream& os, Fraction <T>&& f) {
         os << f.a;
         if (f.b != T(1)) {
             os << "/" << f.b;
@@ -175,7 +175,7 @@ template <class T> struct Fraction {
         return os;
     }
 
-    friend ostream &operator << (ostream &os, Fraction <T> &f) {
+    friend ostream& operator << (ostream& os, Fraction <T>& f) {
         os << f.a;
         if (f.b != T(1)) {
             os << "/" << f.b;
@@ -191,85 +191,85 @@ template <class T> struct Fraction {
 
 template <class T> struct Point {
     T x, y;
-    
-    Point (T x, T y): x(x), y(y) {}
-    
-    Point (const Point &p): x(p.x), y(p.y) {}
 
-    Point& operator += (const Point &p) {
+    Point (T x, T y): x(x), y(y) {}
+
+    Point (const Point& p): x(p.x), y(p.y) {}
+
+    Point& operator += (const Point& p) {
         x += p.x, y += p.y;
         return *this;
     }
-    
+
     friend inline Point operator + (Point lhs, const Point& rhs) {
         lhs += rhs;
         return lhs;
     }
 
-    Point& operator -= (const Point &p) {
+    Point& operator -= (const Point& p) {
         x -= p.x, y -= p.y;
         return *this;
     }
-    
+
     friend inline Point operator - (Point lhs, const Point& rhs) {
         lhs -= rhs;
         return lhs;
     }
 
-    Point& operator += (const T &c) {
+    Point& operator += (const T& c) {
         x += c, y += c;
         return *this;
     }
-    
+
     friend inline Point operator + (Point lhs, const T& rhs) {
         lhs += rhs;
         return lhs;
     }
 
-    Point& operator -= (const T &c) {
+    Point& operator -= (const T& c) {
         x -= c, y -= c;
         return *this;
     }
-    
+
     friend inline Point operator - (Point lhs, const T& rhs) {
         lhs -= rhs;
         return lhs;
     }
 
-    Point& operator *= (const T &c) {
+    Point& operator *= (const T& c) {
         x *= c, y *= c;
         return *this;
     }
-    
+
     friend inline Point operator * (Point lhs, const T& rhs) {
         lhs *= rhs;
         return lhs;
     }
-    
-    Point& operator /= (const T &c) {
+
+    Point& operator /= (const T& c) {
         x /= c, y /= c;
         return *this;
     }
-    
+
     friend inline Point operator / (Point lhs, const T& rhs) {
         lhs /= rhs;
         return lhs;
     }
 
-    bool operator == (const Point &p) const {
+    bool operator == (const Point& p) const {
         return abs(x - p.x) <= EPS && abs(y - p.y) <= EPS;
     }
 
-    bool operator < (const Point &p) const {
+    bool operator < (const Point& p) const {
         return x < p.x || (x == p.x && y < p.y);
     }
 
-    friend ostream &operator << (ostream &os, Point <T> &&p) {
+    friend ostream& operator << (ostream& os, Point <T>&& p) {
         os << "(" << p.x << ", " << p.y << ")";
         return os;
     }
 
-    friend ostream &operator << (ostream &os, Point <T> &p) {
+    friend ostream& operator << (ostream& os, Point <T>& p) {
         os << "(" << p.x << ", " << p.y << ")";
         return os;
     }
@@ -284,7 +284,7 @@ template <class T> struct Point {
 
     // Rotate clockwise by angle t
     friend Point RotateCCW (Point p, double t) {
-        return Point(p.x * cos(t) - p.y * sin(t), p.x * sin(t) + p.y * cos(t)); 
+        return Point(p.x * cos(t) - p.y * sin(t), p.x * sin(t) + p.y * cos(t));
     }
 
     friend T dot (Point a, Point b) {
@@ -323,7 +323,7 @@ template <class T> struct Point {
 
     // determine if lines (a, b) and (c, d) are parallel or collinear
     friend bool LinesParallel(Point a, Point b, Point c, Point d) {
-            return abs(cross(b - a, c - d)) <= EPS;
+        return abs(cross(b - a, c - d)) <= EPS;
     }
 
     friend bool LinesCollinear(Point a, Point b, Point c, Point d) {
@@ -360,12 +360,12 @@ template <class T> struct Point {
     }
 
     // returns 1(0) if p is a strictly interior (exterior) point of v
-    friend bool PointInPolygon(const vector<Point> &v, Point p) {
+    friend bool PointInPolygon(const vector<Point>& v, Point p) {
         bool ret = false;
         for (auto q = v.begin(); q != v.end(); q++) {
             auto r = (next(q) == v.end() ? v.begin() : next(q));
             if ((q->y <= p.y && p.y < r->y || r->y <= p.y && p.y < q->y) &&
-                p.x < q->x + (r->x - q->x) * (p.y - q->y) / (r->y - q->y)) {
+                    p.x < q->x + (r->x - q->x) * (p.y - q->y) / (r->y - q->y)) {
                 ret = !ret;
             }
         }
@@ -373,7 +373,7 @@ template <class T> struct Point {
     }
 
     // determine if point is on the boundary of a polygon
-    friend bool PointOnPolygon(const vector<Point> &v, Point p) {
+    friend bool PointOnPolygon(const vector<Point>& v, Point p) {
         for (auto q = v.begin(); q != v.end(); q++) {
             auto r = (next(q) == v.end() ? v.begin() : next(q));
             if (dist2(ProjectPointSegment(*q, *r, p), p) <= EPS) {
@@ -419,7 +419,7 @@ template <class T> struct Point {
         return ret;
     }
 
-    friend T SignedArea(const vector<Point> &v) {
+    friend T SignedArea(const vector<Point>& v) {
         T area(0);
         for (auto p = v.begin(); p != v.end(); p++) {
             auto q = (next(p) == v.end() ? v.begin() : next(p));
@@ -428,11 +428,11 @@ template <class T> struct Point {
         return area / 2.0;
     }
 
-    friend T Area(const vector<Point> &v) {
+    friend T Area(const vector<Point>& v) {
         return abs(SignedArea(v));
     }
 
-    friend Point Centroid(const vector<Point> &v) {
+    friend Point Centroid(const vector<Point>& v) {
         Point c(0, 0);
         T scale = 6.0 * SignedArea(v);
         for (auto p = v.begin(); p != v.end(); p++) {
@@ -443,7 +443,7 @@ template <class T> struct Point {
     }
 
     // tests whether or not a given polygon (in CW or CCW order) is simple
-    friend bool IsSimple(const vector<Point> &v) {
+    friend bool IsSimple(const vector<Point>& v) {
         for (auto p = v.begin(); p != v.end(); p++) {
             for (auto r = next(p); r != v.end(); r++) {
                 auto q = (next(p) == v.end() ? v.begin() : next(p));
@@ -465,14 +465,14 @@ template <class T> struct Point {
         return cross(a, b) + cross(b, c) + cross(c, a);
     }
 
-    friend void ConvexHull(vector<Point> &v) {
+    friend void ConvexHull(vector<Point>& v) {
         sort(v.begin(), v.end());
         vector<Point> up, dn;
-        for (auto &p: v) {
-            while (up.size() > 1 && area2(up[up.size()-2], up.back(), p) >= 0) {
+        for (auto& p : v) {
+            while (up.size() > 1 && area2(up[up.size() - 2], up.back(), p) >= 0) {
                 up.pop_back();
             }
-            while (dn.size() > 1 && area2(dn[dn.size()-2], dn.back(), p) <= 0) {
+            while (dn.size() > 1 && area2(dn[dn.size() - 2], dn.back(), p) <= 0) {
                 dn.pop_back();
             }
             up.push_back(p);
@@ -481,7 +481,7 @@ template <class T> struct Point {
         v = dn;
         v.pop_back();
         reverse(dn.begin(), dn.end());
-        for (auto &p: dn) {
+        for (auto& p : dn) {
             v.push_back(p);
         }
     }

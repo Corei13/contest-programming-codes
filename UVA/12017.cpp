@@ -28,7 +28,7 @@ struct TarjanSCC {
     VVI adj, components;
     VI idx, componentOf, st, low;
     VB inStack;
-    
+
     TarjanSCC (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b) {
@@ -42,12 +42,12 @@ struct TarjanSCC {
         st.push_back(v);
         inStack[v] = true;
 
-        for (auto w: adj[v]) {
+        for (auto w : adj[v]) {
             if (idx[w] == -1) {
                 DFS(w);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
-                low[v] = min(low[v], low[w]);                
+                low[v] = min(low[v], low[w]);
             }
         }
 
@@ -67,25 +67,25 @@ struct TarjanSCC {
 
     void buildSCC () {
         index = 0, totalComponents = 0;
-        idx = VI(n,-1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
+        idx = VI(n, -1), low = VI(n), componentOf = VI(n), inStack = VB(n, false);
         st.clear();
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i);
-        }
+                DFS(i);
+            }
     }
 
     /*
         Finds an asignment for a 2-SAT problem and stores in sol
         neg[i] is the inverse of i
     */
-    void find2SATSolution (VI &sol, VI &neg) {
+    void find2SATSolution (VI& sol, VI& neg) {
         sol = VI(n, -1);
-        for (auto comp: components) {
-            for (auto j: comp) if (sol[j] == -1) {
-                sol[j] = 1;
-                sol[neg[j]] = 0;
-            }
+        for (auto comp : components) {
+            for (auto j : comp) if (sol[j] == -1) {
+                    sol[j] = 1;
+                    sol[neg[j]] = 0;
+                }
         }
     }
 };
@@ -100,23 +100,23 @@ struct TransitiveRelation {
         adj[a].push_back(b);
     }
 
-    int dfs (int u, VB &vis, VI &w) {
+    int dfs (int u, VB& vis, VI& w) {
         vis[u] = true;
         int ret = w[u];
-        for (auto v: adj[u]) if (!vis[v]) {
-            ret += dfs(v, vis, w);
-        }
+        for (auto v : adj[u]) if (!vis[v]) {
+                ret += dfs(v, vis, w);
+            }
         return ret;
     }
 
-    PI getReductionAndClosure (VI &w) {
+    PI getReductionAndClosure (VI& w) {
         PI ret = make_pair(0, 0);
         for (int i = 0; i < n; ++i) {
             VB vis(n, false);
-            for (auto j: adj[i]) if (!vis[j]) {
-                ret.x++;
-                ret.y += w[i] * dfs(j, vis, w);
-            }
+            for (auto j : adj[i]) if (!vis[j]) {
+                    ret.x++;
+                    ret.y += w[i] * dfs(j, vis, w);
+                }
         }
         return ret;
     }
@@ -125,8 +125,8 @@ struct TransitiveRelation {
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
 
-    TarjanSCC* T;
-    TransitiveRelation* Tr;
+    TarjanSCC *T;
+    TransitiveRelation *Tr;
 
     int t;
     cin >> t;
@@ -145,16 +145,16 @@ int main(int argc, char const *argv[]) {
 
         for (int i = 0; i < T->totalComponents; ++i) {
             VB flag(T->totalComponents, false);
-            
-            for (auto u: T->components[i]) {
-                for (auto v: T->adj[u]) {
+
+            for (auto u : T->components[i]) {
+                for (auto v : T->adj[u]) {
                     flag[T->componentOf[v]] = true;
                 }
             }
 
             for (int j = i - 1; j >= 0; --j) if (flag[j]) {
-                Tr->addEdge(i, j);
-            }
+                    Tr->addEdge(i, j);
+                }
 
             maxr += T->components[i].size() * (T->components[i].size() - 1);
             if (T->components[i].size() >= 2) {
@@ -163,7 +163,7 @@ int main(int argc, char const *argv[]) {
         }
 
         VI w;
-        for (auto c: T->components) {
+        for (auto c : T->components) {
             w.push_back(c.size());
         }
 
@@ -172,6 +172,6 @@ int main(int argc, char const *argv[]) {
 
         cout << "Case #" << cs + 1 << ": " << minr << ' ' << maxr << endl;
     }
-    
+
     return 0;
 }

@@ -48,26 +48,26 @@ struct CutVerticesAndBridges {
 
         int children = 0;
         bool ap = false;
-        for (auto w: adj[v.x]) if (w.y != v.y) {
-            if (idx[w.x] == -1) {
-                cout << v.x + 1 << ' ' << w.x + 1 << endl;
-                index = DFS(w, index);
-                low[v.x] = min(low[v.x], low[w.x]);
-                if (low[w.x] > idx[v.x]) {
-                    bridges.push_back(w.x);
-                    cout << w.x + 1 << ' ' << v.x + 1 << endl;
-                }
-                children++;
-                if ((v.y == -1 && children >= 2) || (v.y != -1 && low[w.x] >= idx[v.x])) {
-                    ap = true;
-                }
-            } else {
-                low[v.x] = min(low[v.x], idx[w.x]);
-                if (idx[w.x] < idx[v.x]) {
+        for (auto w : adj[v.x]) if (w.y != v.y) {
+                if (idx[w.x] == -1) {
                     cout << v.x + 1 << ' ' << w.x + 1 << endl;
+                    index = DFS(w, index);
+                    low[v.x] = min(low[v.x], low[w.x]);
+                    if (low[w.x] > idx[v.x]) {
+                        bridges.push_back(w.x);
+                        cout << w.x + 1 << ' ' << v.x + 1 << endl;
+                    }
+                    children++;
+                    if ((v.y == -1 && children >= 2) || (v.y != -1 && low[w.x] >= idx[v.x])) {
+                        ap = true;
+                    }
+                } else {
+                    low[v.x] = min(low[v.x], idx[w.x]);
+                    if (idx[w.x] < idx[v.x]) {
+                        cout << v.x + 1 << ' ' << w.x + 1 << endl;
+                    }
                 }
             }
-        }
         if (ap) {
             cutVertices.push_back(v.x);
         }
@@ -75,20 +75,20 @@ struct CutVerticesAndBridges {
     }
 
     void build () {
-        idx = VI(n,-1), low = VI(n);
+        idx = VI(n, -1), low = VI(n);
         cutVertices.clear();
         bridges.clear();
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(make_pair(i, -1), 0);
-        }
+                DFS(make_pair(i, -1), 0);
+            }
     }
 };
 
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int n, m, cs = 0;;
     CutVerticesAndBridges *C;
     while (cin >> n >> m && n != 0) {
@@ -102,6 +102,6 @@ int main(int argc, char const *argv[]) {
         C->build();
         cout << "#" << endl;
     }
-    
+
     return 0;
 }

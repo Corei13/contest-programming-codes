@@ -30,15 +30,15 @@ ll minSum (ll n) {
         return 2;
     }
     ll ret = 0, tot = 0;
-    for (ll i = 2; i * i <= n; ++i) if(n % i == 0) {
-        ll a = 1;
-        while (n % i == 0) {
-            a *= i;
-            n /= i;
+    for (ll i = 2; i * i <= n; ++i) if (n % i == 0) {
+            ll a = 1;
+            while (n % i == 0) {
+                a *= i;
+                n /= i;
+            }
+            ret += a;
+            tot += 1;
         }
-        ret += a;
-        tot += 1;
-    }
     if (n != 1) {
         ret += n;
         tot += 1;

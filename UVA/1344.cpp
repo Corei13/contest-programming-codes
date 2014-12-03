@@ -34,11 +34,9 @@ int n;
 VI a, b, c, d;
 VVI dp;
 
-int main (int argc, char const* argv[])
-{
-    while (cin >> n && n)
-    {
-        a = VI(n+1), b = VI(n+1), dp = VVI(n+1, VI(n+1, 0)), c = VI(n+1, 0), d = VI(n+1, 0);
+int main (int argc, char const *argv[]) {
+    while (cin >> n && n) {
+        a = VI(n + 1), b = VI(n + 1), dp = VVI(n + 1, VI(n + 1, 0)), c = VI(n + 1, 0), d = VI(n + 1, 0);
         a[0] = -1, b[0] = -1;
         for (int i = 0; i < n; i += 1)
             cin >> a[i];
@@ -46,36 +44,33 @@ int main (int argc, char const* argv[])
             cin >> b[i];
         sort(all(a));
         sort(all(b));
-        
-        for (int i = 1; i <= n; i += 1)
-        {
+
+        for (int i = 1; i <= n; i += 1) {
             for (int j = n; j > 0; j -= 1)
-                if(b[j] <= a[i]) {
+                if (b[j] <= a[i]) {
                     d[i] = j;
                     break;
                 }
             for (int j = n; j > 0; j -= 1)
-                if(b[j] < a[i]) {
+                if (b[j] < a[i]) {
                     c[i] = j;
                     break;
-                }            
+                }
         }
-        
-        for (int i = 1; i <= n; i += 1)
-        {
-            for (int j = 1; j <= n; j += 1)
-            {
-                dp[i][j] = dp[i-1][j];
+
+        for (int i = 1; i <= n; i += 1) {
+            for (int j = 1; j <= n; j += 1) {
+                dp[i][j] = dp[i - 1][j];
                 int k = d[i];
-                if(k)   dp[i][j] = max(dp[i][j], dp[i-1][min(j-1,k-1)]+1);
+                if (k)   dp[i][j] = max(dp[i][j], dp[i - 1][min(j - 1, k - 1)] + 1);
                 k = c[i];
-                if(k)   dp[i][j] = max(dp[i][j], dp[i-1][min(j-1,k-1)]+2);
+                if (k)   dp[i][j] = max(dp[i][j], dp[i - 1][min(j - 1, k - 1)] + 2);
             }
         }
-        
-        cout << (dp[n][n]-n)*200 << '\n';
+
+        cout << (dp[n][n] - n) * 200 << '\n';
     }
-    
+
     return 0;
 }
 

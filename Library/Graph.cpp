@@ -28,11 +28,11 @@ struct TopologicalSort {
         adj[a].push_back(b);
     }
 
-    void DFS (int u, vector <bool> &marked) {
+    void DFS (int u, vector <bool>& marked) {
         if (marked[u]) {
             return;
         }
-        for (auto &v: adj[u]) {
+        for (auto& v : adj[u]) {
             DFS(v, marked);
         }
         marked[u] = true;
@@ -54,7 +54,7 @@ struct TopologicalSort {
 
     Running time:
         O(|V|+|E|)
-    
+
     Usage:
         - add edges by AddEdge()
         - calling BbuildSCC() will generate the strongly connected components
@@ -77,7 +77,7 @@ struct StronglyConnectedComponents {
     vector <vector <int>> adj, components;
     vector <int> idx, componentOf, st, low;
     vector <bool> inStack;
-    
+
     StronglyConnectedComponents (int n): n(n), adj(n) {}
 
     void AddEdge (int a, int b) {
@@ -91,12 +91,12 @@ struct StronglyConnectedComponents {
         st.push_back(v);
         inStack[v] = true;
 
-        for (auto &w: adj[v]) {
+        for (auto& w : adj[v]) {
             if (idx[w] == -1) {
                 index = DFS(w, index);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
-                low[v] = min(low[v], low[w]);                
+                low[v] = min(low[v], low[w]);
             }
         }
 
@@ -120,9 +120,11 @@ struct StronglyConnectedComponents {
         idx = vector <int>(n, -1), low = vector <int>(n), componentOf = vector <int>(n);
         inStack = vector <bool>(n, false);
         st.clear();
-        
-        for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i, 0);
+
+        for (int i = 0; i < n; i++) {
+            if (idx[i] == -1) {
+                DFS(i, 0);
+            }
         }
     }
 
@@ -136,12 +138,14 @@ struct StronglyConnectedComponents {
         Output
             - sol, sol[i] will contain the assignment for i {0: false, 1: true}
     */
-    void Find2SATSolution (vector <int> &sol, vector <int> &neg) {
+    void Find2SATSolution (vector <int>& sol, vector <int>& neg) {
         sol = vector <int>(n, -1);
-        for (auto &comp: components) {
-            for (auto &j: comp) if (sol[j] == -1) {
-                sol[j] = 1;
-                sol[neg[j]] = 0;
+        for (auto& comp : components) {
+            for (auto& j : comp) {
+                if (sol[j] == -1) {
+                    sol[j] = 1;
+                    sol[neg[j]] = 0;
+                }
             }
         }
     }
@@ -157,7 +161,7 @@ struct StronglyConnectedComponents {
     Usage:
         - add edges by AddEdge()
         - call MST() to generate minimum spanning tree
-    
+
     Input:
         - n, number of nodes
         - graph, constructed using AddEdge()
@@ -165,7 +169,7 @@ struct StronglyConnectedComponents {
     Output:
         - weight of minimum spanning tree
         - mst, if given, mst will contain the edges of the minimum spanning tree
-    
+
     Tested Problems:
 */
 
@@ -184,10 +188,12 @@ template <class T> struct Kruskal {
         T ret = 0;
         D = new DisjointSet(n);
         sort(edges.begin(), edges.end());
-        for (auto &e: edges) if (D->Union(e.y.x, e.y.y)) {
-            ret += e.x;
-            if (mst) {
-                mst->push_back(e);
+        for (auto& e : edges) {
+            if (D->Union(e.y.x, e.y.y)) {
+                ret += e.x;
+                if (mst) {
+                    mst->push_back(e);
+                }
             }
         }
         return ret;
@@ -204,7 +210,7 @@ template <class T> struct Kruskal {
     Usage:
         - add edges by AddEdge()
         - call BuildTree() to generate shortest path tree
-    
+
     Input:
         - n, number of nodes
         - directed, true iff the graph is directed
@@ -233,7 +239,7 @@ template <class T> struct Dijkstra {
         }
     }
 
-    void BuildTree (int s, vector<T> &dist) {
+    void BuildTree (int s, vector<T>& dist) {
         dist = vector <T>(n, inf);
         parent = vector <int>(n, -1);
         priority_queue <pair <T, vector<pair <T, int>>>, vector<pair <T, int>>, greater<pair <T, int>>> q;
@@ -241,12 +247,14 @@ template <class T> struct Dijkstra {
         dist[s] = 0;
         q.push(make_pair(dist[s], s));
         do {
-            auto &u = q.top();
+            auto& u = q.top();
             q.pop();
-            for (auto &e: adj[u.y]) if(u.x + e.x < dist[e.y]) {
-                dist[e.y] = u.x + e.x;
-                parent[e.y] = u.y;
-                q.push(make_pair(dist[e.y], e.y));
+            for (auto& e : adj[u.y]) {
+                if (u.x + e.x < dist[e.y]) {
+                    dist[e.y] = u.x + e.x;
+                    parent[e.y] = u.y;
+                    q.push(make_pair(dist[e.y], e.y));
+                }
             }
         } while (!q.empty());
     }
@@ -262,7 +270,7 @@ template <class T> struct Dijkstra {
     Usage:
         - add edges by AddEdge()
         - call BuildBCC() to find all biconnected components, bridges and articulation points
-    
+
     Input:
         - graph, constructed using AddEdge()
 
@@ -303,31 +311,33 @@ struct BiconnectedComponents {
 
         int children = 0;
         bool ap = false;
-        for (auto &w: adj[v.x]) if (w.y != v.y) {
-            if (idx[w.x] == -1) {
-                st.push_back(w.y);
-                index = DFS(w, index);
-                low[v.x] = min(low[v.x], low[w.x]);
-                if (low[w.x] > idx[v.x]) {
-                    bridges.push_back(w.y);
-                }
-                children++;
-                if (low[w.x] >= idx[v.x]) {
-                    if (v.y != -1 || children >= 2) {
-                        ap = true;
+        for (auto& w : adj[v.x]) {
+            if (w.y != v.y) {
+                if (idx[w.x] == -1) {
+                    st.push_back(w.y);
+                    index = DFS(w, index);
+                    low[v.x] = min(low[v.x], low[w.x]);
+                    if (low[w.x] > idx[v.x]) {
+                        bridges.push_back(w.y);
                     }
-                    components.push_back(vector <int>());
-                    totalComponents++;
-                    int u;
-                    do {
-                        u = st.back();
-                        st.pop_back();
-                        components.back().push_back(u);
-                    } while (u != w.y);
+                    children++;
+                    if (low[w.x] >= idx[v.x]) {
+                        if (v.y != -1 || children >= 2) {
+                            ap = true;
+                        }
+                        components.push_back(vector <int>());
+                        totalComponents++;
+                        int u;
+                        do {
+                            u = st.back();
+                            st.pop_back();
+                            components.back().push_back(u);
+                        } while (u != w.y);
+                    }
+                } else if (idx[w.x] < idx[v.x]) {
+                    st.push_back(w.y);
+                    low[v.x] = min(low[v.x], idx[w.x]);
                 }
-            } else if (idx[w.x] < idx[v.x]) {
-                st.push_back(w.y);
-                low[v.x] = min(low[v.x], idx[w.x]);
             }
         }
         if (ap) {
@@ -344,8 +354,10 @@ struct BiconnectedComponents {
         components.clear();
         totalComponents++;
 
-        for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(make_pair(i, -1), 0);
+        for (int i = 0; i < n; i++) {
+            if (idx[i] == -1) {
+                DFS(make_pair(i, -1), 0);
+            }
         }
     }
 };
@@ -363,7 +375,7 @@ struct BiconnectedComponents {
         - call Match() to generate the macimum matching
         - MinimumVertexCover() finds a vertex cover of minimum size
         - Maximum independent set is the complement of minimum vertex cover
-    
+
     Input:
         - graph, constructed using AddEdge()
 
@@ -376,6 +388,7 @@ struct BiconnectedComponents {
         - Probably convert to 0-base indexing
 
     Tested Problems:
+        - UVA: 12880
 */
 
 struct HopcroftKarp {
@@ -389,23 +402,25 @@ struct HopcroftKarp {
     void AddEdge (int l, int r) {
         adj[l].push_back(r);
     }
-    
+
     bool BFS () {
         queue <int> q;
         dist = vector <int>(n + 1, -1);
-        for (int l = 1; l <= n; ++l) if (right[l] == 0) {
-            dist[l] = 0;
-            q.push(l);
+        for (int l = 1; l <= n; ++l) {
+            if (right[l] == 0) {
+                dist[l] = 0;
+                q.push(l);
+            }
         }
 
         while (!q.empty()) {
             int l = q.front();
             q.pop();
             if (dist[0] == -1 || dist[l] < dist[0]) {
-                for (auto &r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    q.push(left[r]);
-                }
+                for (auto& r : adj[l]) if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        q.push(left[r]);
+                    }
             }
         }
         return dist[0] != -1;
@@ -413,10 +428,12 @@ struct HopcroftKarp {
 
     bool DFS (int l) {
         if (l != 0) {
-            for (auto &r: adj[l]) if (dist[left[r]] == dist[l] + 1 && DFS(left[r])) {
-                left[r] = l;
-                right[l] = r;
-                return true;
+            for (auto& r : adj[l]) {
+                if (dist[left[r]] == dist[l] + 1 && DFS(left[r])) {
+                    left[r] = l;
+                    right[l] = r;
+                    return true;
+                }
             }
             dist[l] = -1;
             return false;
@@ -429,8 +446,10 @@ struct HopcroftKarp {
         left = vector <int>(m + 1, 0);
         int ret = 0;
         while (BFS()) {
-            for (int l = 1; l <= n; ++l) if (right[l] == 0 && DFS(l)) {
-                ret++;
+            for (int l = 1; l <= n; ++l) {
+                if (right[l] == 0 && DFS(l)) {
+                    ret++;
+                }
             }
         }
         return ret;
@@ -449,13 +468,15 @@ struct HopcroftKarp {
             (not in the maximum independent set)
     */
 
-    void MinimumVertexCover (vector <bool> &leftCover, vector <bool> &rightCover) {
+    void MinimumVertexCover (vector <bool>& leftCover, vector <bool>& rightCover) {
         leftCover = vector <bool>(n + 1, true), rightCover = vector <bool>(m + 1, false);
         queue <int> q;
         dist = vector <int>(n + 1, -1);
-        for (int l = 1; l <= n; ++l) if (right[l] == 0) {
-            dist[l] = 0;
-            q.push(l);
+        for (int l = 1; l <= n; ++l) {
+            if (right[l] == 0) {
+                dist[l] = 0;
+                q.push(l);
+            }
         }
 
         while (!q.empty()) {
@@ -463,10 +484,12 @@ struct HopcroftKarp {
             q.pop();
             leftCover[l] = false;
             if (dist[0] == -1 || dist[l] < dist[0]) {
-                for (auto &r: adj[l]) if (dist[left[r]] == -1) {
-                    dist[left[r]] = dist[l] + 1;
-                    rightCover[r] = true;
-                    q.push(left[r]);
+                for (auto& r : adj[l]) {
+                    if (dist[left[r]] == -1) {
+                        dist[left[r]] = dist[l] + 1;
+                        rightCover[r] = true;
+                        q.push(left[r]);
+                    }
                 }
             }
         }
@@ -492,7 +515,7 @@ struct HopcroftKarp {
     Tested Problems:
 */
 
-void StableMatching (const int n, const vector <vector <int>> &maleRank, const vector <vector <int>> &femaleRank, vector <int> &wife) {
+void StableMatching (const int n, const vector <vector <int>>& maleRank, const vector <vector <int>>& femaleRank, vector <int>& wife) {
     vector <int> freeMen;
     vector <vector <pair <int, int>>> fq(n);
     vector <int> husband(n, -1);
@@ -504,7 +527,7 @@ void StableMatching (const int n, const vector <vector <int>> &maleRank, const v
         sort(fq[m].begin(), fq[m].end(), greater<PI>());
         freeMen.push_back(m);
     }
-    
+
     while (!freeMen.empty()) {
         int m = freeMen.back(), w = fq[m].back().y;
         fq[m].pop_back();
@@ -533,7 +556,7 @@ void StableMatching (const int n, const vector <vector <int>> &maleRank, const v
     Usage:
         - add edges by AddEdge(), use directed = true if the graph is directed
         - StartTour(start) will create a tour from start
-    
+
     Input:
         - graph, constructed using AddEdge()
         - start, node index to start tour, default is 0
@@ -566,7 +589,7 @@ struct EulerTour {
         tour.clear();
         tour.push_back(start);
         vector<vector <pair <int, int>>::iterator> iter;
-        for (auto &v: adj) {
+        for (auto& v : adj) {
             iter.push_back(v.begin());
         }
         vector <bool> visited(e, false);
@@ -575,16 +598,16 @@ struct EulerTour {
             auto pos = next(it);
             do {
                 while (iter[v] != adj[v].end() && visited[iter[v]->y]) {
-                        iter[v]++;
-                    }
-                    if (iter[v] == adj[v].end()) {
-                        break;
-                    } else {
-                        visited[iter[v]->y] = true;
-                        iter[v]++;
-                        v = prev(iter[v])->x;
-                        tour.insert(pos, v);
-                    }
+                    iter[v]++;
+                }
+                if (iter[v] == adj[v].end()) {
+                    break;
+                } else {
+                    visited[iter[v]->y] = true;
+                    iter[v]++;
+                    v = prev(iter[v])->x;
+                    tour.insert(pos, v);
+                }
             } while (v != u);
         }
     }
@@ -647,12 +670,12 @@ template <class T> struct PushRelabel {
         }
     }
 
-    void Push (Edge <T> &e) {
+    void Push (Edge <T>& e) {
         T amt = min(excess[e.from], e.cap - e.flow);
         if (dist[e.from] == dist[e.to] + 1 && amt > T(0)) {
             e.flow += amt;
             adj[e.to][e.index].flow -= amt;
-            excess[e.to] += amt;    
+            excess[e.to] += amt;
             excess[e.from] -= amt;
             Enqueue(e.to);
         }
@@ -660,25 +683,27 @@ template <class T> struct PushRelabel {
 
     void Gap (int k) {
         for (int v = 0; v < n; v++) if (dist[v] >= k) {
-            count[dist[v]]--;
-            dist[v] = max(dist[v], n);
-            count[dist[v]]++;
-            Enqueue(v);
-        }
+                count[dist[v]]--;
+                dist[v] = max(dist[v], n);
+                count[dist[v]]++;
+                Enqueue(v);
+            }
     }
 
     void Relabel (int v) {
         count[dist[v]]--;
         dist[v] = n;
-        for (auto &e: adj[v]) if (e.cap - e.flow > 0) {
-            dist[v] = min(dist[v], dist[e.to] + 1);
+        for (auto& e : adj[v]) {
+            if (e.cap - e.flow > 0) {
+                dist[v] = min(dist[v], dist[e.to] + 1);
+            }
         }
         count[dist[v]]++;
         Enqueue(v);
     }
 
     void Discharge(int v) {
-        for (auto &e: adj[v]) {
+        for (auto& e : adj[v]) {
             if (excess[v] > 0) {
                 Push(e);
             } else {
@@ -688,7 +713,7 @@ template <class T> struct PushRelabel {
 
         if (excess[v] > 0) {
             if (count[dist[v]] == 1) {
-                Gap(dist[v]); 
+                Gap(dist[v]);
             } else {
                 Relabel(v);
             }
@@ -699,21 +724,21 @@ template <class T> struct PushRelabel {
         dist = vector <int>(n, 0), excess = vector<T>(n, 0), count = vector <int>(n + 1, 0);
         active = vector <bool>(n, false), B = vector <vector <int>>(n);
         b = 0;
-        
+
         for (int i = 0; i < n; ++i) {
-            for (auto &e: adj[i]) {
+            for (auto& e : adj[i]) {
                 e.flow = 0;
             }
         }
 
-        for (auto &e: adj[s]) {
+        for (auto& e : adj[s]) {
             excess[s] += e.cap;
         }
 
         count[0] = n;
         Enqueue(s);
         active[t] = true;
-        
+
         while (b >= 0) {
             if (!B[b].empty()) {
                 int v = B[b].back();
@@ -768,11 +793,11 @@ template <class T> struct PushRelabel {
                                 } while (j != i);
 
                                 int restart = i;
-                                for(j = current[i]->to; j != i; j = e->to) {
+                                for (j = current[i]->to; j != i; j = e->to) {
                                     e = current[j];
-                                    if(rank[j] == WHITE || e->cap - e->flow == 0) {
+                                    if (rank[j] == WHITE || e->cap - e->flow == 0) {
                                         rank[current[j]->to] = WHITE;
-                                        if(rank[j] != WHITE) {
+                                        if (rank[j] != WHITE) {
                                             restart = j;
                                         }
                                     }
@@ -787,13 +812,13 @@ template <class T> struct PushRelabel {
                         }
                         current[i]++;
                     }
-                    if(current[i] == adj[i].end()) {
+                    if (current[i] == adj[i].end()) {
                         rank[i] = BLACK;
-                        if(i != s) {
+                        if (i != s) {
                             st.push_back(i);
                         }
 
-                        if(i != r) {
+                        if (i != r) {
                             i = prev[i];
                             current[i]++;
                         } else {
@@ -810,8 +835,8 @@ template <class T> struct PushRelabel {
 
             auto e = adj[i].begin();
 
-            while(excess[i] > 0) {
-                if(e->cap == 0 && e->cap - e->flow > 0 ) {
+            while (excess[i] > 0) {
+                if (e->cap == 0 && e->cap - e->flow > 0 ) {
                     T amt = min( excess[i], e->cap - e->flow );
                     e->flow += amt;
                     adj[e->to][e->index].flow -= amt;
@@ -836,7 +861,7 @@ template <class T> struct PushRelabel {
                 -1, otherwise
     */
 
-    T GetMinCut (int s, int t, vector <int> &cut) {
+    T GetMinCut (int s, int t, vector <int>& cut) {
         T ret = GetMaxFlow(s, t);
         PreflowToFlow(s, t);
         cut = vector <int> (n, -1);
@@ -845,26 +870,30 @@ template <class T> struct PushRelabel {
         Q.push(s);
         cut[s] = 0;
 
-        while(!Q.empty()) {
+        while (!Q.empty()) {
             int u = Q.front();
             Q.pop();
 
-            for (auto &e: adj[u]) if (cut[e.to] == -1 && e.cap - e.flow > 0) {
-                Q.push(e.to);
-                cut[e.to] = 0;
+            for (auto& e : adj[u]) {
+                if (cut[e.to] == -1 && e.cap - e.flow > 0) {
+                    Q.push(e.to);
+                    cut[e.to] = 0;
+                }
             }
         }
 
         Q.push(t);
         cut[t] = 1;
 
-        while(!Q.empty()) {
+        while (!Q.empty()) {
             int u = Q.front();
             Q.pop();
 
-            for (auto &e: adj[u]) if (cut[e.to] == -1 && adj[e.to][e.index].cap - adj[e.to][e.index].flow > 0) {
-                Q.push(e.to);
-                cut[e.to] = 1;
+            for (auto& e : adj[u]) {
+                if (cut[e.to] == -1 && adj[e.to][e.index].cap - adj[e.to][e.index].flow > 0) {
+                    Q.push(e.to);
+                    cut[e.to] = 1;
+                }
             }
         }
 

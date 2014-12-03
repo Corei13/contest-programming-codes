@@ -30,13 +30,13 @@ int main(int argc, char const *argv[]) {
     while (cin >> k) {
         int cnt = 0;
         for (int e = 1; e <= k; ++e) if ( (k * k) % e == 0 ) {
-            cnt++;
-        }
+                cnt++;
+            }
         cout << cnt << endl;
         for (int e = 1; e <= k; ++e) if ( (k * k) % e == 0 ) {
-            int x = (k * k) / e + k, y = k + e;
-            cout << "1/" << k << " = 1/" << x << " + 1/" << y << endl;
-        }
+                int x = (k * k) / e + k, y = k + e;
+                cout << "1/" << k << " = 1/" << x << " + 1/" << y << endl;
+            }
     }
 
     return 0;

@@ -35,11 +35,11 @@ struct TopSort {
         adj[a].push_back(b);
     }
 
-    void dfs (int u, VB &marked) {
+    void dfs (int u, VB& marked) {
         if (marked[u]) {
             return;
         }
-        for (auto v: adj[u]) {
+        for (auto v : adj[u]) {
             dfs(v, marked);
         }
         marked[u] = true;
@@ -58,29 +58,29 @@ struct TopSort {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
-    TopSort* T = new TopSort(26);
+
+    TopSort *T = new TopSort(26);
     VB flag(26, false);
     string s;
     VS word;
     while (cin >> s && s != "#") {
         for (int i = 0; i < sz(s); ++i) {
-            flag[s[i]-'A'] = true;
+            flag[s[i] - 'A'] = true;
         }
         word.push_back(s);
     }
     for (int i = 0; i < sz(word); ++i) {
         for (int j = 0; j < i; ++j) {
             for (int k = 0; k < min(sz(word[i]), sz(word[j])); ++k) if (word[i][k] != word[j][k]) {
-                T->addEdge(word[i][k] - 'A', word[j][k] - 'A');
-                break;
-            }
+                    T->addEdge(word[i][k] - 'A', word[j][k] - 'A');
+                    break;
+                }
         }
     }
     T->sort();
-    for (auto i: T->sorted) if (flag[i]) {
-        cout << char(i+'A');
-    }
+    for (auto i : T->sorted) if (flag[i]) {
+            cout << char(i + 'A');
+        }
     cout << endl;
 
     return 0;

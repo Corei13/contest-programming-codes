@@ -35,8 +35,8 @@ int main(int argc, char const *argv[]) {
         }
         bool ok = true;
         for (int i = 0; i < n; ++i) if (at[i] == -1) {
-            ok = false;
-        }
+                ok = false;
+            }
         if (ok) {
             for (int i = 0; i < n; ++i) {
                 cout << at[i] << (i + 1 == n ? "\n" : " ");

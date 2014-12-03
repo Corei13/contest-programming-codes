@@ -30,7 +30,7 @@ struct TarjanSCC {
     VVI adj;
     VI idx, component, st, low;
     VB inStack;
-    
+
     TarjanSCC (int n): n(n), adj(n) {}
 
     void addEdge (int a, int b) {
@@ -44,12 +44,12 @@ struct TarjanSCC {
         st.push_back(v);
         inStack[v] = true;
 
-        for (auto w: adj[v]) {
+        for (auto w : adj[v]) {
             if (idx[w] == -1) {
                 DFS(w);
                 low[v] = min(low[v], low[w]);
             } else if (inStack[w]) {
-                low[v] = min(low[v], low[w]);                
+                low[v] = min(low[v], low[w]);
             }
         }
 
@@ -67,12 +67,12 @@ struct TarjanSCC {
 
     void buildSCC () {
         index = 0, components = 0;
-        idx = VI(n,-1), low = VI(n), component = VI(n), inStack = VB(n, false);
+        idx = VI(n, -1), low = VI(n), component = VI(n), inStack = VB(n, false);
         st.clear();
-        
+
         for (int i = 0; i < n; i++) if (idx[i] == -1) {
-            DFS(i);
-        }
+                DFS(i);
+            }
     }
 };
 
@@ -88,19 +88,19 @@ int main(int argc, char const *argv[]) {
         for (int i = 0; i < m; ++i) {
             int a, b;
             cin >> a >> b;
-            T.addEdge(a-1, b-1);
+            T.addEdge(a - 1, b - 1);
         }
         T.buildSCC();
         VB hasRoot(T.components, false);
         for (int i = 0; i < n; ++i) {
-            for (auto j: T.adj[i]) if (T.component[i] != T.component[j]) {
-                hasRoot[T.component[j]] = true;
-            }
+            for (auto j : T.adj[i]) if (T.component[i] != T.component[j]) {
+                    hasRoot[T.component[j]] = true;
+                }
         }
         int ans = 0;
-        for (auto hr: hasRoot) if (!hr) {
-            ans++;
-        }
+        for (auto hr : hasRoot) if (!hr) {
+                ans++;
+            }
         cout << ans << endl;
     }
 

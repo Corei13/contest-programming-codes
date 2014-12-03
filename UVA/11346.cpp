@@ -27,7 +27,7 @@ typedef vector<VD> VVD;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
     cin >> t;
     for (int cs = 0; cs < t; ++cs) {
@@ -43,6 +43,6 @@ int main(int argc, char const *argv[]) {
         }
         cout << fixed << setprecision(6) << pr * 100.0 << "%" << endl;
     }
-;
+    ;
     return 0;
 }

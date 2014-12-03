@@ -56,12 +56,11 @@ struct DisjointSet {
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     int t;
-    DisjointSet* D;
+    DisjointSet *D;
     cin >> t;
-    for (int cs = 0; cs < t; ++cs)
-    {
+    for (int cs = 0; cs < t; ++cs) {
         int m, n = 0;
         cin >> m;
         map<string, int> f;
@@ -74,7 +73,7 @@ int main(int argc, char const *argv[]) {
             edge.push_back(make_pair(f[a], f[b]));
         }
         D = new DisjointSet(n);
-        for (auto e: edge) {
+        for (auto e : edge) {
             D->Union(e.x, e.y);
             cout << D->total[D->Find(e.x)] << endl;
         }

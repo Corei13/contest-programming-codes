@@ -16,7 +16,7 @@
         - UVA: 12879
 */
 
-void FFT (int n, const vector <complex <double>> &f, vector <complex <double>> &F, int dir = 1) {
+void FFT (int n, const vector <complex <double>>& f, vector <complex <double>>& F, int dir = 1) {
     F.clear();
     F.resize(n);
     copy (f.begin(), f.end(), F.begin());
@@ -70,7 +70,7 @@ void FFT (int n, const vector <complex <double>> &f, vector <complex <double>> &
         - UVA: 12879
 */
 
-void Multiply (const vector <complex <double>> &f, const vector <complex <double>> &g, vector <complex <double>> &h) {
+void Multiply (const vector <complex <double>>& f, const vector <complex <double>>& g, vector <complex <double>>& h) {
     vector <complex <double>> F, G;
     int N = 1;
 

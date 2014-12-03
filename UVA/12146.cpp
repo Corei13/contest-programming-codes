@@ -27,17 +27,17 @@ int main(int argc, char const *argv[]) {
 
     int a, b;
     while (cin >> a >> b && a * b != 0) {
-        VVI row(a+1, VI(b+1, 0));
-        VI grid(a+1, 0);
+        VVI row(a + 1, VI(b + 1, 0));
+        VI grid(a + 1, 0);
         for (int i = 0; i < a; ++i) {
             for (int j = 0; j < b; ++j) {
                 int x;
                 cin >> x;
-                row[i][j+1] = max(x + (j >= 1 ? row[i][j-1] : 0), row[i][j]);
+                row[i][j + 1] = max(x + (j >= 1 ? row[i][j - 1] : 0), row[i][j]);
             }
         }
         for (int i = 0; i < a; ++i) {
-            grid[i+1] = max(row[i][b] + (i >= 1 ? grid[i-1] : 0), grid[i]);
+            grid[i + 1] = max(row[i][b] + (i >= 1 ? grid[i - 1] : 0), grid[i]);
         }
         cout << grid[a] << endl;
     }

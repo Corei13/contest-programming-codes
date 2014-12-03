@@ -31,10 +31,10 @@ int main(int argc, char const *argv[]) {
     while (cin >> n[0] >> n[1]) {
         deque<ll> a[2];
         a[0] = deque<ll> (n[0]), a[1] = deque<ll> (n[1]);
-        for (auto &i: a[0]) {
+        for (auto& i : a[0]) {
             cin >> i;
         }
-        for (auto &i: a[1]) {
+        for (auto& i : a[1]) {
             cin >> i;
         }
         sort(all(a[0]), greater<ll>());

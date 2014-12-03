@@ -1,0 +1,25 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+    "settings":
+    {
+        "AStyleFormatter":
+        {
+            "autoformat_on_save": true,
+            "options_default":
+            {
+                "style": "java",
+                "indent": "spaces",
+                "indent-spaces": 4,
+                "align-pointer": "name",
+                "align-reference": "type",
+                "close-templates": true
+            }
+        }
+    }
+}

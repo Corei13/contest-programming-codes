@@ -42,15 +42,15 @@ int main(int argc, char const *argv[]) {
             }
         }
         int ans = 0;
-        for (auto s: src) {
+        for (auto s : src) {
             int curr = n * n;
-            for (auto t: dst) {
+            for (auto t : dst) {
                 curr = min(curr, abs(s.x - t.x) + abs(s.y - t.y));
             }
             ans = max(curr, ans);
         }
         cout << ans << endl;
     }
-    
+
     return 0;
 }

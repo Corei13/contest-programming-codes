@@ -28,7 +28,7 @@ typedef pair<ll, ll> PI;
 
 int main(int argc, char const *argv[]) {
     ios::sync_with_stdio(false);
-    
+
     double height, up, down, rate;
 
     while (cin >> height >> up >> down >> rate && height != 0.0) {
