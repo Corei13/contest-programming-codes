@@ -1,11 +1,21 @@
 ---
 layout: page
 title: Graph Algorithms
-category: Programming
+name: Graph
 type: code
+anchors:
+    Topological Sort: TopologicalSort
+    Strongly Connected Components (Tarjan): StronglyConnectedComponents
+    Minimum Spanning Tree (Kruskal): Kruskal
+    Dijkstra's Algorithm: Dijkstra
+    Articulation Points, Bridges, Biconnected Components: BiconnectedComponents
+    Maximum Bipartite Matching (Hopcroft-Karp): HopcroftKarp
+    Stable Matching (Gale–Shapley): StableMatching
+    Euler Tour: EulerTour
+    Highest Label Push Relabel Maximum Flow Algorithm: PushRelabel
 ---
 
-- **Implementation of topological sort in directed acyclic graphs**
+- <a name="TopologicalSort"></a>**Implementation of topological sort in directed acyclic graphs**
     - *Running time*
         - `O(|V| + |E|)`
     - *Usage*
@@ -52,7 +62,7 @@ struct TopologicalSort {
 };
 {% endhighlight %}
 
-- **Implementation of Tarjan's strongly connected components algorithm**
+- [**Implementation of Tarjan's strongly connected components algorithm**](#StronglyConnectedComponents)
 
     - *Running time*
         `O(|V|+|E|)`
@@ -155,7 +165,7 @@ struct StronglyConnectedComponents {
 {% endhighlight %}
 
 
-- **Implementation of Kruskal's minimum spanning tree algorithm**
+- [**Implementation of Kruskal's minimum spanning tree algorithm**](#Kruskal)
 
     - *Running time*
         `O(|E|log|V|)`
@@ -203,7 +213,7 @@ template <class T> struct Kruskal {
 };
 {% endhighlight %}
 
-- **Implementation of Dijkstra's single source shortest path algorithm**
+- [**Implementation of Dijkstra's single source shortest path algorithm**](#Dijkstra)
 
     - *Running time*
         `O(|V|log|V|+|E|)`
@@ -263,7 +273,7 @@ template <class T> struct Dijkstra {
 };
 {% endhighlight %}
 
-- **Finds biconnected components, bridges and articulation points in a graph**
+- [**Finds biconnected components, bridges and articulation points in a graph**](#BiconnectedComponents)
 
     - *Running time*
         `O(|V|+|E|)`
@@ -364,7 +374,7 @@ struct BiconnectedComponents {
 };
 {% endhighlight %}
 
-- **Implementation of Hopcroft-Karp algorithm of finding maximum matching**
+- [**Implementation of Hopcroft-Karp algorithm of finding maximum matching**](#HopcroftKarp)
 
     - *Running time*
         `O(|E||V|^{1/2})`
@@ -497,7 +507,7 @@ struct HopcroftKarp {
 };
 {% endhighlight %}
 
-- **Implementation of Gale–Shapley stable matching algorithm**
+- [**Implementation of Gale–Shapley stable matching algorithm**](#StableMatching)
 
     - *Running time*
         `O(n^2)`
@@ -548,7 +558,7 @@ void StableMatching
 {% endhighlight %}
 
 
-- **Implementation of euler tour generation algorithm**
+- [**Implementation of euler tour generation algorithm**](#EulerTour)
 
     - *Running time*
         `O(|V|+|E|)`
@@ -614,7 +624,7 @@ struct EulerTour {
 };
 {% endhighlight %}
 
-- **Implementation of highest-label push-relabel maximum flow**
+- [**Implementation of highest-label push-relabel maximum flow**](#PushRelabel)
 
     - *Running time*
         `O(|V|^2|E|^{1/2})`
