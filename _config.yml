@@ -1,0 +1,32 @@
+# Dependencies
+markdown:         redcarpet
+redcarpet:
+  extensions:     ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
+
+highlighter:      pygments
+
+# Permalinks
+permalink:        pretty
+relative_permalinks: true
+
+# Setup
+title:            Notes
+baseurl:          /contest-programming-codes/
+
+author:
+  name:           'Dhananjoy Biswas'
+
+paginate:         5
+
+# Custom vars
+version:          2.1.0
+
+github:
+  repo:           https://github.com/Corei13/contest-programming-codes
+
+sections:         
+                  Graph:    "Graph Algorithms"
+                  String:   "String Algorithms"
+                  DS:       "Data Structures"
+                  Geometry: "Geometry"
+                  Math:     "Mathematical Algorithms"

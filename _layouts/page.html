@@ -1,0 +1,14 @@
+---
+layout: default
+---
+
+<div class="page">
+  {% if page.title != null %}
+  <h1 class="page-title">{{ page.title }}
+    {% if page.author != null %}
+        - <small>{{ page.author }}</small>
+    {% endif %}
+  </h1>
+  {% endif %}
+  {{ content }}
+</div>

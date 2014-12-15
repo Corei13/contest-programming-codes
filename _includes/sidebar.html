@@ -1,0 +1,29 @@
+<script type="text/javascript">
+  console.log({{site | jsonify}});
+  console.log({{page | jsonify}});
+</script>
+
+<div class="sidebar">
+  <div class="container">
+    <nav class="sidebar-nav">
+      {% for section in site.sections%}
+        <b class="sidebar-nav-item{% if section[0] == page.name %} active {% endif %}"><a href="{{ site.baseurl }}Library/{{ section[0] }}">
+        {{ section[1] }}
+        </a></b>
+        {% if section[1] == page.title %}
+          {% for anchor in page.anchors %}
+            <a class="sidebar-nav-item" href="#{{ anchor[1] }}">
+              {{ anchor[0] }}
+            </a>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </nav>
+  </div>
+  <div class="container sidebar-sticky" style="font-size:12px">
+    <a href = "{{ site.github.repo }}" target="_blank">
+      <img src="{{site.baseurl}}/public/github.png"/>
+    </a>
+    <div>Powered by <a href="https://github.com/poole/hyde">Hyde</a></div>
+  </div>
+</div>
