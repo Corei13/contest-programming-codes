@@ -7,9 +7,11 @@
   <div class="container">
     <nav class="sidebar-nav">
       {% for section in site.sections%}
-        <b class="sidebar-nav-item{% if section[0] == page.name %} active {% endif %}"><a href="{{ site.baseurl }}Library/{{ section[0] }}">
-        {{ section[1] }}
-        </a></b>
+        <b class="sidebar-nav-item">
+          <a class="{% if section[0] == page.id %} active {% endif %}" href="{{ site.baseurl }}Library/{{ section[0] }}">
+          {{ section[1] }}
+          </a>
+        </b>
         {% if section[1] == page.title %}
           {% for anchor in page.anchors %}
             <a class="sidebar-nav-item" href="#{{ anchor[1] }}">
