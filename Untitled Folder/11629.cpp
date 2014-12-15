@@ -31,65 +31,57 @@
 using namespace std;
 
 
-struct comp
-{
-	comp(){}
-	
-	bool operator () ( const data &a, const data &b )
-	{	
-		return a.X < b.X;
-	}
+struct comp {
+    comp() {}
+
+    bool operator () ( const data& a, const data& b ) {
+        return a.X < b.X;
+    }
 };
 
-map<string,int> w;
+map<string, int> w;
 string s, t;
 int N, M;
 data u;
 double d;
 int T, e;
 
-int main (int argc, char const* argv[])
-{
-	int cnt = 1;
-	ios::sync_with_stdio(false);
-	
-	cin >> N >> M;
-	
-	for (int i = 0; i < N; i += 1)
-	{
-		cin >> s >> d;
-		w[s] = int(d*10 + 1e-5);
-	}
-	
-	for (int i = 0; i < M; i += 1)
-	{
-		T = 0;
-		
-		while ( cin >> t >> s )
-		{
-			T += w[t];
-			
-			if (s[0] != '+')
-			{
-				break;
-			}
-		}
+int main (int argc, char const *argv[]) {
+    int cnt = 1;
+    ios::sync_with_stdio(false);
 
-		cin >> e;
-		e *= 10;
+    cin >> N >> M;
 
-		
-		cout << "Guess #" << cnt++ << " was ";
-		
-		if ( !( ( s == "<" && T < e ) || ( s == ">" && T > e ) || ( s == "=" && T == e ) || ( s == "<=" && T <= e ) || ( s == ">=" && T >= e ) ) )
-		{
-			cout << "in";
-		}
-		
-		cout << "correct.\n";
-	}
-	
-	
-	return 0;
+    for (int i = 0; i < N; i += 1) {
+        cin >> s >> d;
+        w[s] = int(d * 10 + 1e-5);
+    }
+
+    for (int i = 0; i < M; i += 1) {
+        T = 0;
+
+        while ( cin >> t >> s ) {
+            T += w[t];
+
+            if (s[0] != '+') {
+                break;
+            }
+        }
+
+        cin >> e;
+        e *= 10;
+
+
+        cout << "Guess #" << cnt++ << " was ";
+
+        if ( !( ( s == "<" && T < e ) || ( s == ">" && T > e ) || ( s == "=" && T == e ) || ( s == "<=" && T <= e ) || ( s == ">=" && T >= e ) ) ) {
+            cout << "in";
+        }
+
+        cout << "correct.\n";
+    }
+
+
+    return 0;
 }
 

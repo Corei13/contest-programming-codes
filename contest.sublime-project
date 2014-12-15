@@ -16,9 +16,12 @@
                 "style": "java",
                 "indent": "spaces",
                 "indent-spaces": 4,
-                "align-pointer": "name",
+                "align-pointer": "",
                 "align-reference": "type",
-                "close-templates": true
+                "close-templates": true,
+                "indent-namespaces": true,
+                "add-brackets": false,
+                "add-one-line-brackets": false
             }
         }
     }

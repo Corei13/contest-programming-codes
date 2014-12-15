@@ -37,7 +37,6 @@ Library Hierarchy
     - [ ] Extended Euclid
     - [ ] Diophantine Equation
     - [ ] Reduced Row Echelon Form
-    - [ ] Matrix Class
     
   - **String.cpp**
     - [x] Lexicographically Smallest Rotation (Booth's Algorithm)
@@ -51,6 +50,7 @@ Library Hierarchy
     - [x] Union Find
     - [x] Trie [#TODO: Implement delete function]
     - [x] Static Trie
+    - [x] Matrix [#TODO: add doc + functional plus/multiplication? + add move constructors]
     - [ ] BIT
     - [ ] Segment Tree
     - [ ] 2D Segment Tree

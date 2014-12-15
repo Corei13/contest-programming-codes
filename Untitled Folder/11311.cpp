@@ -32,25 +32,21 @@ using namespace std;
 
 int A, B, X, Y, T;
 
-int main (int argc, char const* argv[])
-{
-	ios::sync_with_stdio(false);
-	
-	cin >> T;
-	
-	for (int t = 0; t < T; t += 1)
-	{
-		cin >> A >> B >> X >> Y;
-		
-		
-		if ( (X^Y^(A-X-1)^(B-Y-1)) )
-		{
-			cout << "Gretel\n";
-		}
-		else	cout << "Hansel\n";
-	}
-	
-	return 0;
+int main (int argc, char const *argv[]) {
+    ios::sync_with_stdio(false);
+
+    cin >> T;
+
+    for (int t = 0; t < T; t += 1) {
+        cin >> A >> B >> X >> Y;
+
+
+        if ( (X ^ Y ^ (A - X - 1) ^ (B - Y - 1)) ) {
+            cout << "Gretel\n";
+        } else    cout << "Hansel\n";
+    }
+
+    return 0;
 }
 
 

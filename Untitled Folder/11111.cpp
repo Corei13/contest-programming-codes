@@ -36,63 +36,47 @@ vector <int> v;
 int sz, a;
 string S;
 
-int main (int argc, char const* argv[])
-{
-	ios::sync_with_stdio(false);
-	
-	while( getline ( cin, S ) )
-	{
-		stringstream ss(S);
-		v.clear();
-		sz = -1;
-		bool finish = false;
-		bool flag = true;
-		
-		while( ss >> a )
-		{
-			if (finish)
-			{
-				flag = false;
-				break;
-			}
-			if ( a < 0 )
-			{
-				v.push_back(-a);
-				sz++;
-				cnt[sz] = 0;
-			}
-			else
-			{
-				if (v.empty())
-				{
-					flag = false;
-				}
-				else if ( cnt[sz] >= v.back() || a != v.back() )
-				{
-					flag = false;
-				}
-				else
-				{
-					v.pop_back();
-					sz--;
-					if (sz < 0)
-					{
-						finish = true;
-					}
-					else	cnt[sz] += a;
-				}
-			}
-			
-		}
-		
-		if (flag && v.empty())
-		{
-			cout << ":-) Matrioshka!\n";
-		}
-		else	cout << ":-( Try again.\n";
-	}
-	
-	return 0;
+int main (int argc, char const *argv[]) {
+    ios::sync_with_stdio(false);
+
+    while ( getline ( cin, S ) ) {
+        stringstream ss(S);
+        v.clear();
+        sz = -1;
+        bool finish = false;
+        bool flag = true;
+
+        while ( ss >> a ) {
+            if (finish) {
+                flag = false;
+                break;
+            }
+            if ( a < 0 ) {
+                v.push_back(-a);
+                sz++;
+                cnt[sz] = 0;
+            } else {
+                if (v.empty()) {
+                    flag = false;
+                } else if ( cnt[sz] >= v.back() || a != v.back() ) {
+                    flag = false;
+                } else {
+                    v.pop_back();
+                    sz--;
+                    if (sz < 0) {
+                        finish = true;
+                    } else    cnt[sz] += a;
+                }
+            }
+
+        }
+
+        if (flag && v.empty()) {
+            cout << ":-) Matrioshka!\n";
+        } else    cout << ":-( Try again.\n";
+    }
+
+    return 0;
 }
 
 

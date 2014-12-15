@@ -34,27 +34,24 @@ int N, A;
 int cnt[10500];
 
 
-int main (int argc, char const* argv[])
-{
-	ios::sync_with_stdio(false);
-	
-	while ( cin >> N && N )
-	{
-		memset ( cnt, 0, sizeof(cnt) );
-		A = 0;
-		
-		while ( cnt[N] == 0 )
-		{
-			cnt[N] = 1;
-			N *= N;
-			N /= 100;
-			N %= 10000;
-			A++;
-		}
-		cout << A << '\n';
-	}
-	
-	return 0;
+int main (int argc, char const *argv[]) {
+    ios::sync_with_stdio(false);
+
+    while ( cin >> N && N ) {
+        memset ( cnt, 0, sizeof(cnt) );
+        A = 0;
+
+        while ( cnt[N] == 0 ) {
+            cnt[N] = 1;
+            N *= N;
+            N /= 100;
+            N %= 10000;
+            A++;
+        }
+        cout << A << '\n';
+    }
+
+    return 0;
 }
 
 

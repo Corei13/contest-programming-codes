@@ -1,5 +1,3 @@
-using namespace std::rel_ops;
-
 /*
     Full featured fraction class
 */
@@ -43,19 +41,9 @@ template <class T> struct Fraction {
         return *this;
     }
 
-    friend inline Fraction operator + (Fraction lhs, const Fraction& rhs) {
-        lhs += rhs;
-        return lhs;
-    }
-
     Fraction& operator += (const T& rhs) {
         this->a += this->b * rhs;
         return *this;
-    }
-
-    friend inline Fraction operator + (Fraction lhs, const T& rhs) {
-        lhs += rhs;
-        return lhs;
     }
 
     Fraction& operator -= (const Fraction& rhs) {
@@ -65,19 +53,9 @@ template <class T> struct Fraction {
         return *this;
     }
 
-    friend inline Fraction operator - (Fraction lhs, const Fraction& rhs) {
-        lhs -= rhs;
-        return lhs;
-    }
-
     Fraction& operator -= (const T& rhs) {
         this->a -= this->b * rhs;
         return *this;
-    }
-
-    friend inline Fraction operator - (Fraction lhs, const T& rhs) {
-        lhs -= rhs;
-        return lhs;
     }
 
     Fraction& operator *= (const Fraction& rhs) {
@@ -86,20 +64,10 @@ template <class T> struct Fraction {
         return *this;
     }
 
-    friend inline Fraction operator * (Fraction lhs, const Fraction& rhs) {
-        lhs *= rhs;
-        return lhs;
-    }
-
     Fraction& operator *= (const T& rhs) {
         this->a *= rhs;
         this->Normalize();
         return *this;
-    }
-
-    friend inline Fraction operator * (Fraction lhs, const T& rhs) {
-        lhs *= rhs;
-        return lhs;
     }
 
     Fraction& operator /= (const Fraction& rhs) {
@@ -108,20 +76,10 @@ template <class T> struct Fraction {
         return *this;
     }
 
-    friend inline Fraction operator / (Fraction lhs, const Fraction& rhs) {
-        lhs /= rhs;
-        return lhs;
-    }
-
     Fraction& operator /= (const T& rhs) {
         this->b *= rhs;
         this->Normalize();
         return *this;
-    }
-
-    friend inline Fraction operator / (Fraction lhs, const T& rhs) {
-        lhs /= rhs;
-        return lhs;
     }
 
     friend inline Fraction abs (const Fraction& f) {
@@ -211,19 +169,9 @@ template <class T> struct Point {
         return *this;
     }
 
-    friend inline Point operator - (Point lhs, const Point& rhs) {
-        lhs -= rhs;
-        return lhs;
-    }
-
     Point& operator += (const T& c) {
         x += c, y += c;
         return *this;
-    }
-
-    friend inline Point operator + (Point lhs, const T& rhs) {
-        lhs += rhs;
-        return lhs;
     }
 
     Point& operator -= (const T& c) {
@@ -231,29 +179,14 @@ template <class T> struct Point {
         return *this;
     }
 
-    friend inline Point operator - (Point lhs, const T& rhs) {
-        lhs -= rhs;
-        return lhs;
-    }
-
     Point& operator *= (const T& c) {
         x *= c, y *= c;
         return *this;
     }
 
-    friend inline Point operator * (Point lhs, const T& rhs) {
-        lhs *= rhs;
-        return lhs;
-    }
-
     Point& operator /= (const T& c) {
         x /= c, y /= c;
         return *this;
-    }
-
-    friend inline Point operator / (Point lhs, const T& rhs) {
-        lhs /= rhs;
-        return lhs;
     }
 
     bool operator == (const Point& p) const {

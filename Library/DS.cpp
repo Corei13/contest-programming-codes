@@ -294,3 +294,119 @@ template <class T, int n> struct StaticTrie {
         }
     }
 };
+
+
+template <class T, T I = T(0)> struct Matrix {
+    int n, m;
+    valarray <T> cells;
+
+    Matrix (int n, int m): n(n), m(m), cells(I, n * m) {}
+
+    Matrix (int n): Matrix (n, n) {}
+
+    Matrix (vector <vector <T>>&& cells): n(cells.size()), m(cells[0].size()) {
+        this->cells = valarray <T>(I, n * m);
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                this->cells[i * m + j] = cells[i][j];
+            }
+        }
+    }
+
+    inline T& operator() (unsigned int row, unsigned int col) {
+        return cells[row * m + col];
+    }
+
+    inline T operator() (unsigned int row, unsigned int col) const {
+        return cells[row * m + col];
+    }
+
+    inline Matrix operator - () const {
+        return *this * -1;
+    }
+
+    inline Matrix& operator += (const Matrix& rhs) {
+        cells += rhs.cells;
+        return *this;
+    }
+
+    inline Matrix& operator -= (const Matrix& rhs) {
+        cells -= rhs.cells;
+        return *this;
+    }
+
+    inline Matrix& operator *= (const Matrix& rhs) {
+        assert(m == rhs.n);
+        valarray <T> product(I, n * rhs.m);
+        for (int i = 0; i < n; ++i) {
+            for (int k = 0; k < m; ++k) {
+                product[slice(i * rhs.m, rhs.m, 1)] += cells[i * m + k] * rhs.cells[slice(k * rhs.m, rhs.m, 1)];
+            }
+        }
+        m = rhs.m;
+        cells = product;
+        return *this;
+    }
+
+    inline Matrix& operator += (const T& rhs) {
+        cells += rhs;
+        return *this;
+    }
+
+    inline Matrix& operator -= (const T& rhs) {
+        cells -= rhs;
+        return *this;
+    }
+
+    inline Matrix& operator *= (const T& rhs) {
+        cells *= rhs;
+        return *this;
+    }
+
+    inline Matrix& operator /= (const T& rhs) {
+        cells /= rhs;
+        return *this;
+    }
+
+    inline void eye () {
+        assert(n == m);
+        for (int i = 0; i < n; ++i) {
+            cells[i * n + i] = 1;
+        }
+    }
+
+    inline Matrix apply (function <int (T)> f) {
+        Matrix a = *this;
+        for (int i = 0; i < n * m; ++i) {
+            a.cells[i] = f(cells[i]);
+        }
+        return a;
+    }
+
+    inline friend Matrix pow (const Matrix& base, long long n) {
+        Matrix ret (base.n);
+        ret.eye();
+        int msb = -1;
+        while (n >> (msb + 1)) {
+            ++msb;
+        }
+        while (msb >= 0) {
+            ret *= ret;
+            if (n & (1LL << msb)) {
+                ret *= base;
+            }
+            --msb;
+        }
+        return ret;
+    }
+
+    friend ostream& operator << (ostream& os, const Matrix& M) {
+        for (int i = 0; i < M.n; ++i) {
+            for (int j = 0; j < M.m; ++j) {
+                os << setw (10) << M(i, j);
+            }
+            os << endl;
+        }
+        return os;
+    }
+};

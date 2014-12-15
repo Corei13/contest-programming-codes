@@ -21,17 +21,15 @@ using namespace std;
 int T;
 int x, y, z;
 
-int main (int argc, char const* argv[])
-{
-	cin >> T;
-	for (int t = 1; t <= T; t += 1)
-	{
-		cin >> x >> y >> z;
-		cout << max( 0, min( z, z*(2*x-y)/(x+y) ) ) << '\n';
-	}
-	
-	
-	return 0;
+int main (int argc, char const *argv[]) {
+    cin >> T;
+    for (int t = 1; t <= T; t += 1) {
+        cin >> x >> y >> z;
+        cout << max( 0, min( z, z * (2 * x - y) / (x + y) ) ) << '\n';
+    }
+
+
+    return 0;
 }
 
 
