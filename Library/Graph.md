@@ -2,7 +2,6 @@
 layout: page
 title: Graph Algorithms
 name: Graph
-type: code
 anchors:
     Topological Sort: TopologicalSort
     Strongly Connected Components (Tarjan): StronglyConnectedComponents
@@ -28,7 +27,7 @@ anchors:
     - *Tested Problems*
 
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 struct TopologicalSort {
     int n;
     vector <vector <int>> adj;
@@ -62,7 +61,7 @@ struct TopologicalSort {
 };
 {% endhighlight %}
 
-- [**Implementation of Tarjan's strongly connected components algorithm**](#StronglyConnectedComponents)
+- <a name = "StronglyConnectedComponents"></a>**Implementation of Tarjan's strongly connected components algorithm**
 
     - *Running time*
         `O(|V|+|E|)`
@@ -82,7 +81,7 @@ struct TopologicalSort {
 
     - *Tested Problems*
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 struct StronglyConnectedComponents {
     int n;
     int totalComponents;
@@ -165,7 +164,7 @@ struct StronglyConnectedComponents {
 {% endhighlight %}
 
 
-- [**Implementation of Kruskal's minimum spanning tree algorithm**](#Kruskal)
+- <a name = "Kruskal"></a>**Implementation of Kruskal's minimum spanning tree algorithm**
 
     - *Running time*
         `O(|E|log|V|)`
@@ -184,7 +183,7 @@ struct StronglyConnectedComponents {
 
     - *Tested Problems*
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 template <class T> struct Kruskal {
     int n;
     vector <pair <T, PI>> edges;
@@ -213,7 +212,7 @@ template <class T> struct Kruskal {
 };
 {% endhighlight %}
 
-- [**Implementation of Dijkstra's single source shortest path algorithm**](#Dijkstra)
+- <a name = "Dijkstra"></a>**Implementation of Dijkstra's single source shortest path algorithm**
 
     - *Running time*
         `O(|V|log|V|+|E|)`
@@ -235,7 +234,7 @@ template <class T> struct Kruskal {
     - *Tested Problems*
 */
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 template <class T> struct Dijkstra {
     int n;
     bool directed;
@@ -273,7 +272,7 @@ template <class T> struct Dijkstra {
 };
 {% endhighlight %}
 
-- [**Finds biconnected components, bridges and articulation points in a graph**](#BiconnectedComponents)
+- <a name = "BiconnectedComponents"></a>**Finds biconnected components, bridges and articulation points in a graph**
 
     - *Running time*
         `O(|V|+|E|)`
@@ -295,7 +294,7 @@ template <class T> struct Dijkstra {
 
     - *Tested Problems*
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 struct BiconnectedComponents {
     int n;
     int totalComponents;
@@ -374,7 +373,7 @@ struct BiconnectedComponents {
 };
 {% endhighlight %}
 
-- [**Implementation of Hopcroft-Karp algorithm of finding maximum matching**](#HopcroftKarp)
+- <a name = "HopcroftKarp"></a>**Implementation of Hopcroft-Karp algorithm of finding maximum matching**
 
     - *Running time*
         `O(|E||V|^{1/2})`
@@ -400,7 +399,7 @@ struct BiconnectedComponents {
     - *Tested Problems*
         - UVA: 12880
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 struct HopcroftKarp {
     int n, m;
     vector <vector <int>> adj;
@@ -507,7 +506,7 @@ struct HopcroftKarp {
 };
 {% endhighlight %}
 
-- [**Implementation of Gale–Shapley stable matching algorithm**](#StableMatching)
+- <a name = "StableMatching"></a>**Implementation of Gale–Shapley stable matching algorithm**
 
     - *Running time*
         `O(n^2)`
@@ -523,7 +522,7 @@ struct HopcroftKarp {
 
     - *Tested Problems*
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 void StableMatching
 (const int n, const vector <vector <int>>& maleRank, const vector <vector <int>>& femaleRank, vector <int>& wife) {
     vector <int> freeMen;
@@ -558,7 +557,7 @@ void StableMatching
 {% endhighlight %}
 
 
-- [**Implementation of euler tour generation algorithm**](#EulerTour)
+- <a name = "EulerTour"></a>**Implementation of euler tour generation algorithm**
 
     - *Running time*
         `O(|V|+|E|)`
@@ -576,7 +575,7 @@ void StableMatching
 
     - *Tested Problems*
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 struct EulerTour {
     int n, e;
     vector <vector <pair <int, int>>> adj;
@@ -624,7 +623,7 @@ struct EulerTour {
 };
 {% endhighlight %}
 
-- [**Implementation of highest-label push-relabel maximum flow**](#PushRelabel)
+- <a name = "PushRelabel"></a>**Implementation of highest-label push-relabel maximum flow**
 
     - *Running time*
         `O(|V|^2|E|^{1/2})`
@@ -644,7 +643,7 @@ struct EulerTour {
 
     - *Tested Problems*
 
-{% highlight cpp linenos %}
+{% highlight cpp %}
 template <class T> struct Edge {
     int from, to, index;
     T cap, flow;
