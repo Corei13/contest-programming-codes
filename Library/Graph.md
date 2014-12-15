@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Graph Algorithms
-name: Graph
+id: Graph
 anchors:
     Topological Sort: TopologicalSort
     Strongly Connected Components (Tarjan): StronglyConnectedComponents

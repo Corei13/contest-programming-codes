@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Data Structures
-name: DS
+id: DS
 anchors:
     Longest Increasing Subsequence: LongestIncreasingSubsequence
     Disjoint Set: DisjointSet

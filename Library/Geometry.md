@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Geometry
-name: Geometry
+id: Geometry
 anchors:
     Fraction Class: Fraction
     Geometry Routines: GeometryRoutines
