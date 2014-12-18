@@ -23,12 +23,3 @@ author:
 
 github:
     repo:               https://github.com/Corei13/contest-programming-codes
-
-sections:
-    readme:                     "Index"
-    graph:                      "Graph Algorithms"
-    string:                     "String Algorithms"
-    data-structures:            "Data Structures"
-    geometry:                   "Geometry"
-    math:                       "Mathematics"
-    theorems-and-formulae:      "Theorems And Formulae"
