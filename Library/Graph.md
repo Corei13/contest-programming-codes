@@ -1,20 +1,23 @@
 ---
-layout: page
-title: Graph Algorithms
-id: Graph
+layout:     page
+title:      Graph Algorithms
+id:         graph
+path:       Library/Graph
 anchors:
-    Topological Sort: TopologicalSort
-    Strongly Connected Components (Tarjan): StronglyConnectedComponents
-    Minimum Spanning Tree (Kruskal): Kruskal
-    Dijkstra's Algorithm: Dijkstra
-    Articulation Points, Bridges, Biconnected Components: BiconnectedComponents
-    Maximum Bipartite Matching (Hopcroft-Karp): HopcroftKarp
-    Stable Matching (Gale–Shapley): StableMatching
-    Euler Tour: EulerTour
-    Highest Label Push Relabel Maximum Flow Algorithm: PushRelabel
+            TopologicalSort: Topological Sort
+            StronglyConnectedComponents: Strongly Connected Components (Tarjan)
+            Kruskal: Minimum Spanning Tree (Kruskal)
+            Dijkstra: Dijkstra's Algorithm
+            BiconnectedComponents: Articulation Points, Bridges, Biconnected Components
+            HopcroftKarp: Maximum Bipartite Matching (Hopcroft-Karp)
+            StableMatching: Stable Matching (Gale–Shapley)
+            EulerTour: Euler Tour
+            PushRelabel: Highest Label Push Relabel Maximum Flow Algorithm
 ---
 
-- <a name="TopologicalSort"></a>**Implementation of topological sort in directed acyclic graphs**
+<a name="TopologicalSort"></a>
+
+- **Implementation of topological sort in directed acyclic graphs**
     - *Running time*
         - `O(|V| + |E|)`
     - *Usage*
@@ -61,7 +64,9 @@ struct TopologicalSort {
 };
 {% endhighlight %}
 
-- <a name = "StronglyConnectedComponents"></a>**Implementation of Tarjan's strongly connected components algorithm**
+<a name = "StronglyConnectedComponents"></a>
+
+- **Implementation of Tarjan's strongly connected components algorithm**
 
     - *Running time*
         `O(|V|+|E|)`
@@ -164,7 +169,9 @@ struct StronglyConnectedComponents {
 {% endhighlight %}
 
 
-- <a name = "Kruskal"></a>**Implementation of Kruskal's minimum spanning tree algorithm**
+<a name = "Kruskal"></a>
+
+- **Implementation of Kruskal's minimum spanning tree algorithm**
 
     - *Running time*
         `O(|E|log|V|)`
@@ -212,7 +219,9 @@ template <class T> struct Kruskal {
 };
 {% endhighlight %}
 
-- <a name = "Dijkstra"></a>**Implementation of Dijkstra's single source shortest path algorithm**
+<a name = "Dijkstra"></a>
+
+- **Implementation of Dijkstra's single source shortest path algorithm**
 
     - *Running time*
         `O(|V|log|V|+|E|)`
@@ -272,7 +281,9 @@ template <class T> struct Dijkstra {
 };
 {% endhighlight %}
 
-- <a name = "BiconnectedComponents"></a>**Finds biconnected components, bridges and articulation points in a graph**
+<a name = "BiconnectedComponents"></a>
+
+- **Finds biconnected components, bridges and articulation points in a graph**
 
     - *Running time*
         `O(|V|+|E|)`
@@ -373,7 +384,9 @@ struct BiconnectedComponents {
 };
 {% endhighlight %}
 
-- <a name = "HopcroftKarp"></a>**Implementation of Hopcroft-Karp algorithm of finding maximum matching**
+<a name = "HopcroftKarp"></a>
+
+- **Implementation of Hopcroft-Karp algorithm of finding maximum matching**
 
     - *Running time*
         `O(|E||V|^{1/2})`
@@ -506,7 +519,9 @@ struct HopcroftKarp {
 };
 {% endhighlight %}
 
-- <a name = "StableMatching"></a>**Implementation of Gale–Shapley stable matching algorithm**
+<a name = "StableMatching"></a>
+
+- **Implementation of Gale–Shapley stable matching algorithm**
 
     - *Running time*
         `O(n^2)`
@@ -523,8 +538,7 @@ struct HopcroftKarp {
     - *Tested Problems*
 
 {% highlight cpp %}
-void StableMatching
-(const int n, const vector <vector <int>>& maleRank, const vector <vector <int>>& femaleRank, vector <int>& wife) {
+void StableMatching (const int n, const vector <vector <int>>& maleRank, const vector <vector <int>>& femaleRank, vector <int>& wife) {
     vector <int> freeMen;
     vector <vector <pair <int, int>>> fq(n);
     vector <int> husband(n, -1);
@@ -557,7 +571,9 @@ void StableMatching
 {% endhighlight %}
 
 
-- <a name = "EulerTour"></a>**Implementation of euler tour generation algorithm**
+<a name = "EulerTour"></a>
+
+- **Implementation of euler tour generation algorithm**
 
     - *Running time*
         `O(|V|+|E|)`
@@ -623,7 +639,9 @@ struct EulerTour {
 };
 {% endhighlight %}
 
-- <a name = "PushRelabel"></a>**Implementation of highest-label push-relabel maximum flow**
+<a name = "PushRelabel"></a>
+
+- **Implementation of highest-label push-relabel maximum flow**
 
     - *Running time*
         `O(|V|^2|E|^{1/2})`

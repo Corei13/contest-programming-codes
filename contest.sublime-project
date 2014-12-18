@@ -23,6 +23,22 @@
                 "add-brackets": false,
                 "add-one-line-brackets": false
             }
+        },
+        "MarkdownPreview":
+        {
+            "parser": "github",
+            "enable_mathjax": true
+        },
+        "Markdown (Jekyll)":
+        {
+            "extensions":
+            [
+                "markdown",
+                "mdown",
+                "mkdn",
+                "md"
+            ]
         }
+
     }
 }

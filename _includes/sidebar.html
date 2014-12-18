@@ -1,23 +1,31 @@
 <script type="text/javascript">
   console.log({{site | jsonify}});
+  site = {{site | jsonify}};
   console.log({{page | jsonify}});
 </script>
 
 <div class="sidebar">
   <div class="container">
     <nav class="sidebar-nav">
-      {% for section in site.sections%}
-        <b class="sidebar-nav-item">
-          <a class="{% if section[0] == page.id %} active {% endif %}" href="{{ site.baseurl }}Library/{{ section[0] }}">
-          {{ section[1] }}
+      <b class="sidebar-nav-item">
+          <a class = "active" href="{{ site.baseurl }}">
+            <h4>Home</h4>
           </a>
         </b>
-        {% if section[1] == page.title %}
-          {% for anchor in page.anchors %}
-            <a class="sidebar-nav-item" href="#{{ anchor[1] }}">
-              {{ anchor[0] }}
+      {% for section in site.pages %}
+        {% if section.layout == "page" %}
+          <b class="sidebar-nav-item">
+            <a class="{% if section.id == page.id %} active {% endif %}" href="{{ site.baseurl }}{{ section.path }}">
+              {{ section.title }}
             </a>
-          {% endfor %}
+          </b>
+          {% if section.id == page.id %}
+            {% for anchor in page.anchors %}
+              <a class="sidebar-nav-item" href="#{{ anchor[0] }}">
+                {{ anchor[1] }}
+              </a>
+            {% endfor %}
+          {% endif %}
         {% endif %}
       {% endfor %}
     </nav>

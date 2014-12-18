@@ -32,16 +32,16 @@
  */
 
 html {
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-family: Arial, "PT Sans", Helvetica, sans-serif;
 }
 @media (min-width: 48em) {
   html {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 @media (min-width: 58em) {
   html {
-    font-size: 16px;
+    font-size: 15px;
   }
 }
 
@@ -55,7 +55,7 @@ html {
 
 .sidebar {
   text-align: center;
-  padding: 1rem 0rem;
+  padding: 0rem;
   color: rgba(255,255,255,.5);
   background-color: #202020;
 }

@@ -1,13 +1,16 @@
 ---
-layout: page
-title: Geometry
-id: Geometry
+layout:     page
+title:      Geometry
+id:         geometry
+path:       Library/Geometry
 anchors:
-    Fraction Class: Fraction
-    Geometry Routines: GeometryRoutines
+            Fraction: Fraction Class
+            GeometryRoutines: Geometry Routines
 ---
 
-- <a name="Fraction"></a>**Full featured fraction class**
+<a name="Fraction"></a>
+
+- **Full featured fraction class**
 
 {% highlight cpp %}
 template <class T> struct Fraction {
@@ -151,7 +154,9 @@ template <class T> struct Fraction {
 };
 {% endhighlight %}
 
-- <a name = "GeometryRoutines"></a>**Common Geometry Routines**
+<a name = "GeometryRoutines"></a>
+
+- **Common Geometry Routines**
     - <small>*Shamelessly copied from [stanford acm notebook](http://web.stanford.edu/~liszt90/acm/notebook.html)*</small>
 
 {% highlight cpp %}

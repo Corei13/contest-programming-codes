@@ -1,16 +1,19 @@
 ---
-layout: page
-title: Data Structures
-id: DS
+layout:     page
+title:      Data Structures
+id:         data-structures
+path:       Library/DS
 anchors:
-    Longest Increasing Subsequence: LongestIncreasingSubsequence
-    Disjoint Set: DisjointSet
-    Trie: Trie
-    Memory Efficient Trie: StaticTrie
-    Matrix: Matrix
+            LongestIncreasingSubsequence: Longest Increasing Subsequence
+            DisjointSet: Disjoint Set
+            Trie: Trie
+            StaticTrie: Memory Efficient Trie
+            Matrix: Matrix
 ---
 
-- <a name = "LongestIncreasingSubsequence"></a>**Implementation of longest increasing subsequence algorithm**
+<a name = "LongestIncreasingSubsequence"></a>
+
+- **Implementation of longest increasing subsequence algorithm**
     - *Running time*
         `O(n log(n))`
     - *Usage*
@@ -73,7 +76,9 @@ template <class T, class F = less_equal<T>> struct LongestIncreasingSubsequence 
 };
 {% endhighlight %}
 
-- <a name = "DisjointSet"></a> **Implementation of disjoint-set data structure**
+<a name = "DisjointSet"></a>
+
+- **Implementation of disjoint-set data structure**
     - *Running time*
         `O(⍺(n))` per operation, where `⍺(n)` is the inverse of Ackermann function
     - *Usage*
@@ -112,7 +117,9 @@ struct DisjointSet {
 };
 {% endhighlight %}
 
-- <a name = "Trie"></a> **Implementation of dynamic Prefix Tree (Trie) data structure**
+<a name = "Trie"></a>
+
+- **Implementation of dynamic Prefix Tree (Trie) data structure**
     - *Usage*
         - Initialize dynamicaly like: `Trie <string, 26> *root = new Trie <string, 26> ();`
         - `Insert(word)` inserts a iterable word (`string`, `vector` etc) into the Trie
@@ -199,7 +206,9 @@ template <class T, int n> struct Trie {
 };
 {% endhighlight %}
 
-- <a name = "StaticTrie"></a> **Implementation of memory efficient static Prefix Tree (Trie) data structure**
+<a name = "StaticTrie"></a>
+
+- **Implementation of memory efficient static Prefix Tree (Trie) data structure**
     - *Usage*
         - In this version, an array of StaticTrie pointers should be declared. Example:
             `StaticTrie <string, 2> *root = new StaticTrie <string, 2> [2 * 1024 * 1024] ();`
@@ -294,7 +303,9 @@ template <class T, int n> struct StaticTrie {
 };
 {% endhighlight %}
 
-- <a name = "Matrix"></a> **Implementation of Matrix data structure**
+<a name = "Matrix"></a>
+
+- **Implementation of Matrix data structure**
     - *Tested Problems*
 
 

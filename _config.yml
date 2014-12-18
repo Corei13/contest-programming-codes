@@ -1,32 +1,34 @@
 # Dependencies
-markdown:         redcarpet
-redcarpet:
-  extensions:     ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript"]
+markdown:               redcarpet
 
-highlighter:      pygments
+redcarpet:
+    extensions:         ["no_intra_emphasis", "fenced_code_blocks", "autolink", "strikethrough", "superscript", "subscript"]
+
+kramdown:
+    extensions:         ["mathjax"]
+
+highlighter:            pygments
 
 # Permalinks
-permalink:        pretty
-relative_permalinks: true
+permalink:              pretty
+relative_permalinks:    true
 
 # Setup
-title:            Notes
-baseurl:          /contest-programming-codes/
+title:                  Notes
+baseurl:                /contest-programming-codes/
 
 author:
-  name:           'Dhananjoy Biswas'
-
-paginate:         5
-
-# Custom vars
-version:          2.1.0
+    name:               "Dhananjoy Biswas"
+    email:              "ebappa1971@gmail.com"
 
 github:
-  repo:           https://github.com/Corei13/contest-programming-codes
+    repo:               https://github.com/Corei13/contest-programming-codes
 
-sections:         
-                  Graph:    "Graph Algorithms"
-                  String:   "String Algorithms"
-                  DS:       "Data Structures"
-                  Geometry: "Geometry"
-                  Math:     "Mathematical Algorithms"
+sections:
+    readme:                     "Index"
+    graph:                      "Graph Algorithms"
+    string:                     "String Algorithms"
+    data-structures:            "Data Structures"
+    geometry:                   "Geometry"
+    math:                       "Mathematics"
+    theorems-and-formulae:      "Theorems And Formulae"

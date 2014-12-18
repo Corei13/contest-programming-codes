@@ -1,11 +1,7 @@
----
-layout: page
----
-
 Library Hierarchy
 -----------------
 
-  - **Graph.cpp**
+- **Graph.cpp**
     - [x] SCC (Tarjan)
     - [x] TopSort
     - [x] Minimum Spanning Tree
@@ -25,31 +21,30 @@ Library Hierarchy
     - [ ] Directed MST
     - [ ] Array Represtation Of Adj. List
 
-
-  - **Geometry.cpp**
+- **Geometry.cpp**
     - [x] Common Geometry Routines
     - [x] Fraction
     - [x] Convex Hull
     - [ ] Triangulation
     - [ ] Closest Pair of Points
     - [ ] Rotating Calipers
-    
-  - **Math.cpp**
+
+- **Math.cpp**
     - [x] FFT
     - [ ] Simplex
     - [ ] Gauss-Jordan
     - [ ] Extended Euclid
     - [ ] Diophantine Equation
     - [ ] Reduced Row Echelon Form
-    
-  - **String.cpp**
+
+- **String.cpp**
     - [x] Lexicographically Smallest Rotation (Booth's Algorithm)
     - [ ] Longest palindromic substring
     - [ ] Suffix Array
     - [ ] Automata
     - [ ] KMP
-    
-  - **DS.cpp**
+
+- **DS.cpp**
     - [x] LIS
     - [x] Union Find
     - [x] Trie [#TODO: Implement delete function]
@@ -68,19 +63,19 @@ Library Hierarchy
     - [ ] Treap
     - [ ] AVL Tree
 
-  - **DP.cpp**
+- **DP.cpp**
     - [ ] Monotonous Queue [ min (j < i) { a[j] + b[j] * c[i] } ]
     - [ ] Dynamic Monotonous Queue
     - [ ] Knuth Optimization [ dp[i][j] = C[i][j] + min (i < k < j) { dp[i][k] + dp[k][j] }, C concave ]
     - [ ] Divide and Conquer [ dp[i][j] = min (k < j) { dp[i - 1][k] + C[k][j] } ]
     - [ ] dp[i] = min (j < i) { f( dp[j] ) + C[i][j] }, C concave, f = O(1)
 
-  - **Parser.cpp**
+- **Parse.cpp**
     - [ ] Postfix, Infix, Prefix Converter
     - [ ] Context-Free Grammer
     - [ ] RegEx
     
-  - **Misc.cpp**
+- **Misc.cpp**
     - [x] lambda functions
     - [x] STL cheatsheet
     - [x] Kahan Summation Algorithm
