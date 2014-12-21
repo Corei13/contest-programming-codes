@@ -51,8 +51,6 @@ transform(all(a), a.begin(), [](int i) {
 // stoi(s, nullptr, b) converts string s to base
 
 
-#include <numeric>
-
 // accumulate(all(v), init, f) returns f(f(...f(f(init, v[0]), v[1])...), v[n-1])
 // iota(all(v), init) -> v = {init, init+1, init+2 ...}
 // adjacent_difference(all(v), res, f) --> res = {v[0], f(v[0], v[1]), f(v[1], v[2])...}
@@ -61,24 +59,13 @@ transform(all(a), a.begin(), [](int i) {
 // res must have size greater than or equal to v
 
 // Bit Hacks
-// Looping Over all subsets of a number
-for (int i = n; i != 0; i = (i - 1) & n) {
-    cout << i << endl;
+// Looping over all non-zero submask of a binary mask
+for (int submask = mask; submask != 0; submask = (submask - 1) & mask) {
+    cout << submask << endl;
 }
-// Looping Over all set bits of a number
-for (int m = n, i = (m & (m - 1)) ^ m; m != 0; m &= (m - 1), i = (m & (m - 1)) ^ m) {
-    cout << i << endl;
-}
-
-double KahanSummation (VD& v) {
-    double sum = 0.0, c = 0.0;
-    for (auto a : v) {
-        double y = a - c;
-        double t = sum + y;
-        c = (t - sum) - y;
-        sum = t;
-    }
-    return sum;
+// Looping over all set bits of a binary mask
+for (int m = mask; m != 0; m &= (m - 1)) {
+    cout << (m & (m - 1)) ^ m << endl;
 }
 
 // converting integer to binary string
@@ -89,3 +76,5 @@ bitset<64>("10010").to_ulong()
 bitset<64> foo;
 cin >> foo;
 int n = foo.to_ulong();
+
+__PRETTY_FUNCTION__

@@ -2,7 +2,7 @@
     Full featured fraction class
 */
 
-template <class T> struct Fraction {
+template <class T = long long> struct Fraction {
     T a, b;
 
     Fraction (T a = T(0), T b = T(1)): a(a), b(b) {
@@ -147,7 +147,7 @@ template <class T> struct Fraction {
     Shamelessly copied from stanford acm notebook [http://web.stanford.edu/~liszt90/acm/notebook.html]
 */
 
-template <class T> struct Point {
+template <class T = double> struct Point {
     T x, y;
 
     Point (T x, T y): x(x), y(y) {}
@@ -205,6 +205,14 @@ template <class T> struct Point {
     friend ostream& operator << (ostream& os, Point <T>& p) {
         os << "(" << p.x << ", " << p.y << ")";
         return os;
+    }
+
+    friend T norm (Point P) {
+        return P.x * P.x + P.y * P.y;
+    }
+
+    friend Point unit (Point P) {
+        return P / norm(P);
     }
 
     friend Point RotateCCW90 (Point p) {
