@@ -13,9 +13,9 @@
             "autoformat_on_save": true,
             "options_default":
             {
-                "style": "java",
+                "style": "google",
                 "indent": "spaces",
-                "indent-spaces": 4,
+                "indent-spaces": 2,
                 "align-pointer": "",
                 "align-reference": "type",
                 "close-templates": true,
